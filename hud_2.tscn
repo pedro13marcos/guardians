@@ -1,0 +1,97 @@
+[gd_scene load_steps=12 format=3 uid="uid://d0gmnax02ed3k"]
+
+[ext_resource type="Texture2D" uid="uid://853rphabw05v" path="res://assets/Bars/guardian hud (1).png" id="1_4ruds"]
+[ext_resource type="Script" uid="uid://cr67m5awaytfn" path="res://hud_2.gd" id="1_ja568"]
+[ext_resource type="Texture2D" uid="uid://dron21oqqa8ex" path="res://assets/Bars/life.png" id="2_bwsqg"]
+[ext_resource type="Texture2D" uid="uid://bknfb84xgc1y2" path="res://assets/Bars/energy.png" id="2_iqd3l"]
+[ext_resource type="Texture2D" uid="uid://bsdy5w73yee6k" path="res://assets/Bars/goals.png" id="3_gvf7k"]
+[ext_resource type="Texture2D" uid="uid://b8x47atq3go0l" path="res://assets/Bars/WL hud (1).png" id="5_wob38"]
+[ext_resource type="Texture2D" uid="uid://defsctqp1yos1" path="res://assets/Bars/Monkey hud.png" id="6_q7m1e"]
+[ext_resource type="Texture2D" uid="uid://d3koj12duq2nj" path="res://assets/Bars/Hud_buttom-removebg-preview.png" id="8_dsmfw"]
+[ext_resource type="Texture2D" uid="uid://cxoxswmhb1k8y" path="res://assets/Bars/Hud_enemy-removebg-preview.png" id="9_w8twj"]
+[ext_resource type="Texture2D" uid="uid://bu42hw23gbwss" path="res://assets/Bars/Hud_time-removebg-preview.png" id="10_vo1jk"]
+[ext_resource type="Texture2D" uid="uid://lh61pnv6d838" path="res://assets/Bars/Done Mission.png" id="11_ha6lp"]
+
+[node name="HUD2" type="CanvasLayer" node_paths=PackedStringArray("healthBar", "goals", "energyBar")]
+script = ExtResource("1_ja568")
+healthBar = NodePath("HUD2/Life")
+goals = NodePath("HUD2/Goals")
+energyBar = NodePath("HUD2/Energy")
+
+[node name="HUD2" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Life" type="TextureProgressBar" parent="HUD2"]
+layout_mode = 0
+offset_right = 2176.0
+offset_bottom = 1812.0
+min_value = -41.0
+max_value = 111.0
+value = 100.0
+texture_progress = ExtResource("2_bwsqg")
+
+[node name="Energy" type="TextureProgressBar" parent="HUD2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+min_value = -65.0
+max_value = 136.0
+value = 100.0
+texture_progress = ExtResource("2_iqd3l")
+
+[node name="Goals" type="TextureProgressBar" parent="HUD2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+min_value = -76.0
+max_value = 163.0
+value = 100.0
+texture_progress = ExtResource("3_gvf7k")
+
+[node name="uiG" type="TextureRect" parent="HUD2"]
+visible = false
+layout_mode = 0
+offset_right = 2176.0
+offset_bottom = 1812.0
+texture = ExtResource("1_4ruds")
+
+[node name="uiWL" type="TextureRect" parent="HUD2"]
+visible = false
+layout_mode = 0
+offset_right = 2176.0
+offset_bottom = 1812.0
+texture = ExtResource("5_wob38")
+
+[node name="uiM" type="TextureRect" parent="HUD2"]
+layout_mode = 0
+offset_right = 2176.0
+offset_bottom = 1812.0
+texture = ExtResource("6_q7m1e")
+
+[node name="goalSw" type="TextureRect" parent="HUD2"]
+layout_mode = 0
+offset_right = 2176.0
+offset_bottom = 1812.0
+texture = ExtResource("8_dsmfw")
+
+[node name="goalEn" type="TextureRect" parent="HUD2"]
+layout_mode = 0
+offset_right = 2176.0
+offset_bottom = 1812.0
+texture = ExtResource("9_w8twj")
+
+[node name="goalTime" type="TextureRect" parent="HUD2"]
+layout_mode = 0
+offset_right = 2176.0
+offset_bottom = 1812.0
+texture = ExtResource("10_vo1jk")
+
+[node name="goalDone" type="TextureRect" parent="HUD2"]
+layout_mode = 0
+offset_left = 644.0
+offset_top = 585.0
+offset_right = 910.0
+offset_bottom = 773.0
+texture = ExtResource("11_ha6lp")
+expand_mode = 1

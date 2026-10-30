@@ -1,0 +1,176 @@
+[gd_scene load_steps=17 format=3 uid="uid://ctr0ugq7lo6bh"]
+
+[ext_resource type="Texture2D" uid="uid://cg7ygyhcif6u0" path="res://Super Spritesheet.png" id="1_glkac"]
+[ext_resource type="Script" uid="uid://b8gnye4w0ashi" path="res://atack_power.gd" id="1_otpsn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5hvn"]
+atlas = ExtResource("1_glkac")
+region = Rect2(16, 336, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uaknb"]
+atlas = ExtResource("1_glkac")
+region = Rect2(16, 320, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8m7ix"]
+atlas = ExtResource("1_glkac")
+region = Rect2(0, 320, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5tvtr"]
+atlas = ExtResource("1_glkac")
+region = Rect2(0, 336, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7vf7"]
+atlas = ExtResource("1_glkac")
+region = Rect2(16, 368, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2yaho"]
+atlas = ExtResource("1_glkac")
+region = Rect2(16, 352, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k1bvj"]
+atlas = ExtResource("1_glkac")
+region = Rect2(0, 352, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frj30"]
+atlas = ExtResource("1_glkac")
+region = Rect2(0, 368, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_16lpg"]
+atlas = ExtResource("1_glkac")
+region = Rect2(16, 304, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6iy2q"]
+atlas = ExtResource("1_glkac")
+region = Rect2(0, 304, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2myen"]
+atlas = ExtResource("1_glkac")
+region = Rect2(0, 304, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61tnm"]
+atlas = ExtResource("1_glkac")
+region = Rect2(16, 304, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c0rjf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5hvn")
+}],
+"loop": true,
+"name": &"Adown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uaknb")
+}],
+"loop": true,
+"name": &"Aleft",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8m7ix")
+}],
+"loop": true,
+"name": &"Aright",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5tvtr")
+}],
+"loop": true,
+"name": &"Aup",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d7vf7")
+}],
+"loop": true,
+"name": &"Fdown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2yaho")
+}],
+"loop": true,
+"name": &"Fleft",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k1bvj")
+}],
+"loop": true,
+"name": &"Fright",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frj30")
+}],
+"loop": true,
+"name": &"Fup",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_16lpg")
+}],
+"loop": true,
+"name": &"Vdown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6iy2q")
+}],
+"loop": true,
+"name": &"Vleft",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2myen")
+}],
+"loop": true,
+"name": &"Vright",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61tnm")
+}],
+"loop": true,
+"name": &"Vup",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g7dyd"]
+size = Vector2(16, 16)
+
+[node name="atackPower" type="Area2D"]
+z_index = -1
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("1_otpsn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_c0rjf")
+animation = &"Vdown"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_g7dyd")
+
+[node name="mataTiro" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="mataTiro" to="." method="_on_mata_tiro_timeout"]
