@@ -20,11 +20,11 @@ func _process(delta):
 
 func setCameraLimits():
 	var mapSize = $Background.get_used_rect();
-	var celSize = $Background.cell_quadrant_size;
-	$Camera2D.limit_left = mapSize.position.x * celSize*$Background.scale.x;
-	$Camera2D.limit_top = mapSize.position.y * celSize*$Background.scale.y;
-	$Camera2D.limit_right = mapSize.end.x * celSize*$Background.scale.x;
-	$Camera2D.limit_bottom = mapSize.end.y * celSize*$Background.scale.y;
+	var celSize = $Background.tile_set.tile_size;
+	$Camera2D.limit_left = int(mapSize.position.x * celSize.x * $Background.scale.x);
+	$Camera2D.limit_top = int(mapSize.position.y * celSize.y * $Background.scale.y);
+	$Camera2D.limit_right = int(mapSize.end.x * celSize.x * $Background.scale.x);
+	$Camera2D.limit_bottom = int(mapSize.end.y * celSize.y * $Background.scale.y);
 	
 
 

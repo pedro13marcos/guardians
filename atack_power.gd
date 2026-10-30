@@ -1,6 +1,6 @@
 extends Area2D
 
-@onready var player = get_node("../../Player");
+@onready var player = get_node("../Player");
 
 var speed = 8;
 var facingDir = Vector2();

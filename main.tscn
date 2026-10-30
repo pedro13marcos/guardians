@@ -10,6 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://d0gmnax02ed3k" path="res://hud_2.tscn" id="7_eni5i"]
 [ext_resource type="PackedScene" uid="uid://bm83b7150i3kw" path="res://pause.tscn" id="8_kegx7"]
 [ext_resource type="PackedScene" uid="uid://bf5nsw1gvvosb" path="res://computer.tscn" id="9_n5m13"]
+[ext_resource type="PackedScene" path="res://plant.tscn" id="20_plant"]
+[ext_resource type="PackedScene" path="res://filing_cabinet.tscn" id="21_cab"]
+[ext_resource type="PackedScene" path="res://server_rack.tscn" id="22_rack"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_hak7n"]
 vertices = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -223,65 +226,65 @@ visible = false
 position = Vector2(112, 384)
 scale = Vector2(0.02, 0.02)
 
-[node name="Computer2" parent="." instance=ExtResource("9_n5m13")]
+[node name="ServerRack1" parent="." instance=ExtResource("22_rack")]
 position = Vector2(144, 384)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.04, 0.04)
 
 [node name="Computer3" parent="." instance=ExtResource("9_n5m13")]
 position = Vector2(240, 384)
 scale = Vector2(0.02, 0.02)
 
-[node name="Computer4" parent="." instance=ExtResource("9_n5m13")]
+[node name="Plant2" parent="." instance=ExtResource("20_plant")]
 position = Vector2(272, 384)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.04, 0.04)
 
 [node name="Computer5" parent="." instance=ExtResource("9_n5m13")]
 position = Vector2(368, 384)
 scale = Vector2(0.02, 0.02)
 
-[node name="Computer6" parent="." instance=ExtResource("9_n5m13")]
+[node name="FilingCabinet3" parent="." instance=ExtResource("21_cab")]
 position = Vector2(400, 384)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.04, 0.04)
 
 [node name="Computer7" parent="." instance=ExtResource("9_n5m13")]
 position = Vector2(496, 384)
 scale = Vector2(0.02, 0.02)
 
-[node name="Computer8" parent="." instance=ExtResource("9_n5m13")]
+[node name="ServerRack4" parent="." instance=ExtResource("22_rack")]
 position = Vector2(528, 384)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.04, 0.04)
 
 [node name="Computer9" parent="." instance=ExtResource("9_n5m13")]
 position = Vector2(112, 512)
 scale = Vector2(0.02, 0.02)
 
-[node name="Computer10" parent="." instance=ExtResource("9_n5m13")]
+[node name="Plant5" parent="." instance=ExtResource("20_plant")]
 position = Vector2(144, 512)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.04, 0.04)
 
 [node name="Computer11" parent="." instance=ExtResource("9_n5m13")]
 position = Vector2(240, 512)
 scale = Vector2(0.02, 0.02)
 
-[node name="Computer12" parent="." instance=ExtResource("9_n5m13")]
+[node name="FilingCabinet6" parent="." instance=ExtResource("21_cab")]
 position = Vector2(272, 512)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.04, 0.04)
 
 [node name="Computer13" parent="." instance=ExtResource("9_n5m13")]
 position = Vector2(368, 512)
 scale = Vector2(0.02, 0.02)
 
-[node name="Computer14" parent="." instance=ExtResource("9_n5m13")]
+[node name="ServerRack7" parent="." instance=ExtResource("22_rack")]
 position = Vector2(400, 512)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.04, 0.04)
 
 [node name="Computer15" parent="." instance=ExtResource("9_n5m13")]
 position = Vector2(496, 512)
 scale = Vector2(0.02, 0.02)
 
-[node name="Computer16" parent="." instance=ExtResource("9_n5m13")]
+[node name="Plant8" parent="." instance=ExtResource("20_plant")]
 position = Vector2(528, 512)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.04, 0.04)
 
 [node name="Inimigo10" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_wlxhx")]
 position = Vector2(432, 192)
@@ -291,70 +294,6 @@ player = NodePath("../Player")
 position = Vector2(400, 64)
 player = NodePath("../Player")
 
-[node name="Computer17" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(112, 384)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer18" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(144, 384)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer19" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(240, 384)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer20" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(272, 384)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer21" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(368, 384)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer22" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(400, 384)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer23" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(496, 384)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer24" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(528, 384)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer25" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(112, 512)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer26" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(144, 512)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer27" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(240, 512)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer28" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(272, 512)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer29" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(368, 512)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer30" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(400, 512)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer31" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(496, 512)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer32" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(528, 512)
-scale = Vector2(0.02, 0.02)
-
 [node name="Inimigo14" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_wlxhx")]
 position = Vector2(320, 128)
 player = NodePath("../Player")
@@ -363,129 +302,65 @@ player = NodePath("../Player")
 position = Vector2(112, 128)
 scale = Vector2(0.02, 0.02)
 
-[node name="Computer34" parent="." instance=ExtResource("9_n5m13")]
+[node name="Plant9" parent="." instance=ExtResource("20_plant")]
 position = Vector2(144, 128)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.04, 0.04)
 
 [node name="Computer35" parent="." instance=ExtResource("9_n5m13")]
 position = Vector2(240, 128)
 scale = Vector2(0.02, 0.02)
 
-[node name="Computer36" parent="." instance=ExtResource("9_n5m13")]
+[node name="FilingCabinet10" parent="." instance=ExtResource("21_cab")]
 position = Vector2(272, 128)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.04, 0.04)
 
 [node name="Computer37" parent="." instance=ExtResource("9_n5m13")]
 position = Vector2(368, 128)
 scale = Vector2(0.02, 0.02)
 
-[node name="Computer38" parent="." instance=ExtResource("9_n5m13")]
+[node name="ServerRack11" parent="." instance=ExtResource("22_rack")]
 position = Vector2(400, 128)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.04, 0.04)
 
 [node name="Computer39" parent="." instance=ExtResource("9_n5m13")]
 position = Vector2(496, 128)
 scale = Vector2(0.02, 0.02)
 
-[node name="Computer40" parent="." instance=ExtResource("9_n5m13")]
+[node name="Plant12" parent="." instance=ExtResource("20_plant")]
 position = Vector2(528, 128)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.04, 0.04)
 
 [node name="Computer41" parent="." instance=ExtResource("9_n5m13")]
 position = Vector2(112, 256)
 scale = Vector2(0.02, 0.02)
 
-[node name="Computer42" parent="." instance=ExtResource("9_n5m13")]
+[node name="FilingCabinet13" parent="." instance=ExtResource("21_cab")]
 position = Vector2(144, 256)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.04, 0.04)
 
 [node name="Computer43" parent="." instance=ExtResource("9_n5m13")]
 position = Vector2(240, 256)
 scale = Vector2(0.02, 0.02)
 
-[node name="Computer44" parent="." instance=ExtResource("9_n5m13")]
+[node name="ServerRack14" parent="." instance=ExtResource("22_rack")]
 position = Vector2(272, 256)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.04, 0.04)
 
 [node name="Computer45" parent="." instance=ExtResource("9_n5m13")]
 position = Vector2(368, 256)
 scale = Vector2(0.02, 0.02)
 
-[node name="Computer46" parent="." instance=ExtResource("9_n5m13")]
+[node name="Plant15" parent="." instance=ExtResource("20_plant")]
 position = Vector2(400, 256)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.04, 0.04)
 
 [node name="Computer47" parent="." instance=ExtResource("9_n5m13")]
 position = Vector2(496, 256)
 scale = Vector2(0.02, 0.02)
 
-[node name="Computer48" parent="." instance=ExtResource("9_n5m13")]
+[node name="FilingCabinet16" parent="." instance=ExtResource("21_cab")]
 position = Vector2(528, 256)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer49" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(112, 128)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer50" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(144, 128)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer51" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(240, 128)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer52" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(272, 128)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer53" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(368, 128)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer54" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(400, 128)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer55" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(496, 128)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer56" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(528, 128)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer57" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(112, 256)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer58" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(144, 256)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer59" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(240, 256)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer60" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(272, 256)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer61" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(368, 256)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer62" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(400, 256)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer63" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(496, 256)
-scale = Vector2(0.02, 0.02)
-
-[node name="Computer64" parent="." instance=ExtResource("9_n5m13")]
-position = Vector2(528, 256)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.04, 0.04)
 
 [connection signal="inimigoMorto" from="Inimigo" to="." method="_on_inimigo_inimigo_morto"]
 [connection signal="inimigoMorto" from="Inimigo2" to="." method="_on_inimigo_inimigo_morto"]

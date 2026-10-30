@@ -1,9 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://cn5jdneh51sms"]
+[gd_scene load_steps=13 format=3 uid="uid://cn5jdneh51sms"]
 
 [ext_resource type="Script" uid="uid://bw3aqaqkt51o" path="res://player.gd" id="1_h3qib"]
 [ext_resource type="Texture2D" uid="uid://da4yptiufuw7p" path="res://assets/New Characters/monkey.png" id="2_s6gyj"]
+[ext_resource type="Texture2D" path="res://assets/New Characters/monkey_step_left.png" id="2_m_step_l"]
 [ext_resource type="Texture2D" uid="uid://v5vwp1wbobdk" path="res://assets/New Characters/Guardian.png" id="3_rqmuv"]
+[ext_resource type="Texture2D" path="res://assets/New Characters/guardian_step_left.png" id="3_g_step_l"]
+[ext_resource type="Texture2D" path="res://assets/New Characters/guardian_step_right.png" id="3_g_step_r"]
 [ext_resource type="Texture2D" uid="uid://dkudo1d2gfhgg" path="res://assets/New Characters/White%20Lightning%20.png" id="4_uibw2"]
+[ext_resource type="Texture2D" path="res://assets/New Characters/wl_step_left.png" id="4_wl_step_l"]
+[ext_resource type="Texture2D" path="res://assets/New Characters/wl_step_right.png" id="4_wl_step_r"]
 [ext_resource type="PackedScene" uid="uid://chntjtllsck7v" path="res://mobile_controllers.tscn" id="5_4dqb6"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xciff"]
@@ -11,98 +16,182 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_s6gyj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_m_step_l")
 }],
 "loop": true,
 "name": &"Adown",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_s6gyj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_m_step_l")
 }],
 "loop": true,
 "name": &"Aleft",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_s6gyj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_m_step_l")
 }],
 "loop": true,
 "name": &"Aright",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_s6gyj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_m_step_l")
 }],
 "loop": true,
 "name": &"Aup",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_rqmuv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_g_step_l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rqmuv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_g_step_r")
 }],
 "loop": true,
 "name": &"Fdown",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_rqmuv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_g_step_l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rqmuv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_g_step_r")
 }],
 "loop": true,
 "name": &"Fleft",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_rqmuv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_g_step_l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rqmuv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_g_step_r")
 }],
 "loop": true,
 "name": &"Fright",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_rqmuv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_g_step_l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rqmuv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_g_step_r")
 }],
 "loop": true,
 "name": &"Fup",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("4_uibw2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wl_step_l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_uibw2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wl_step_r")
 }],
 "loop": true,
 "name": &"Vdown",
-"speed": 8.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("4_uibw2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wl_step_l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_uibw2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wl_step_r")
 }],
 "loop": true,
 "name": &"Vleft",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("4_uibw2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wl_step_l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_uibw2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wl_step_r")
 }],
 "loop": true,
 "name": &"Vright",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("4_uibw2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wl_step_l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_uibw2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wl_step_r")
 }],
 "loop": true,
 "name": &"Vup",
-"speed": 5.0
+"speed": 6.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_15vd7"]

@@ -71,7 +71,7 @@ func _physics_process(_delta):
 			energia -= 10;
 			atualizaUI();
 			var poder = novoPoder.instantiate();
-			add_child(poder);
+			pai.add_child(poder);
 	
 	if Input.is_action_just_pressed("changeCharacter"):
 		personagem = trocaPersonagem(personagem);
