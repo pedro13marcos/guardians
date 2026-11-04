@@ -1,4 +1,4 @@
-﻿extends CharacterBody2D
+extends CharacterBody2D
 
 var speed = 80;
 var facingDir = Vector2();

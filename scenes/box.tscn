@@ -1,4 +1,4 @@
-﻿[gd_scene load_steps=5 format=3 uid="uid://r217baigiijd"]
+[gd_scene load_steps=5 format=3 uid="uid://r217baigiijd"]
 
 [ext_resource type="Texture2D" path="res://assets/box/broken box.png" id="1_8b71e"]
 [ext_resource type="Texture2D" path="res://assets/box/box.png" id="2_6oy1c"]

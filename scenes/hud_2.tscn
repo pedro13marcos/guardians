@@ -1,4 +1,4 @@
-﻿[gd_scene load_steps=12 format=3 uid="uid://d0gmnax02ed3k"]
+[gd_scene load_steps=12 format=3 uid="uid://d0gmnax02ed3k"]
 
 [ext_resource type="Texture2D" path="res://assets/Bars/guardian hud (1).png" id="1_4ruds"]
 [ext_resource type="Script" path="res://scripts/hud_2.gd" id="1_ja568"]

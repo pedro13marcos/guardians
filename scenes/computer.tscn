@@ -1,4 +1,4 @@
-﻿[gd_scene load_steps=11 format=3 uid="uid://bf5nsw1gvvosb"]
+[gd_scene load_steps=11 format=3 uid="uid://bf5nsw1gvvosb"]
 
 [ext_resource type="Texture2D" path="res://assets/Computer/computer broke.png" id="1_1oel3"]
 [ext_resource type="Script" path="res://scripts/computer.gd" id="1_tsg4a"]
