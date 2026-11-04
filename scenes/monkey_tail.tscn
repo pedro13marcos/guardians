@@ -1,0 +1,36 @@
+﻿[gd_scene load_steps=5 format=3 uid="uid://b8monkeytail1"]
+
+[ext_resource type="Script" path="res://scripts/monkey_tail.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/Powers/monkey_tail_segment.png" id="2_seg"]
+[ext_resource type="Texture2D" path="res://assets/Powers/monkey_claw.png" id="3_claw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tip"]
+radius = 6.0
+
+[node name="MonkeyTail" type="Node2D"]
+z_index = 1
+script = ExtResource("1_script")
+
+[node name="TailLine" type="Line2D" parent="."]
+texture_repeat = 2
+points = PackedVector2Array(0, 0, 0, 0)
+width = 4.0
+default_color = Color(1, 1, 1, 1)
+texture = ExtResource("2_seg")
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+
+[node name="Claw" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("3_claw")
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("CircleShape2D_tip")
+
+[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

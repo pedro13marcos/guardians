@@ -1,0 +1,42 @@
+﻿[gd_scene load_steps=6 format=3 uid="uid://57e2sjpuj1c6"]
+
+[ext_resource type="Texture2D" path="res://assets/ButtonDown.png" id="1_p8gen"]
+[ext_resource type="Script" path="res://scripts/button.gd" id="1_pbav5"]
+[ext_resource type="Texture2D" path="res://assets/ButtonUp.png" id="2_82kuk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lo8r4"]
+size = Vector2(32, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nq86a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_p8gen")
+}],
+"loop": true,
+"name": &"Down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_82kuk")
+}],
+"loop": true,
+"name": &"Up",
+"speed": 5.0
+}]
+
+[node name="Button" type="Area2D" groups=["button"]]
+script = ExtResource("1_pbav5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_lo8r4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_nq86a")
+animation = &"Down"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
