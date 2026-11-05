@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ijae3dwcdini"
-path="res://.godot/imported/monkey_tail_segment.png-7de0c48e25dfeeff0009b20a9e4a7aba.ctex"
+path="res://.godot/imported/monkey_tail_segment.png-0c795a9bd7f13cdb70d0bc74243e7343.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/AI/monkey_tail_segment.png"
-dest_files=["res://.godot/imported/monkey_tail_segment.png-7de0c48e25dfeeff0009b20a9e4a7aba.ctex"]
+dest_files=["res://.godot/imported/monkey_tail_segment.png-0c795a9bd7f13cdb70d0bc74243e7343.ctex"]
 
 [params]
 

@@ -1984,8 +1984,11 @@ position = Vector2(-984, 8)
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 zoom = Vector2(4, 4)
-limit_left = 0
-limit_top = 0
+limit_left = -384
+limit_top = -192
+limit_right = 128
+limit_bottom = 192
+limit_smoothed = true
 position_smoothing_enabled = true
 editor_draw_limits = true
 editor_draw_drag_margin = true

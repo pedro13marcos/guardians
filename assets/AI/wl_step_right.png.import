@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cfbiph04f1l5e"
-path="res://.godot/imported/wl_step_right.png-b0f1180eb7ed7c4ce1156534ac5aac34.ctex"
+path="res://.godot/imported/wl_step_right.png-3589bf1dbf4d7f63f5ce833c47e24743.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/AI/wl_step_right.png"
-dest_files=["res://.godot/imported/wl_step_right.png-b0f1180eb7ed7c4ce1156534ac5aac34.ctex"]
+dest_files=["res://.godot/imported/wl_step_right.png-3589bf1dbf4d7f63f5ce833c47e24743.ctex"]
 
 [params]
 

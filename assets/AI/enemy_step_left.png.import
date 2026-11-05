@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://di28ak1x2amlb"
-path="res://.godot/imported/enemy_step_left.png-4a5a0b3c0bff4b259bb7c6ec44504132.ctex"
+path="res://.godot/imported/enemy_step_left.png-b10c10dd013ea8f11f88c4a26eac1c7d.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/AI/enemy_step_left.png"
-dest_files=["res://.godot/imported/enemy_step_left.png-4a5a0b3c0bff4b259bb7c6ec44504132.ctex"]
+dest_files=["res://.godot/imported/enemy_step_left.png-b10c10dd013ea8f11f88c4a26eac1c7d.ctex"]
 
 [params]
 

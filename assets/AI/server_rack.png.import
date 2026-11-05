@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dth7fafe0x2ac"
-path="res://.godot/imported/server_rack.png-aad46b2bd926be5563de7fa2340ca81b.ctex"
+path="res://.godot/imported/server_rack.png-daeed31c837b8ef1d2a517054568e06c.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/AI/server_rack.png"
-dest_files=["res://.godot/imported/server_rack.png-aad46b2bd926be5563de7fa2340ca81b.ctex"]
+dest_files=["res://.godot/imported/server_rack.png-daeed31c837b8ef1d2a517054568e06c.ctex"]
 
 [params]
 

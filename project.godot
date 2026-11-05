@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="OldProject (4.7)"
-config/version="0.6"
+config/version="0.7"
 run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://2023-06-21 10.39.05.jpg"

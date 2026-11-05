@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b8a5vk1m0x7j5"
-path="res://.godot/imported/filing_cabinet.png-abdc3bfbd3def86a3548f9db1940927e.ctex"
+path="res://.godot/imported/filing_cabinet.png-de2de1a6b0550fc8791bf83463aeb5ff.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/AI/filing_cabinet.png"
-dest_files=["res://.godot/imported/filing_cabinet.png-abdc3bfbd3def86a3548f9db1940927e.ctex"]
+dest_files=["res://.godot/imported/filing_cabinet.png-de2de1a6b0550fc8791bf83463aeb5ff.ctex"]
 
 [params]
 
