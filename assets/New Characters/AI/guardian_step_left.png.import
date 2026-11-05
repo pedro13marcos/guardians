@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bngkr04rlxtb1"
-path="res://.godot/imported/guardian_step_left.png-bf3fb29b8ebf5a12a6a4198816171eb4.ctex"
+path="res://.godot/imported/guardian_step_left.png-0cbe38d8c714c3f38ed0307ee2779f76.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/New Characters/AI/guardian_step_left.png"
-dest_files=["res://.godot/imported/guardian_step_left.png-bf3fb29b8ebf5a12a6a4198816171eb4.ctex"]
+dest_files=["res://.godot/imported/guardian_step_left.png-0cbe38d8c714c3f38ed0307ee2779f76.ctex"]
 
 [params]
 

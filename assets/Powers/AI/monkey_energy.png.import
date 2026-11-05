@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://8do6ojhxbx1k"
-path="res://.godot/imported/monkey_energy.png-890a427d23317064ec8d0948de9f90d5.ctex"
+path="res://.godot/imported/monkey_energy.png-f73d6f0ab8294fa0e8520cfa895bb52f.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/Powers/AI/monkey_energy.png"
-dest_files=["res://.godot/imported/monkey_energy.png-890a427d23317064ec8d0948de9f90d5.ctex"]
+dest_files=["res://.godot/imported/monkey_energy.png-f73d6f0ab8294fa0e8520cfa895bb52f.ctex"]
 
 [params]
 

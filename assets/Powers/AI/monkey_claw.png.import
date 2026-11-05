@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://gdagckhgjl5u"
-path="res://.godot/imported/monkey_claw.png-1aac81d61ed3e20ae29285e186fe3f61.ctex"
+path="res://.godot/imported/monkey_claw.png-d17ae48253cc4b6fd6277e841e0274a9.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/Powers/AI/monkey_claw.png"
-dest_files=["res://.godot/imported/monkey_claw.png-1aac81d61ed3e20ae29285e186fe3f61.ctex"]
+dest_files=["res://.godot/imported/monkey_claw.png-d17ae48253cc4b6fd6277e841e0274a9.ctex"]
 
 [params]
 
