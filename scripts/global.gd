@@ -3,7 +3,7 @@ extends Node
 ## Global singleton for Guardians game.
 ## Manages global game state and persistent overlays such as the version watermark.
 
-const GAME_VERSION: String = "0.7"
+const GAME_VERSION: String = "0.8"
 
 func _ready() -> void:
 	_create_watermark()

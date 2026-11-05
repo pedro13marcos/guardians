@@ -3,7 +3,7 @@ extends Node2D
 var inimigosMortos
 var buttonPressed;
 
-var nextLevel = "res://scenes/ending_page.tscn";
+var nextLevel = "res://scenes/level_3.tscn";
 
 var maxSwitches = 3;
 
