@@ -4,10 +4,11 @@ signal enemy_spawned(enemy: Node2D)
 
 @export var enemy_scene: PackedScene = preload("res://scenes/inimigo.tscn")
 @export var auto_spawn: bool = true
-@export var spawn_interval: float = 5.0
-@export var initial_delay: float = 2.0
-@export var max_active_enemies: int = 5
+@export var spawn_interval: float = 2.5
+@export var initial_delay: float = 1.0
+@export var max_active_enemies: int = 8
 @export var spawn_offset: Vector2 = Vector2(0, 24)
+@export var always_pursue: bool = true
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var timer: Timer = $SpawnTimer
@@ -66,6 +67,8 @@ func spawn_enemy() -> Node2D:
 
 	if "player" in enemy:
 		enemy.player = player_node
+	if "always_pursue" in enemy:
+		enemy.always_pursue = always_pursue
 
 	# Position the enemy relative to the spawner door
 	enemy.global_position = global_position + spawn_offset
