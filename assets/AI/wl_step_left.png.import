@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dth7fafe0x2ac"
-path="res://.godot/imported/server_rack.png-a9900834f9a046421b662a4c76030a08.ctex"
+uid="uid://r5gjv3hywsbo"
+path="res://.godot/imported/wl_step_left.png-54dec861c405cf8328876a9075c8809c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Props/server_rack.png"
-dest_files=["res://.godot/imported/server_rack.png-a9900834f9a046421b662a4c76030a08.ctex"]
+source_file="res://assets/AI/wl_step_left.png"
+dest_files=["res://.godot/imported/wl_step_left.png-54dec861c405cf8328876a9075c8809c.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://r5gjv3hywsbo"
-path="res://.godot/imported/wl_step_left.png-ce2b1b97b8863726d87f982acdccf5a5.ctex"
+uid="uid://ijae3dwcdini"
+path="res://.godot/imported/monkey_tail_segment.png-7de0c48e25dfeeff0009b20a9e4a7aba.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/New Characters/wl_step_left.png"
-dest_files=["res://.godot/imported/wl_step_left.png-ce2b1b97b8863726d87f982acdccf5a5.ctex"]
+source_file="res://assets/AI/monkey_tail_segment.png"
+dest_files=["res://.godot/imported/monkey_tail_segment.png-7de0c48e25dfeeff0009b20a9e4a7aba.ctex"]
 
 [params]
 

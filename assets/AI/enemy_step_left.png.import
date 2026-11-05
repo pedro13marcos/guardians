@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gdagckhgjl5u"
-path="res://.godot/imported/monkey_claw.png-1aac81d61ed3e20ae29285e186fe3f61.ctex"
+uid="uid://di28ak1x2amlb"
+path="res://.godot/imported/enemy_step_left.png-4a5a0b3c0bff4b259bb7c6ec44504132.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Powers/monkey_claw.png"
-dest_files=["res://.godot/imported/monkey_claw.png-1aac81d61ed3e20ae29285e186fe3f61.ctex"]
+source_file="res://assets/AI/enemy_step_left.png"
+dest_files=["res://.godot/imported/enemy_step_left.png-4a5a0b3c0bff4b259bb7c6ec44504132.ctex"]
 
 [params]
 

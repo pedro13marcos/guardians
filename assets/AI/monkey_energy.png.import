@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cksddv4xhyne2"
-path="res://.godot/imported/plant.png-f7bfbc43ac7bb07cff123b8d834001c3.ctex"
+uid="uid://8do6ojhxbx1k"
+path="res://.godot/imported/monkey_energy.png-f73d6f0ab8294fa0e8520cfa895bb52f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Props/plant.png"
-dest_files=["res://.godot/imported/plant.png-f7bfbc43ac7bb07cff123b8d834001c3.ctex"]
+source_file="res://assets/AI/monkey_energy.png"
+dest_files=["res://.godot/imported/monkey_energy.png-f73d6f0ab8294fa0e8520cfa895bb52f.ctex"]
 
 [params]
 

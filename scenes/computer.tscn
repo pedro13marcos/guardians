@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" path="res://assets/Computer/computer broke.png" id="1_1oel3"]
 [ext_resource type="Script" path="res://scripts/computer.gd" id="1_tsg4a"]
-[ext_resource type="Texture2D" path="res://assets/Computer/monitor_light.png" id="2_light"]
+[ext_resource type="Texture2D" path="res://assets/AI/monitor_light.png" id="2_light"]
 [ext_resource type="Texture2D" path="res://assets/Computer/computer.png" id="2_uirv4"]
 [ext_resource type="Texture2D" path="res://assets/Computer/computer broke2.png" id="3_0hcfo"]
 [ext_resource type="Texture2D" path="res://assets/Computer/computer broke (1).png" id="4_6m3ct"]
