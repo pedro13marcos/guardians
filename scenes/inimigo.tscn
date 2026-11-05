@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://ckg1cgb841q43"]
 
 [ext_resource type="Script" path="res://scripts/inimigo.gd" id="1_ap55t"]
-[ext_resource type="Texture2D" path="res://assets/New Characters/AI/enemy.png" id="2_enemy_idle"]
-[ext_resource type="Texture2D" path="res://assets/New Characters/AI/enemy_step_left.png" id="3_enemy_step_l"]
-[ext_resource type="Texture2D" path="res://assets/New Characters/AI/enemy_step_right.png" id="4_enemy_step_r"]
+[ext_resource type="Texture2D" path="res://assets/AI/enemy.png" id="2_enemy_idle"]
+[ext_resource type="Texture2D" path="res://assets/AI/enemy_step_left.png" id="3_enemy_step_l"]
+[ext_resource type="Texture2D" path="res://assets/AI/enemy_step_right.png" id="4_enemy_step_r"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_q54sm"]
 animations = [{

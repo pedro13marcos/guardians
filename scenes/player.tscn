@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_h3qib"]
 [ext_resource type="Texture2D" path="res://assets/New Characters/monkey.png" id="2_s6gyj"]
-[ext_resource type="Texture2D" path="res://assets/New Characters/AI/monkey_step_left.png" id="2_m_step_l"]
+[ext_resource type="Texture2D" path="res://assets/AI/monkey_step_left.png" id="2_m_step_l"]
 [ext_resource type="Texture2D" path="res://assets/New Characters/Guardian.png" id="3_rqmuv"]
-[ext_resource type="Texture2D" path="res://assets/New Characters/AI/guardian_step_left.png" id="3_g_step_l"]
-[ext_resource type="Texture2D" path="res://assets/New Characters/AI/guardian_step_right.png" id="3_g_step_r"]
+[ext_resource type="Texture2D" path="res://assets/AI/guardian_step_left.png" id="3_g_step_l"]
+[ext_resource type="Texture2D" path="res://assets/AI/guardian_step_right.png" id="3_g_step_r"]
 [ext_resource type="Texture2D" path="res://assets/New Characters/White%20Lightning%20.png" id="4_uibw2"]
-[ext_resource type="Texture2D" path="res://assets/New Characters/AI/wl_step_left.png" id="4_wl_step_l"]
-[ext_resource type="Texture2D" path="res://assets/New Characters/AI/wl_step_right.png" id="4_wl_step_r"]
+[ext_resource type="Texture2D" path="res://assets/AI/wl_step_left.png" id="4_wl_step_l"]
+[ext_resource type="Texture2D" path="res://assets/AI/wl_step_right.png" id="4_wl_step_r"]
 [ext_resource type="PackedScene" path="res://scenes/mobile_controllers.tscn" id="5_4dqb6"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xciff"]

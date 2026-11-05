@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" path="res://Super Spritesheet.png" id="1_jf87c"]
 [ext_resource type="Script" path="res://scripts/energy_font.gd" id="1_mj0gm"]
-[ext_resource type="Texture2D" path="res://assets/Powers/AI/monkey_energy.png" id="3_banana"]
+[ext_resource type="Texture2D" path="res://assets/AI/monkey_energy.png" id="3_banana"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ahbnc"]
 atlas = ExtResource("3_banana")

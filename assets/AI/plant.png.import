@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cfbiph04f1l5e"
-path="res://.godot/imported/wl_step_right.png-b0f1180eb7ed7c4ce1156534ac5aac34.ctex"
+uid="uid://cksddv4xhyne2"
+path="res://.godot/imported/plant.png-39d08bae4242e89a6f3910499f42943e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/New Characters/AI/wl_step_right.png"
-dest_files=["res://.godot/imported/wl_step_right.png-b0f1180eb7ed7c4ce1156534ac5aac34.ctex"]
+source_file="res://assets/AI/plant.png"
+dest_files=["res://.godot/imported/plant.png-39d08bae4242e89a6f3910499f42943e.ctex"]
 
 [params]
 

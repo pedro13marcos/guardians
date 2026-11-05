@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://colg4g2fgivkj"
-path="res://.godot/imported/enemy.png-2676d26e74b8731f716d4c90d4c31ab0.ctex"
+uid="uid://ijae3dwcdini"
+path="res://.godot/imported/monkey_tail_segment.png-7de0c48e25dfeeff0009b20a9e4a7aba.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/New Characters/AI/enemy.png"
-dest_files=["res://.godot/imported/enemy.png-2676d26e74b8731f716d4c90d4c31ab0.ctex"]
+source_file="res://assets/AI/monkey_tail_segment.png"
+dest_files=["res://.godot/imported/monkey_tail_segment.png-7de0c48e25dfeeff0009b20a9e4a7aba.ctex"]
 
 [params]
 

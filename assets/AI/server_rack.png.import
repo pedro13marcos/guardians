@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://assets/Props/AI/server_rack.png"
+source_file="res://assets/AI/server_rack.png"
 dest_files=["res://.godot/imported/server_rack.png-aad46b2bd926be5563de7fa2340ca81b.ctex"]
 
 [params]

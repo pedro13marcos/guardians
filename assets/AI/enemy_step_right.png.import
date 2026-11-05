@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://be8rdfjlqxbqi"
-path="res://.godot/imported/guardian_step_right.png-96a2f08f213ea1d9a9619bd01bbb0262.ctex"
+uid="uid://cbx7kvunm7bnd"
+path="res://.godot/imported/enemy_step_right.png-24da608e037a184a1568c9617333d87e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/New Characters/AI/guardian_step_right.png"
-dest_files=["res://.godot/imported/guardian_step_right.png-96a2f08f213ea1d9a9619bd01bbb0262.ctex"]
+source_file="res://assets/AI/enemy_step_right.png"
+dest_files=["res://.godot/imported/enemy_step_right.png-24da608e037a184a1568c9617333d87e.ctex"]
 
 [params]
 
