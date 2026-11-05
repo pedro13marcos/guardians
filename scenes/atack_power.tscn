@@ -1,8 +1,8 @@
-﻿[gd_scene load_steps=18 format=3 uid="uid://ctr0ugq7lo6bh"]
+[gd_scene load_steps=18 format=3 uid="uid://ctr0ugq7lo6bh"]
 
 [ext_resource type="Texture2D" path="res://Super Spritesheet.png" id="1_glkac"]
 [ext_resource type="Script" path="res://scripts/atack_power.gd" id="1_otpsn"]
-[ext_resource type="Texture2D" path="res://assets/Powers/guardian_orb.png" id="2_orb"]
+[ext_resource type="Texture2D" path="res://assets/Powers/AI/guardian_orb.png" id="2_orb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w5hvn"]
 atlas = ExtResource("1_glkac")

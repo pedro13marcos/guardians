@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://assets/New Characters/guardian_step_left.png"
+source_file="res://assets/New Characters/AI/guardian_step_left.png"
 dest_files=["res://.godot/imported/guardian_step_left.png-bf3fb29b8ebf5a12a6a4198816171eb4.ctex"]
 
 [params]

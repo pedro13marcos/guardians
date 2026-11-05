@@ -1,8 +1,8 @@
-﻿[gd_scene load_steps=5 format=3 uid="uid://b8monkeytail1"]
+[gd_scene load_steps=5 format=3 uid="uid://b8monkeytail1"]
 
 [ext_resource type="Script" path="res://scripts/monkey_tail.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/Powers/monkey_tail_segment.png" id="2_seg"]
-[ext_resource type="Texture2D" path="res://assets/Powers/monkey_claw.png" id="3_claw"]
+[ext_resource type="Texture2D" path="res://assets/Powers/AI/monkey_tail_segment.png" id="2_seg"]
+[ext_resource type="Texture2D" path="res://assets/Powers/AI/monkey_claw.png" id="3_claw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tip"]
 radius = 6.0

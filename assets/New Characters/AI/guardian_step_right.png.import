@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://r5gjv3hywsbo"
-path="res://.godot/imported/wl_step_left.png-ce2b1b97b8863726d87f982acdccf5a5.ctex"
+uid="uid://be8rdfjlqxbqi"
+path="res://.godot/imported/guardian_step_right.png-0fef7947919dda6f8af2fc07085b9ad7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/New Characters/wl_step_left.png"
-dest_files=["res://.godot/imported/wl_step_left.png-ce2b1b97b8863726d87f982acdccf5a5.ctex"]
+source_file="res://assets/New Characters/AI/guardian_step_right.png"
+dest_files=["res://.godot/imported/guardian_step_right.png-0fef7947919dda6f8af2fc07085b9ad7.ctex"]
 
 [params]
 

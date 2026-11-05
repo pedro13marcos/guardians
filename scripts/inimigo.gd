@@ -1,4 +1,4 @@
-﻿extends CharacterBody2D
+extends CharacterBody2D
 
 var distPers = 10;
 var speed = 60;
@@ -20,7 +20,8 @@ func _ready():
 	
 func _physics_process(_delta: float) -> void:
 	var dir = to_local(nav_agent.get_next_path_position()).normalized();
-	if disPers > (global_position.distance_to(player.position)):
+	var is_moving = disPers > (global_position.distance_to(player.position));
+	if is_moving:
 		velocity = dir*speed;
 		move_and_slide();
 	atualizaVida();
@@ -31,16 +32,21 @@ func _physics_process(_delta: float) -> void:
 			collision.get_collider().danoPlayer();
 			
 	#changing animation of enemy
-	if abs(dir.x) > abs(dir.y):
-		if dir.x > 0:
-			$AnimatedSprite2D.play("direita");
-		else:
-			$AnimatedSprite2D.play("esquerda");
-	elif abs(dir.y) > abs(dir.x):
-		if dir.y > 0:
-			$AnimatedSprite2D.play("baixo");
-		else:
-			$AnimatedSprite2D.play("cima");
+	if is_moving:
+		if abs(dir.x) > 0.05:
+			$AnimatedSprite2D.flip_h = dir.x > 0;
+		if abs(dir.x) > abs(dir.y):
+			if dir.x > 0:
+				$AnimatedSprite2D.play("direita");
+			else:
+				$AnimatedSprite2D.play("esquerda");
+		elif abs(dir.y) > abs(dir.x):
+			if dir.y > 0:
+				$AnimatedSprite2D.play("baixo");
+			else:
+				$AnimatedSprite2D.play("cima");
+	else:
+		$AnimatedSprite2D.stop();
 	
 func makePath() -> void:
 	nav_agent.target_position = player.global_position;

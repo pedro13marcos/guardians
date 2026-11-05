@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cme4fx8tjfscg"
-path="res://.godot/imported/guardian_orb.png-24d554227d1abbe8b4db6c1d698f4636.ctex"
+uid="uid://dth7fafe0x2ac"
+path="res://.godot/imported/server_rack.png-a9900834f9a046421b662a4c76030a08.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Powers/guardian_orb.png"
-dest_files=["res://.godot/imported/guardian_orb.png-24d554227d1abbe8b4db6c1d698f4636.ctex"]
+source_file="res://assets/Props/AI/server_rack.png"
+dest_files=["res://.godot/imported/server_rack.png-a9900834f9a046421b662a4c76030a08.ctex"]
 
 [params]
 

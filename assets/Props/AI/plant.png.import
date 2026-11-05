@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckqnhautvgntt"
-path="res://.godot/imported/monitor_light.png-d89a91077f49b0b63f8bad496bcd1440.ctex"
+uid="uid://cksddv4xhyne2"
+path="res://.godot/imported/plant.png-f7bfbc43ac7bb07cff123b8d834001c3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Computer/monitor_light.png"
-dest_files=["res://.godot/imported/monitor_light.png-d89a91077f49b0b63f8bad496bcd1440.ctex"]
+source_file="res://assets/Props/AI/plant.png"
+dest_files=["res://.godot/imported/plant.png-f7bfbc43ac7bb07cff123b8d834001c3.ctex"]
 
 [params]
 

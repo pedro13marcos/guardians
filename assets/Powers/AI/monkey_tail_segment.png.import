@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dth7fafe0x2ac"
-path="res://.godot/imported/server_rack.png-a9900834f9a046421b662a4c76030a08.ctex"
+uid="uid://ijae3dwcdini"
+path="res://.godot/imported/monkey_tail_segment.png-52fdee825b55445e0e13a6b182e476a3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Props/server_rack.png"
-dest_files=["res://.godot/imported/server_rack.png-a9900834f9a046421b662a4c76030a08.ctex"]
+source_file="res://assets/Powers/AI/monkey_tail_segment.png"
+dest_files=["res://.godot/imported/monkey_tail_segment.png-52fdee825b55445e0e13a6b182e476a3.ctex"]
 
 [params]
 
