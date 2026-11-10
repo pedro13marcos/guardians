@@ -46,30 +46,33 @@ func _get_target_limits(p: Vector2) -> Array[float]:
 	var target_t: float = -192.0
 	var target_b: float = 224.0
 
+	# Vertical position is checked first for the north/south corridors, because those
+	# corridors extend left of x = -200 and would otherwise be mistaken for the west branch.
+	var in_hall: bool = p.y >= -168.0 and p.y <= 200.0
 	if p.x > 160.0:
 		# East branch (leads to Button 2) - ceiling is at -160, floor at 416, right wall at 1024
 		target_l = -384.0
 		target_r = 1024.0
 		target_t = -160.0
 		target_b = 416.0
-	elif p.x < -200.0:
-		# West branch (leads to Door) - ceiling at -192, floor at 192, left wall at -1056
-		target_l = -1056.0
-		target_r = 192.0
-		target_t = -192.0
-		target_b = 192.0
-	elif p.y < -120.0:
+	elif p.y < -168.0:
 		# North branch (leads to Button 3) - ceiling at -736, walls at -352 and 128
 		target_l = -352.0
 		target_r = 128.0
 		target_t = -736.0
 		target_b = 224.0
-	elif p.y > 120.0:
+	elif p.y > 200.0:
 		# South branch (leads to Button 1) - floor at 832, walls at -384 and 128
 		target_l = -384.0
 		target_r = 128.0
 		target_t = -192.0
 		target_b = 832.0
+	elif in_hall and p.x < -200.0:
+		# West branch (leads to Door) - ceiling at -192, floor at 192, left wall at -1056
+		target_l = -1056.0
+		target_r = 192.0
+		target_t = -192.0
+		target_b = 192.0
 
 	return [target_l, target_t, target_r, target_b]
 
