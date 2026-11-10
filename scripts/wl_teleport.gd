@@ -34,10 +34,16 @@ func _physics_process(delta: float) -> void:
 	
 	var step = speed * delta
 	
-	# Check if wall ahead
-	if raycast.is_colliding():
-		_finish_teleport()
-		return
+	# Check if a wall is ahead. Enemies are ignored so the lightning pierces through them.
+	raycast.force_raycast_update()
+	while raycast.is_colliding():
+		var collider = raycast.get_collider()
+		if collider is Node and (collider.is_in_group("inimigo") or collider == player):
+			raycast.add_exception(collider)
+			raycast.force_raycast_update()
+		else:
+			_finish_teleport()
+			return
 		
 	# Move projectile
 	var move_vec = facing_dir * step

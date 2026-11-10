@@ -1,7 +1,7 @@
 extends Area2D
 
 ## Monkey Whirlwind Tail Spin
-## Rapidly spins the mechanical tail around Monkey dealing damage to all surrounding enemies within 100px radius (quarter-screen).
+## Rapidly spins the mechanical tail around Monkey dealing damage to all surrounding enemies within 160px radius.
 
 @export var damage: int = 20
 @export var spin_duration: float = 0.45
@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 	sprite.rotation = progress * TAU * spin_rotations
 	
 	# Scale punch and fade
-	var scale_factor = 0.1953 * (0.8 + 0.2 * sin(progress * PI))
+	var scale_factor = 0.3125 * (0.8 + 0.2 * sin(progress * PI))
 	sprite.scale = Vector2(scale_factor, scale_factor)
 	
 	# Re-check overlapping bodies continuously during spin
