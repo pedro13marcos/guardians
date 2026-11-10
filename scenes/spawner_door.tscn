@@ -1,21 +1,14 @@
 [gd_scene format=3 uid="uid://bfvcrxtk1v78n"]
 
-[ext_resource type="Texture2D" uid="uid://cg7ygyhcif6u0" path="res://Super Spritesheet.png" id="1_spritesheet"]
-[ext_resource type="Script" path="res://scripts/spawner_door.gd" id="2_script"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_close"]
-atlas = ExtResource("1_spritesheet")
-region = Rect2(0, 32, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_open"]
-atlas = ExtResource("1_spritesheet")
-region = Rect2(16, 32, 16, 16)
+[ext_resource type="Texture2D" path="res://assets/AI/door_closed.png" id="1_door_close"]
+[ext_resource type="Texture2D" path="res://assets/AI/door_open.png" id="2_door_open"]
+[ext_resource type="Script" path="res://scripts/spawner_door.gd" id="3_script"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_spawner"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_close")
+"texture": ExtResource("1_door_close")
 }],
 "loop": true,
 "name": &"close",
@@ -23,7 +16,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_open")
+"texture": ExtResource("2_door_open")
 }],
 "loop": true,
 "name": &"open",
@@ -32,11 +25,12 @@ animations = [{
 
 [node name="SpawnerDoor" type="Node2D"]
 scale = Vector2(2, 2)
-script = ExtResource("2_script")
+script = ExtResource("3_script")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(0.95, 0.4, 0.4, 1)
-texture_filter = 3
+texture_filter = 2
+scale = Vector2(0.0625, 0.0625)
 sprite_frames = SubResource("SpriteFrames_spawner")
 animation = &"close"
 

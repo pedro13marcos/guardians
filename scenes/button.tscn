@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://57e2sjpuj1c6"]
 
-[ext_resource type="Texture2D" path="res://assets/ButtonDown.png" id="1_p8gen"]
+[ext_resource type="Texture2D" path="res://assets/AI/button_down.png" id="1_p8gen"]
 [ext_resource type="Script" path="res://scripts/button.gd" id="1_pbav5"]
-[ext_resource type="Texture2D" path="res://assets/ButtonUp.png" id="2_82kuk"]
+[ext_resource type="Texture2D" path="res://assets/AI/button_up.png" id="2_82kuk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lo8r4"]
 size = Vector2(32, 16)
@@ -34,7 +34,8 @@ position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_lo8r4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-texture_filter = 1
+texture_filter = 2
+scale = Vector2(0.125, 0.125)
 sprite_frames = SubResource("SpriteFrames_nq86a")
 animation = &"Down"
 
