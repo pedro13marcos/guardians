@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://ch3n0buhot3rm"]
+
+[ext_resource type="Script" path="res://scripts/monkey_tail_spin.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/AI/monkey_tail_spin.png" id="2_tex"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_spin"]
+radius = 100.0
+
+[node name="MonkeyTailSpin" type="Area2D"]
+z_index = 2
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(0.1953, 0.1953)
+texture = ExtResource("2_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_spin")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cn5jdneh51sms"]
+[gd_scene load_steps=16 format=3 uid="uid://cn5jdneh51sms"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_h3qib"]
 [ext_resource type="Texture2D" path="res://assets/New Characters/monkey.png" id="2_s6gyj"]
@@ -10,6 +10,9 @@
 [ext_resource type="Texture2D" path="res://assets/AI/wl_step_left.png" id="4_wl_step_l"]
 [ext_resource type="Texture2D" path="res://assets/AI/wl_step_right.png" id="4_wl_step_r"]
 [ext_resource type="PackedScene" path="res://scenes/mobile_controllers.tscn" id="5_4dqb6"]
+[ext_resource type="Texture2D" path="res://assets/AI/monkey_crunched.png" id="6_m_crunched"]
+[ext_resource type="Texture2D" path="res://assets/AI/guardian_staff_hit.png" id="7_g_staff"]
+[ext_resource type="Texture2D" path="res://assets/AI/wl_throw.png" id="8_wl_throw"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xciff"]
 animations = [{
@@ -192,6 +195,30 @@ animations = [{
 "loop": true,
 "name": &"Vup",
 "speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_m_crunched")
+}],
+"loop": false,
+"name": &"Aside",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_g_staff")
+}],
+"loop": false,
+"name": &"Fside",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_wl_throw")
+}],
+"loop": false,
+"name": &"Vside",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_15vd7"]

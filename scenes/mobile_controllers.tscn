@@ -60,6 +60,14 @@ texture_normal = ExtResource("3_nqiey")
 passby_press = true
 action = "Ataque"
 
+[node name="side_ability" type="TouchScreenButton" parent="Control"]
+modulate = Color(0.3, 0.9, 1, 1)
+position = Vector2(1268, 830)
+scale = Vector2(0.32, 0.32)
+texture_normal = ExtResource("3_nqiey")
+passby_press = true
+action = "side_ability"
+
 [node name="Action" type="TouchScreenButton" parent="Control"]
 position = Vector2(1402, 935)
 rotation = -1.5708
