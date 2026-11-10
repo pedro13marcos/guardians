@@ -88,11 +88,5 @@ func _complete_level_timer() -> void:
 			child.stop_spawning()
 
 func setCameraLimits() -> void:
-	if not has_node("Camera2D"):
-		return
-	# Clamp precisely to Level 3 wall bounds so no void outside walls is visible
-	$Camera2D.limit_left = -640
-	$Camera2D.limit_top = -384
-	$Camera2D.limit_right = 480
-	$Camera2D.limit_bottom = 448
-	$Camera2D.limit_smoothed = true
+	# Camera bounds are handled by Camera2D.gd (follows the player without showing the void).
+	pass
