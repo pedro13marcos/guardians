@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://x554pomq32fq"
-path="res://.godot/imported/index.icon.png-5665fad188e88d1e882500a4376bfe02.ctex"
+uid="uid://iqwtiii0dinl"
+path="res://.godot/imported/lightning_projectile.png-a6f389a32510ac440f95276b17c415d3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://index.icon.png"
-dest_files=["res://.godot/imported/index.icon.png-5665fad188e88d1e882500a4376bfe02.ctex"]
+source_file="res://assets/AI/lightning_projectile.png"
+dest_files=["res://.godot/imported/lightning_projectile.png-a6f389a32510ac440f95276b17c415d3.ctex"]
 
 [params]
 

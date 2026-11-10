@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0vdvd7r6ndnf"
-path="res://.godot/imported/index.144x144.png-2b0029b1c41935347a831d6368ea8b5e.ctex"
+uid="uid://y7bnn7pn0vua"
+path="res://.godot/imported/wl_throw.png-acc1b13820b4b572cae8900858bf16f2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://index.144x144.png"
-dest_files=["res://.godot/imported/index.144x144.png-2b0029b1c41935347a831d6368ea8b5e.ctex"]
+source_file="res://assets/AI/wl_throw.png"
+dest_files=["res://.godot/imported/wl_throw.png-acc1b13820b4b572cae8900858bf16f2.ctex"]
 
 [params]
 

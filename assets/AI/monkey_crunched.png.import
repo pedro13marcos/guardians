@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://o543i5vsthla"
-path="res://.godot/imported/2023-06-21 10.39.05.jpg-6894119e895c09a29cfbddf2b435a99e.ctex"
+uid="uid://byts475ucms74"
+path="res://.godot/imported/monkey_crunched.png-a036aaacf9b1ed072936098345f58fc0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://guardioes/2023-06-21 10.39.05.jpg"
-dest_files=["res://.godot/imported/2023-06-21 10.39.05.jpg-6894119e895c09a29cfbddf2b435a99e.ctex"]
+source_file="res://assets/AI/monkey_crunched.png"
+dest_files=["res://.godot/imported/monkey_crunched.png-a036aaacf9b1ed072936098345f58fc0.ctex"]
 
 [params]
 

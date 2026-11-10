@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwrd2aea58uo1"
-path="res://.godot/imported/scratch_mask.png-a2095aef8ca12b0b4bea5d81830ea4de.ctex"
+uid="uid://b23mc5n5pjy5y"
+path="res://.godot/imported/monkey_tail_spin.png-d3cabf80023d7c265f19616d68a0cef8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scratch_mask.png"
-dest_files=["res://.godot/imported/scratch_mask.png-a2095aef8ca12b0b4bea5d81830ea4de.ctex"]
+source_file="res://assets/AI/monkey_tail_spin.png"
+dest_files=["res://.godot/imported/monkey_tail_spin.png-d3cabf80023d7c265f19616d68a0cef8.ctex"]
 
 [params]
 

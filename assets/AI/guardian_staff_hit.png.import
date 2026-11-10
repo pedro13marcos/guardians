@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xggl6hdggobs"
-path="res://.godot/imported/index.180x180.png-85792731391e8780a712c9f88639f6c3.ctex"
+uid="uid://clovgg1t4d4to"
+path="res://.godot/imported/guardian_staff_hit.png-c75471e66880c48002ba88a44ee13816.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://index.180x180.png"
-dest_files=["res://.godot/imported/index.180x180.png-85792731391e8780a712c9f88639f6c3.ctex"]
+source_file="res://assets/AI/guardian_staff_hit.png"
+dest_files=["res://.godot/imported/guardian_staff_hit.png-c75471e66880c48002ba88a44ee13816.ctex"]
 
 [params]
 
