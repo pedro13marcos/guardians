@@ -9,9 +9,9 @@ radius = 18.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_prompt"]
 font = ExtResource("3_font")
-font_size = 10
-outline_size = 3
-outline_color = Color(0, 0, 0, 0.9)
+font_size = 40
+outline_size = 12
+outline_color = Color(0, 0, 0, 0.95)
 
 [node name="ElectricPlug" type="Area2D"]
 collision_layer = 7
@@ -27,10 +27,11 @@ texture = ExtResource("2_plug_tex")
 shape = SubResource("CircleShape2D_plug")
 
 [node name="PromptLabel" type="Label" parent="."]
-offset_left = -60.0
-offset_top = -28.0
-offset_right = 60.0
-offset_bottom = -12.0
+offset_left = -120.0
+offset_top = -32.0
+offset_right = 360.0
+offset_bottom = 20.0
+scale = Vector2(0.25, 0.25)
 label_settings = SubResource("LabelSettings_prompt")
 horizontal_alignment = 1
 

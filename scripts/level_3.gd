@@ -41,6 +41,7 @@ func _setup_timer_ui() -> void:
 	timer_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	
 	var settings = LabelSettings.new()
+	settings.font = preload("res://assets/Fonts/comic_adventure.ttf")
 	settings.font_size = 28
 	settings.font_color = Color(1.0, 0.9, 0.3, 1.0) # Gold yellow
 	settings.outline_size = 4
