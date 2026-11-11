@@ -53,17 +53,26 @@ func setObjetivo(tipo,top,atual):
 		$HUD2/goalEn.show();
 		$HUD2/goalSw.hide();
 		$HUD2/goalTime.hide();
-		pass;
+		if has_node("HUD2/goalDoor"):
+			$HUD2/goalDoor.hide();
 	elif(tipo == "switch"):
 		$HUD2/goalEn.hide();
 		$HUD2/goalSw.show();
 		$HUD2/goalTime.hide();
-		pass;
+		if has_node("HUD2/goalDoor"):
+			$HUD2/goalDoor.hide();
 	elif(tipo == "tempo"):
 		$HUD2/goalEn.hide();
 		$HUD2/goalSw.hide();
 		$HUD2/goalTime.show();
-		pass;
+		if has_node("HUD2/goalDoor"):
+			$HUD2/goalDoor.hide();
+	elif(tipo == "activate" or tipo == "porta" or tipo == "door"):
+		$HUD2/goalEn.hide();
+		$HUD2/goalSw.hide();
+		$HUD2/goalTime.hide();
+		if has_node("HUD2/goalDoor"):
+			$HUD2/goalDoor.show();
 	atualizaObjetivo(atual);
 
 func atualizaPersonagem(per):
@@ -95,7 +104,11 @@ func atualizaPersonagem(per):
 	
 func atualizaObjetivo(quantidade):
 	var value: float
-	value = (float(quantidade)/float(topObjetivo))*100.0;
+	if topObjetivo != null and float(topObjetivo) > 0.0:
+		value = (float(quantidade)/float(topObjetivo))*100.0;
+	else:
+		value = 100.0 if quantidade else 0.0
+	
 	if value>=100:
 		$HUD2/goalDone.show();
 	else:

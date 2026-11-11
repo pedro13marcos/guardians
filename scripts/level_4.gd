@@ -8,7 +8,7 @@ func _ready() -> void:
 		$door.isOpen = false
 	
 	if has_node("HUD2"):
-		$HUD2.setObjetivo("switch", 1, 0)
+		$HUD2.setObjetivo("activate", 1, 0)
 	
 	setCameraLimits()
 
