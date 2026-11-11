@@ -2,8 +2,7 @@
 
 [ext_resource type="Texture2D" path="res://inner bar.png" id="1_mb0h6"]
 [ext_resource type="Script" path="res://scripts/pause.gd" id="1_uhgxk"]
-
-[sub_resource type="Theme" id="Theme_qiq18"]
+[ext_resource type="Theme" uid="uid://c6v2xk8j5qw1m" path="res://assets/guardians_theme.tres" id="2_theme"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
@@ -16,7 +15,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_qiq18")
+theme = ExtResource("2_theme")
 script = ExtResource("1_uhgxk")
 
 [node name="Sprite2D" type="Sprite2D" parent="Pause"]

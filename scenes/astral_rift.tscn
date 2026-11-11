@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scripts/astral_rift.gd" id="1_rift_script"]
 [ext_resource type="Texture2D" uid="uid://da6uobdlwwnp5" path="res://assets/AI/astral_rift_wall_closed.png" id="2_closed_tex"]
 [ext_resource type="Texture2D" uid="uid://b5lw5odydlr5" path="res://assets/AI/astral_rift_wall_open.png" id="3_open_tex"]
+[ext_resource type="FontFile" uid="uid://c4ckyntlpw0a5" path="res://assets/Fonts/comic_adventure.ttf" id="4_font"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rift_wall"]
 animations = [{
@@ -30,6 +31,7 @@ size = Vector2(40, 40)
 size = Vector2(32, 32)
 
 [sub_resource type="LabelSettings" id="LabelSettings_prompt"]
+font = ExtResource("4_font")
 font_size = 10
 outline_size = 3
 outline_color = Color(0, 0, 0, 0.9)

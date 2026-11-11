@@ -1,6 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://qr3w6g4i8ojv"]
 
 [ext_resource type="Script" path="res://scripts/Control.gd" id="1_uukbw"]
+[ext_resource type="Theme" uid="uid://c6v2xk8j5qw1m" path="res://assets/guardians_theme.tres" id="2_theme"]
 
 [sub_resource type="Animation" id="Animation_odpfr"]
 length = 0.001
@@ -50,6 +51,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("2_theme")
 script = ExtResource("1_uukbw")
 
 [node name="MarginContainer" type="MarginContainer" parent="Control"]

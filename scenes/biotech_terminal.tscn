@@ -2,11 +2,13 @@
 
 [ext_resource type="Script" path="res://scripts/biotech_terminal.gd" id="1_term_script"]
 [ext_resource type="Texture2D" uid="uid://ckmbumc2cesex" path="res://assets/AI/biotech_terminal.png" id="2_term_tex"]
+[ext_resource type="FontFile" uid="uid://c4ckyntlpw0a5" path="res://assets/Fonts/comic_adventure.ttf" id="3_font"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_term"]
 size = Vector2(32, 28)
 
 [sub_resource type="LabelSettings" id="LabelSettings_prompt"]
+font = ExtResource("3_font")
 font_size = 10
 outline_size = 3
 outline_color = Color(0, 0, 0, 0.9)
