@@ -221,8 +221,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_15vd7"]
-size = Vector2(20, 32)
+[sub_resource type="CircleShape2D" id="CircleShape2D_player"]
+radius = 11.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 z_index = 1
@@ -236,7 +236,8 @@ sprite_frames = SubResource("SpriteFrames_xciff")
 animation = &"Vdown"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_15vd7")
+position = Vector2(0, 4)
+shape = SubResource("CircleShape2D_player")
 
 [node name="hurtingCoolDown" type="Timer" parent="."]
 

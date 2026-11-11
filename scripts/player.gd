@@ -77,10 +77,30 @@ func _physics_process(_delta):
 				anim.play(personagem + "up");
 			elif vel.y > 0:
 				anim.play(personagem + "down");
+			
+			# Tile snapping / corner nudge:
+			# When moving along one axis, subtly align the perpendicular axis to the tile center (32px grid).
+			# This ensures the player slides effortlessly into 1-tile wide doorways without snagging corners.
+			const TILE_SIZE: float = 32.0
+			const ALIGN_STRENGTH: float = 40.0
+			var tile_offset_x = fposmod(global_position.x, TILE_SIZE) - (TILE_SIZE * 0.5)
+			var tile_offset_y = fposmod(global_position.y, TILE_SIZE) - (TILE_SIZE * 0.5)
+			
+			var nudge = Vector2.ZERO
+			if vel.x != 0 and vel.y == 0:
+				# Moving horizontally: gently pull towards vertical lane center if slightly misaligned
+				if abs(tile_offset_y) > 0.5 and abs(tile_offset_y) < 10.0:
+					nudge.y = -sign(tile_offset_y) * ALIGN_STRENGTH
+			elif vel.y != 0 and vel.x == 0:
+				# Moving vertically: gently pull towards horizontal lane center if slightly misaligned
+				if abs(tile_offset_x) > 0.5 and abs(tile_offset_x) < 10.0:
+					nudge.x = -sign(tile_offset_x) * ALIGN_STRENGTH
+			
+			velocity = (vel * speed) + nudge
 		else:
 			anim.stop();
+			velocity = Vector2.ZERO;
 
-		velocity = vel*speed;
 		move_and_slide();
 	
 	# --- Primary Attack ---
