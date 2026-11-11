@@ -33,6 +33,7 @@ var is_teleporting: bool = false;
 @onready var pai = get_node("..");
 
 func _ready():
+	add_to_group("player")
 	atualizaUI();
 	anim.play("Vdown");
 	anim.stop();

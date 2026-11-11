@@ -1,87 +1,183 @@
 extends CharacterBody2D
 
-var distPers = 10;
-var speed = 60;
-var life = 5;
-var vida = 5;
-@export var disPers: float = 250.0;
-@export var always_pursue: bool = false;
+var speed: float = 60.0
+var life: int = 5
+var vida: int = 5
 
-@export var player: Node2D
-@onready var nav_agent := $NavigationAgent2D as NavigationAgent2D
-@onready var novoEnergia = preload("res://scenes/energy_font.tscn");
-@onready var novoItemVida = preload("res://scenes/life_font.tscn");
-@onready var pai = get_node("..");
+@export var disPers: float = 250.0
+@export var always_pursue: bool = false
+@export var player: Node2D = null
 
-signal inimigoMorto;
+@onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
+@onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var att_timer: Timer = $attNav
 
-func _ready():
-	randomize();
-	vida = life;
-	if player == null and is_inside_tree() and get_tree() != null:
-		player = get_tree().get_first_node_in_group("player");
-	makePath();
+@onready var novoEnergia = preload("res://scenes/energy_font.tscn")
+@onready var novoItemVida = preload("res://scenes/life_font.tscn")
+@onready var pai = get_node_or_null("..")
+
+signal inimigoMorto
+
+var _is_nav_ready: bool = false
+var _stuck_timer: float = 0.0
+var _last_position: Vector2 = Vector2.ZERO
+
+func _ready() -> void:
+	randomize()
+	vida = life
+	_last_position = global_position
 	
-func _physics_process(_delta: float) -> void:
-	if not is_instance_valid(player):
+	_resolve_player()
+	
+	if nav_agent != null:
+		nav_agent.velocity_computed.connect(_on_velocity_computed)
+	
+	if att_timer != null:
+		att_timer.wait_time = randf_range(0.18, 0.28)
+	
+	# In Godot 4, wait for the first physics tick before querying NavigationServer
+	call_deferred("_setup_navigation")
+
+func _setup_navigation() -> void:
+	await get_tree().physics_frame
+	_is_nav_ready = true
+	makePath()
+
+func _resolve_player() -> void:
+	if is_instance_valid(player):
 		return
-	if nav_agent == null:
-		if has_node("NavigationAgent2D"):
-			nav_agent = $NavigationAgent2D
-		else:
-			return
-	var next_pos = nav_agent.get_next_path_position()
-	var dir = to_local(next_pos).normalized()
-	if dir == Vector2.ZERO and is_instance_valid(player):
-		dir = (player.global_position - global_position).normalized()
-	var is_moving = always_pursue or (disPers > global_position.distance_to(player.global_position));
-	if is_moving:
-		velocity = dir*speed;
-		move_and_slide();
-	atualizaVida();
+	var found = get_tree().get_first_node_in_group("player")
+	if is_instance_valid(found):
+		player = found as Node2D
+		return
+	if has_node("../Player"):
+		player = get_node("../Player") as Node2D
+
+func _physics_process(delta: float) -> void:
+	_resolve_player()
+	if not is_instance_valid(player):
+		_update_animations(Vector2.ZERO, false)
+		return
 	
-	for i in get_slide_collision_count():
-		var collision = get_slide_collision(i);
-		if collision.get_collider().name == "Player":
-			collision.get_collider().danoPlayer();
-			
-	#changing animation of enemy
-	if is_moving:
+	if not _is_nav_ready:
+		return
+	
+	var dist_to_player: float = global_position.distance_to(player.global_position)
+	var is_in_range: bool = always_pursue or (dist_to_player <= disPers)
+	
+	if not is_in_range:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		_update_animations(Vector2.ZERO, false)
+		return
+	
+	# Check if we already reached desired target distance
+	if nav_agent.is_navigation_finished():
+		var direct_to_player = player.global_position - global_position
+		if direct_to_player.length() <= 20.0:
+			# Close attack range
+			_apply_movement(direct_to_player.normalized() * (speed * 0.4))
+		else:
+			_apply_movement(Vector2.ZERO)
+		_check_player_collisions()
+		return
+	
+	# Calculate path direction towards next path point in world space
+	var next_path_pos: Vector2 = nav_agent.get_next_path_position()
+	var move_dir: Vector2 = (next_path_pos - global_position).normalized()
+	
+	# If next_path_pos is too close or empty, direct towards target
+	if move_dir == Vector2.ZERO:
+		move_dir = (player.global_position - global_position).normalized()
+	
+	# Unstuck watchdog: detect if moving into a corner vertex
+	if global_position.distance_to(_last_position) < 1.0 and is_in_range:
+		_stuck_timer += delta
+		if _stuck_timer > 0.35:
+			# Nudge slightly perpendicular to glide around corner
+			var perp = Vector2(-move_dir.y, move_dir.x)
+			move_dir = (move_dir + perp * 0.7).normalized()
+			if _stuck_timer > 0.8:
+				makePath()
+				_stuck_timer = 0.0
+	else:
+		_stuck_timer = 0.0
+	
+	_last_position = global_position
+	var intended_velocity: Vector2 = move_dir * speed
+	
+	if nav_agent.avoidance_enabled:
+		nav_agent.set_velocity(intended_velocity)
+	else:
+		_apply_movement(intended_velocity)
+	
+	_check_player_collisions()
+
+func _on_velocity_computed(safe_velocity: Vector2) -> void:
+	_apply_movement(safe_velocity)
+
+func _apply_movement(vel: Vector2) -> void:
+	velocity = vel
+	move_and_slide()
+	_update_animations(velocity, velocity.length() > 2.0)
+
+func _check_player_collisions() -> void:
+	for i in range(get_slide_collision_count()):
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		if collider and collider.name == "Player":
+			if collider.has_method("danoPlayer"):
+				collider.danoPlayer()
+
+func _update_animations(dir: Vector2, is_moving: bool) -> void:
+	if not is_instance_valid(anim_sprite):
+		return
+	
+	if is_moving and dir.length() > 2.0:
 		if abs(dir.x) > 0.05:
-			$AnimatedSprite2D.flip_h = dir.x > 0;
+			anim_sprite.flip_h = dir.x > 0
 		if abs(dir.x) > abs(dir.y):
 			if dir.x > 0:
-				$AnimatedSprite2D.play("direita");
+				anim_sprite.play("direita")
 			else:
-				$AnimatedSprite2D.play("esquerda");
-		elif abs(dir.y) > abs(dir.x):
+				anim_sprite.play("esquerda")
+		else:
 			if dir.y > 0:
-				$AnimatedSprite2D.play("baixo");
+				anim_sprite.play("baixo")
 			else:
-				$AnimatedSprite2D.play("cima");
+				anim_sprite.play("cima")
 	else:
-		$AnimatedSprite2D.stop();
-	
-func makePath() -> void:
-	nav_agent.target_position = player.global_position;
+		anim_sprite.stop()
 
-func _on_att_nav_timeout():
-	makePath();
-	$attNav.start();
+func makePath() -> void:
+	if not is_instance_valid(player) or not is_instance_valid(nav_agent):
+		return
 	
-func atualizaVida():
+	# Snap target to nearest valid point on navigation mesh to prevent unreachable target stalls
+	var map_rid: RID = nav_agent.get_navigation_map()
+	var target_pt: Vector2 = player.global_position
+	if map_rid.is_valid():
+		target_pt = NavigationServer2D.map_get_closest_point(map_rid, player.global_position)
+	
+	nav_agent.target_position = target_pt
+
+func _on_att_nav_timeout() -> void:
+	makePath()
+	if att_timer != null:
+		att_timer.start(randf_range(0.18, 0.28))
+
+func atualizaVida() -> void:
 	if vida != null and vida <= 0:
-		if randi_range(0,10) < 6:
-			randomize();
-			if randi_range(0,4) <= 3:
-				var Energia = novoEnergia.instantiate();
-				Energia.position = position;
-				pai.add_child(Energia);
+		if randi_range(0, 10) < 6:
+			if randi_range(0, 4) <= 3:
+				var energia = novoEnergia.instantiate()
+				energia.position = position
+				if pai:
+					pai.add_child(energia)
 			else:
-				var itemVida = novoItemVida.instantiate();
-				itemVida.position = position;
-				pai.add_child(itemVida);
-				pass
-		emit_signal("inimigoMorto");
-		queue_free();
-		
+				var item_vida = novoItemVida.instantiate()
+				item_vida.position = position
+				if pai:
+					pai.add_child(item_vida)
+		emit_signal("inimigoMorto")
+		queue_free()
