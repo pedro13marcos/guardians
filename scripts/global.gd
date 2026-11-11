@@ -4,7 +4,7 @@ extends Node
 ## Manages global game state, configuration/save persistence, translation,
 ## level background pre-loading, directional slide transitions, and persistent overlays.
 
-const GAME_VERSION: String = "0.40"
+const GAME_VERSION: String = "0.41"
 const CONF_PATH: String = "user://confGame.json"
 const SAVE_PATH: String = "user://saveGame.json"
 
@@ -235,8 +235,9 @@ func get_preloaded_scene(scene_path: String) -> PackedScene:
 		return load(scene_path) as PackedScene
 	return null
 
-## Transitions smoothly between scenes with a directional slide (up, down, left, right)
-func transition_to_level(target_scene: String, slide_dir: Vector2 = Vector2.UP) -> void:
+## Transitions smoothly between scenes with a directional slide
+## (e.g. door on left -> slides from left to right, door on top -> slides from top to bottom)
+func transition_to_level(target_scene: String, motion_vec: Vector2 = Vector2.DOWN) -> void:
 	if is_transitioning:
 		return
 	is_transitioning = true
@@ -298,39 +299,42 @@ func transition_to_level(target_scene: String, slide_dir: Vector2 = Vector2.UP) 
 	new_rect.stretch_mode = TextureRect.STRETCH_SCALE
 	new_rect.size = vp_size
 
-	# Incoming scene starts in opposite direction and slides to (0, 0)
-	var new_start_pos := -slide_dir * vp_size
+	# Incoming scene enters from opposite edge and slides into (0, 0)
+	var new_start_pos := -motion_vec * vp_size
 	new_rect.position = new_start_pos
 	root_ctrl.add_child(new_rect)
 
 	# 6. Stylish comic-dark divider seam line between the two slides
 	var divider := ColorRect.new()
 	divider.color = Color(0.04, 0.06, 0.1, 0.95)
-	if abs(slide_dir.y) >= abs(slide_dir.x):
-		divider.size = Vector2(vp_size.x, 6.0)
-		if slide_dir.y < 0:
-			divider.position = Vector2(0, vp_size.y - 3.0)
-		else:
-			divider.position = Vector2(0, -3.0)
-	else:
+	var divider_start_pos := Vector2.ZERO
+	if abs(motion_vec.x) > abs(motion_vec.y):
 		divider.size = Vector2(6.0, vp_size.y)
-		if slide_dir.x < 0:
-			divider.position = Vector2(vp_size.x - 3.0, 0)
+		if motion_vec.x > 0:
+			divider_start_pos = Vector2(-3.0, 0)
 		else:
-			divider.position = Vector2(-3.0, 0)
+			divider_start_pos = Vector2(vp_size.x - 3.0, 0)
+	else:
+		divider.size = Vector2(vp_size.x, 6.0)
+		if motion_vec.y > 0:
+			divider_start_pos = Vector2(0, -3.0)
+		else:
+			divider_start_pos = Vector2(0, vp_size.y - 3.0)
+
+	divider.position = divider_start_pos
 	root_ctrl.add_child(divider)
 
-	# 7. Smooth cubic tween
+	# 7. Smooth cubic tween in direction of motion_vec
 	var tween := create_tween()
 	tween.set_parallel(true)
 	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.set_ease(Tween.EASE_IN_OUT)
 	var duration: float = 0.55
 
-	var old_end_pos := slide_dir * vp_size
+	var old_end_pos := motion_vec * vp_size
 	tween.tween_property(old_rect, "position", old_end_pos, duration)
 	tween.tween_property(new_rect, "position", Vector2.ZERO, duration)
-	var divider_end_pos := divider.position + (slide_dir * vp_size)
+	var divider_end_pos := divider_start_pos + (motion_vec * vp_size)
 	tween.tween_property(divider, "position", divider_end_pos, duration)
 
 	await tween.finished

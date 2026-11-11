@@ -75,7 +75,7 @@ player = NodePath("../Player")
 
 [node name="door" parent="." instance=ExtResource("5_elmpe")]
 position = Vector2(304, 32)
-slide_direction = "up"
+door_side = "top"
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 zoom = Vector2(4, 4)
