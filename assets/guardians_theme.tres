@@ -1,0 +1,39 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://c6v2xk8j5qw1m"]
+
+[ext_resource type="Texture2D" uid="uid://cyw5q0mgl46wy" path="res://assets/AI/menu_btn_normal.png" id="1_normal"]
+[ext_resource type="Texture2D" uid="uid://oaw8dq2a3yc5" path="res://assets/AI/menu_btn_hover.png" id="2_hover"]
+[ext_resource type="Texture2D" uid="uid://4o6h33bmd57v" path="res://assets/AI/menu_btn_pressed.png" id="3_pressed"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_normal"]
+texture = ExtResource("1_normal")
+texture_margin_left = 12.0
+texture_margin_top = 10.0
+texture_margin_right = 12.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hover"]
+texture = ExtResource("2_hover")
+texture_margin_left = 12.0
+texture_margin_top = 10.0
+texture_margin_right = 12.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pressed"]
+texture = ExtResource("3_pressed")
+texture_margin_left = 12.0
+texture_margin_top = 10.0
+texture_margin_right = 12.0
+texture_margin_bottom = 10.0
+
+[resource]
+Button/colors/font_color = Color(0.92, 0.95, 1, 1)
+Button/colors/font_hover_color = Color(0.4, 0.92, 1, 1)
+Button/colors/font_focus_color = Color(0.4, 0.92, 1, 1)
+Button/colors/font_pressed_color = Color(0.9, 0.7, 1, 1)
+Button/colors/font_outline_color = Color(0.08, 0.1, 0.15, 0.9)
+Button/constants/outline_size = 4
+Button/font_sizes/font_size = 28
+Button/styles/normal = SubResource("StyleBoxTexture_normal")
+Button/styles/hover = SubResource("StyleBoxTexture_hover")
+Button/styles/pressed = SubResource("StyleBoxTexture_pressed")
+Button/styles/focus = SubResource("StyleBoxTexture_hover")

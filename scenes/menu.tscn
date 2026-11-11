@@ -1,6 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://d0qaxoayuvlfe"]
+[gd_scene load_steps=5 format=3 uid="uid://d0qaxoayuvlfe"]
 
-[ext_resource type="Script" path="res://scripts/Menu.gd" id="1_gh1ei"]
+[ext_resource type="Script" uid="uid://c1o8f42q5pknm" path="res://scripts/Menu.gd" id="1_gh1ei"]
+[ext_resource type="Texture2D" uid="uid://y4x6swa5xy4t" path="res://assets/AI/menu_background.jpg" id="2_bg"]
+[ext_resource type="Theme" uid="uid://c6v2xk8j5qw1m" path="res://assets/guardians_theme.tres" id="3_theme"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slate"]
+bg_color = Color(0.06, 0.08, 0.12, 0.75)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25, 0.55, 0.75, 0.6)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 12
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -9,35 +25,61 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("3_theme")
 script = ExtResource("1_gh1ei")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="MenuSlate" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -170.0
+offset_top = -240.0
+offset_right = 170.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_slate")
+
+[node name="MarginContainer" type="MarginContainer" parent="MenuSlate"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuSlate/MarginContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 100
-text = "Guardians"
+theme_override_constants/separation = 14
 
-[node name="play" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="play" type="Button" parent="MenuSlate/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(250, 48)
 layout_mode = 2
-theme_override_font_sizes/font_size = 200
-text = "Play"
+text = "PLAY GAME"
 
-[node name="quit" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="options" type="Button" parent="MenuSlate/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(250, 48)
 layout_mode = 2
-theme_override_font_sizes/font_size = 200
-text = "Quit"
+text = "OPTIONS"
 
-[connection signal="button_up" from="MarginContainer/VBoxContainer/play" to="." method="_on_play_button_up"]
-[connection signal="button_up" from="MarginContainer/VBoxContainer/quit" to="." method="_on_quit_button_up"]
+[node name="quit" type="Button" parent="MenuSlate/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(250, 48)
+layout_mode = 2
+text = "QUIT"
+
+[connection signal="button_up" from="MenuSlate/MarginContainer/VBoxContainer/play" to="." method="_on_play_button_up"]
+[connection signal="button_up" from="MenuSlate/MarginContainer/VBoxContainer/options" to="." method="_on_options_button_up"]
+[connection signal="button_up" from="MenuSlate/MarginContainer/VBoxContainer/quit" to="." method="_on_quit_button_up"]
