@@ -102,18 +102,18 @@ expand_mode = 1
 
 [node name="NextHeroBubble1" type="TextureRect" parent="HUD2"]
 layout_mode = 0
-offset_left = 60.0
-offset_top = 520.0
-offset_right = 260.0
-offset_bottom = 720.0
+offset_left = 32.0
+offset_top = 538.0
+offset_right = 232.0
+offset_bottom = 738.0
 texture = ExtResource("12_g_bubble")
 expand_mode = 1
 
 [node name="NextHeroBubble2" type="TextureRect" parent="HUD2"]
 layout_mode = 0
-offset_left = 135.0
-offset_top = 690.0
-offset_right = 295.0
-offset_bottom = 850.0
+offset_left = 118.0
+offset_top = 700.0
+offset_right = 278.0
+offset_bottom = 860.0
 texture = ExtResource("13_m_bubble")
 expand_mode = 1

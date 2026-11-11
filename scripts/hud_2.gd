@@ -6,9 +6,25 @@ extends CanvasLayer
 
 var topObjetivo;
 
-@onready var bubble_wl = preload("res://assets/Bars/bubble_face_wl.png")
-@onready var bubble_guardian = preload("res://assets/Bars/bubble_face_guardian.png")
-@onready var bubble_monkey = preload("res://assets/Bars/bubble_face_monkey.png")
+# Preloaded HUD-theme matching hero bubbles
+# Matrix: [CurrentHUDTheme][UpcomingHero]
+@onready var bubble_textures = {
+	"V": {
+		"guardian": preload("res://assets/Bars/bubble_hud_wl_hero_guardian.png"),
+		"monkey": preload("res://assets/Bars/bubble_hud_wl_hero_monkey.png"),
+		"wl": preload("res://assets/Bars/bubble_hud_wl_hero_wl.png")
+	},
+	"F": {
+		"guardian": preload("res://assets/Bars/bubble_hud_guardian_hero_guardian.png"),
+		"monkey": preload("res://assets/Bars/bubble_hud_guardian_hero_monkey.png"),
+		"wl": preload("res://assets/Bars/bubble_hud_guardian_hero_wl.png")
+	},
+	"A": {
+		"guardian": preload("res://assets/Bars/bubble_hud_monkey_hero_guardian.png"),
+		"monkey": preload("res://assets/Bars/bubble_hud_monkey_hero_monkey.png"),
+		"wl": preload("res://assets/Bars/bubble_hud_monkey_hero_wl.png")
+	}
+}
 
 func _ready():
 	$HUD2.show()
@@ -56,25 +72,25 @@ func atualizaPersonagem(per):
 		$HUD2/uiG.hide();
 		$HUD2/uiM.hide();
 		if has_node("HUD2/NextHeroBubble1"):
-			$HUD2/NextHeroBubble1.texture = bubble_guardian
+			$HUD2/NextHeroBubble1.texture = bubble_textures["V"]["guardian"]
 		if has_node("HUD2/NextHeroBubble2"):
-			$HUD2/NextHeroBubble2.texture = bubble_monkey
+			$HUD2/NextHeroBubble2.texture = bubble_textures["V"]["monkey"]
 	elif per == "F":
 		$HUD2/uiWL.hide();
 		$HUD2/uiG.show();
 		$HUD2/uiM.hide();
 		if has_node("HUD2/NextHeroBubble1"):
-			$HUD2/NextHeroBubble1.texture = bubble_monkey
+			$HUD2/NextHeroBubble1.texture = bubble_textures["F"]["monkey"]
 		if has_node("HUD2/NextHeroBubble2"):
-			$HUD2/NextHeroBubble2.texture = bubble_wl
+			$HUD2/NextHeroBubble2.texture = bubble_textures["F"]["wl"]
 	elif per == "A":
 		$HUD2/uiWL.hide();
 		$HUD2/uiG.hide();
 		$HUD2/uiM.show();
 		if has_node("HUD2/NextHeroBubble1"):
-			$HUD2/NextHeroBubble1.texture = bubble_wl
+			$HUD2/NextHeroBubble1.texture = bubble_textures["A"]["wl"]
 		if has_node("HUD2/NextHeroBubble2"):
-			$HUD2/NextHeroBubble2.texture = bubble_guardian
+			$HUD2/NextHeroBubble2.texture = bubble_textures["A"]["guardian"]
 	pass;
 	
 func atualizaObjetivo(quantidade):
