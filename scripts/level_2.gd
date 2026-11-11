@@ -8,6 +8,7 @@ var nextLevel = "res://scenes/level_3.tscn";
 var maxSwitches = 3;
 
 func _ready():
+	Global.save_level(scene_file_path)
 	buttonPressed = 0;
 	inimigosMortos = 0;
 	$HUD2.setObjetivo("switch", maxSwitches, buttonPressed);

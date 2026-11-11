@@ -1,12 +1,15 @@
 extends Node
 
 ## Global singleton for Guardians game.
-## Manages global game state, translation/language options, and persistent overlays.
+## Manages global game state, configuration/save persistence, translation, and overlays.
 
-const GAME_VERSION: String = "0.38"
+const GAME_VERSION: String = "0.39"
 const CONF_PATH: String = "user://confGame.json"
+const SAVE_PATH: String = "user://saveGame.json"
 
 var current_language_mode: String = "auto"
+var fullscreen: bool = false
+var current_level: String = "res://scenes/main.tscn"
 var watermark_label: Label = null
 
 const SUPPORTED_LANGUAGES: Array[Dictionary] = [
@@ -17,9 +20,15 @@ const SUPPORTED_LANGUAGES: Array[Dictionary] = [
 ]
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	_load_csv_translations("res://translation/translation.csv")
 	load_config()
 	_create_watermark()
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_F11 or (event.alt_pressed and (event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER)):
+			set_fullscreen(not fullscreen)
 
 ## Loads CSV translations at runtime and registers them with TranslationServer
 func _load_csv_translations(csv_path: String) -> void:
@@ -55,7 +64,6 @@ func _load_csv_translations(csv_path: String) -> void:
 	for idx in translations_by_locale.keys():
 		var tr_res: Translation = translations_by_locale[idx]
 		TranslationServer.add_translation(tr_res)
-		# Alias for pt_BR -> pt so base language code resolves
 		if tr_res.locale == "pt_BR":
 			var pt_alias = Translation.new()
 			pt_alias.locale = "pt"
@@ -82,14 +90,31 @@ func _resolve_supported_locale(raw_locale: String) -> String:
 		return "pt_BR"
 	return "en"
 
+func set_fullscreen(is_fullscreen: bool) -> void:
+	fullscreen = is_fullscreen
+	apply_display_settings()
+	save_config()
+
+func apply_display_settings() -> void:
+	if fullscreen:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+
+# -------------------------------------------------------------
+# Configuration File Persistence (user://confGame.json)
+# -------------------------------------------------------------
+
 func save_config() -> void:
 	var data = {
 		"lang": current_language_mode,
+		"fullscreen": fullscreen,
 		"version": GAME_VERSION
 	}
 	var file = FileAccess.open(CONF_PATH, FileAccess.WRITE)
 	if file != null:
-		file.store_string(JSON.stringify(data))
+		file.store_string(JSON.stringify(data, "\t"))
+		print("Config saved successfully!")
 
 func load_config() -> void:
 	if not FileAccess.file_exists(CONF_PATH):
@@ -103,9 +128,71 @@ func load_config() -> void:
 	var data = JSON.parse_string(json_str)
 	if typeof(data) == TYPE_DICTIONARY:
 		var saved_lang = data.get("lang", "auto")
+		fullscreen = bool(data.get("fullscreen", false))
 		set_language_mode(saved_lang)
+		apply_display_settings()
+		print("Config loaded successfully!")
 	else:
 		set_language_mode("auto")
+
+# -------------------------------------------------------------
+# Game Save Persistence (user://saveGame.json & user://saveGame.txt)
+# -------------------------------------------------------------
+
+func check_save() -> bool:
+	return FileAccess.file_exists(SAVE_PATH) or FileAccess.file_exists("user://saveGame.txt")
+
+func checkSave() -> bool:
+	return check_save()
+
+func save_game(level_path: String = "") -> void:
+	if not level_path.is_empty():
+		# Do not save menu or ending page as resumable levels
+		if not level_path.contains("menu.tscn") and not level_path.contains("ending_page.tscn"):
+			current_level = level_path
+	
+	var data = {
+		"last_level": current_level,
+		"version": GAME_VERSION,
+		"timestamp": Time.get_datetime_string_from_system()
+	}
+	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	if file != null:
+		file.store_string(JSON.stringify(data, "\t"))
+		print("Game saved successfully! Last level: ", current_level)
+
+func save_level(level_path: String) -> void:
+	save_game(level_path)
+
+func load_game() -> void:
+	var path_to_load = SAVE_PATH
+	if not FileAccess.file_exists(path_to_load):
+		if FileAccess.file_exists("user://saveGame.txt"):
+			path_to_load = "user://saveGame.txt"
+		else:
+			print("Save file not found; starting default level.")
+			current_level = "res://scenes/main.tscn"
+			get_tree().change_scene_to_file(current_level)
+			return
+
+	var file = FileAccess.open(path_to_load, FileAccess.READ)
+	if file == null:
+		return
+	var json_str = file.get_as_text()
+	var data = JSON.parse_string(json_str)
+	if typeof(data) == TYPE_DICTIONARY:
+		current_level = data.get("last_level", "res://scenes/main.tscn")
+		print("Game loaded! Resuming from: ", current_level)
+		get_tree().change_scene_to_file(current_level)
+	else:
+		get_tree().change_scene_to_file("res://scenes/main.tscn")
+
+func reset_save() -> void:
+	current_level = "res://scenes/main.tscn"
+	if FileAccess.file_exists(SAVE_PATH):
+		DirAccess.remove_absolute(SAVE_PATH)
+	if FileAccess.file_exists("user://saveGame.txt"):
+		DirAccess.remove_absolute("user://saveGame.txt")
 
 func _create_watermark() -> void:
 	# Persistent canvas layer on top of all scenes

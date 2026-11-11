@@ -8,6 +8,7 @@ var nextLevel = "res://scenes/level_2.tscn";
 @onready var novoEnergia = preload("res://scenes/energy_font.tscn");
 
 func _ready():
+	Global.save_level(scene_file_path)
 	inimigosMortos = 0;
 	$HUD2.setObjetivo("Inimigo",maxInimigo,inimigosMortos);
 	$door.level = nextLevel;

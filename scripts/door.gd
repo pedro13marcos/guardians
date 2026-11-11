@@ -37,4 +37,5 @@ func _on_body_entered(body):
 			nextLevel(level)
 
 func nextLevel(Level):
+	Global.save_level(Level)
 	get_tree().change_scene_to_file(Level)

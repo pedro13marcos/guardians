@@ -8,6 +8,7 @@ var is_completed: bool = false
 var timer_label: Label = null
 
 func _ready() -> void:
+	Global.save_level(scene_file_path)
 	if has_node("door"):
 		$door.level = nextLevel
 		$door.isOpen = false

@@ -2,6 +2,7 @@ extends Control
 
 @onready var menu_slate: PanelContainer = $MenuSlate
 @onready var options_slate: PanelContainer = $OptionsSlate
+@onready var continue_btn: Button = $MenuSlate/MarginContainer/VBoxContainer/continue
 @onready var play_btn: Button = $MenuSlate/MarginContainer/VBoxContainer/play
 @onready var options_btn: Button = $MenuSlate/MarginContainer/VBoxContainer/options
 @onready var quit_btn: Button = $MenuSlate/MarginContainer/VBoxContainer/quit
@@ -14,7 +15,14 @@ extends Control
 func _ready() -> void:
 	menu_slate.visible = true
 	options_slate.visible = false
-	play_btn.grab_focus()
+	
+	if Global.check_save():
+		continue_btn.show()
+		continue_btn.grab_focus()
+	else:
+		continue_btn.hide()
+		play_btn.grab_focus()
+
 	_sync_options_state()
 	_refresh_ui_text()
 
@@ -46,7 +54,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		_on_back_button_up()
 		get_viewport().set_input_as_handled()
 
+func _on_continue_button_up() -> void:
+	Global.load_game()
+
 func _on_play_button_up() -> void:
+	Global.save_level("res://scenes/main.tscn")
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
 
 func _on_options_button_up() -> void:
@@ -59,7 +71,10 @@ func _on_options_button_up() -> void:
 func _on_back_button_up() -> void:
 	options_slate.visible = false
 	menu_slate.visible = true
-	options_btn.grab_focus()
+	if continue_btn and continue_btn.visible:
+		continue_btn.grab_focus()
+	else:
+		play_btn.grab_focus()
 
 func _on_quit_button_up() -> void:
 	get_tree().quit()
@@ -72,13 +87,12 @@ func _on_language_select_item_selected(index: int) -> void:
 	_refresh_ui_text()
 
 func _on_fullscreen_check_toggled(button_pressed: bool) -> void:
-	if button_pressed:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	Global.set_fullscreen(button_pressed)
 
 func _refresh_ui_text() -> void:
 	_populate_language_options()
+	if continue_btn:
+		continue_btn.text = tr("menu_continue")
 	if play_btn:
 		play_btn.text = tr("menu_play")
 	if options_btn:

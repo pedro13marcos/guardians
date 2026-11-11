@@ -3,6 +3,7 @@ extends Node2D
 var nextLevel: String = "res://scenes/ending_page.tscn"
 
 func _ready() -> void:
+	Global.save_level(scene_file_path)
 	if has_node("door"):
 		$door.level = nextLevel
 		$door.isOpen = false
