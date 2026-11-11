@@ -4,7 +4,7 @@ extends Node
 ## Manages global game state, configuration/save persistence, translation,
 ## level background pre-loading, directional slide transitions, and persistent overlays.
 
-const GAME_VERSION: String = "0.49"
+const GAME_VERSION: String = "0.50"
 const CONF_PATH: String = "user://confGame.json"
 const SAVE_PATH: String = "user://saveGame.json"
 
@@ -277,39 +277,37 @@ func transition_to_level(target_scene: String, motion_vec: Vector2 = Vector2.DOW
 	old_rect.position = Vector2.ZERO
 	root_ctrl.add_child(old_rect)
 
-	# 3. Change scene underneath using pre-loaded PackedScene
+	# 3. Create off-screen SubViewport to render the incoming scene
+	var sv := SubViewport.new()
+	sv.size = Vector2i(int(vp_size.x), int(vp_size.y))
+	sv.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	canvas.add_child(sv)
+
 	var next_scene_res = get_preloaded_scene(target_scene)
+	var next_level: Node = null
 	if next_scene_res != null:
-		get_tree().change_scene_to_packed(next_scene_res)
-	else:
+		next_level = next_scene_res.instantiate()
+
+	if next_level == null:
+		# Fallback if instantiation failed
+		sv.queue_free()
 		get_tree().change_scene_to_file(target_scene)
+		canvas.queue_free()
+		is_transitioning = false
+		return
 
-	# 4. Wait for new scene to instantiate and initialize camera/player
-	await get_tree().process_frame
+	sv.add_child(next_level)
 
-	# 5. Capture incoming screen without presentation (swap_buffers = false)
-	#    Prevents any 1-frame screen flash while capturing the new scene's live view
-	canvas.visible = false
-	RenderingServer.force_draw(false)
-	var new_tex: ImageTexture = null
-	var new_img: Image = vp.get_texture().get_image()
-	if new_img != null and not new_img.is_empty():
-		new_tex = ImageTexture.create_from_image(new_img)
-	canvas.visible = true
-
-	# 6. Incoming scene TextureRect (enters sliding from opposite edge)
+	# 4. Incoming scene TextureRect (uses live SubViewport texture, enters sliding from opposite edge)
 	var new_rect := TextureRect.new()
-	var has_new_tex: bool = (new_tex != null)
-	if has_new_tex:
-		new_rect.texture = new_tex
+	new_rect.texture = sv.get_texture()
 	new_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	new_rect.stretch_mode = TextureRect.STRETCH_SCALE
 	new_rect.size = vp_size
 	new_rect.position = -motion_vec * vp_size
-	new_rect.visible = has_new_tex
 	root_ctrl.add_child(new_rect)
 
-	# 7. Add stylish seam divider along the joint between the two screens
+	# 5. Add stylish seam divider along the joint between the two screens
 	var divider := ColorRect.new()
 	divider.color = Color(0.04, 0.06, 0.1, 0.95)
 	var accent := ColorRect.new()
@@ -339,12 +337,12 @@ func transition_to_level(target_scene: String, motion_vec: Vector2 = Vector2.DOW
 			accent.position = Vector2(0, 2.0)
 
 	divider.add_child(accent)
-	if has_new_tex:
-		new_rect.add_child(divider)
-	else:
-		old_rect.add_child(divider)
+	new_rect.add_child(divider)
 
-	# 8. Synchronized push tween:
+	# 6. Wait 1 frame so SubViewport renders its initial layout/camera
+	await get_tree().process_frame
+
+	# 7. Synchronized push tween:
 	#    old_rect slides OUT to motion_vec * vp_size
 	#    new_rect slides IN from -motion_vec * vp_size to Vector2.ZERO
 	#    Cubic in-out provides buttery acceleration and cushioning
@@ -356,12 +354,19 @@ func transition_to_level(target_scene: String, motion_vec: Vector2 = Vector2.DOW
 
 	var old_end_pos := motion_vec * vp_size
 	tween.tween_property(old_rect, "position", old_end_pos, duration)
-	if has_new_tex:
-		tween.tween_property(new_rect, "position", Vector2.ZERO, duration)
+	tween.tween_property(new_rect, "position", Vector2.ZERO, duration)
 
 	await tween.finished
 
-	# 9. Cleanup overlay: new_rect is at Vector2.ZERO and perfectly matches the live scene underneath
+	# 8. Reparent live incoming level from SubViewport to scene root and hand over control
+	var old_scene = get_tree().current_scene
+	if is_instance_valid(next_level):
+		next_level.reparent(get_tree().root)
+		get_tree().current_scene = next_level
+
+	if is_instance_valid(old_scene):
+		old_scene.queue_free()
+
 	canvas.queue_free()
 	is_transitioning = false
 	print("Global: Level push transition completed smoothly.")
