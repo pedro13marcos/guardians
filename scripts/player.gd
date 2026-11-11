@@ -4,8 +4,6 @@ var speed = 80;
 const BASE_SPEED: float = 80.0;
 const SPRINT_SPEED: float = 365.0; # Half-way between normal speed (80) and special ability dash (650)
 var is_sprinting: bool = false;
-var sprint_timer: float = 0.0;
-const SPRINT_DURATION: float = 1.6; # Speed boost duration on attack press
 
 var facingDir = Vector2();
 var vel = Vector2();
@@ -43,20 +41,17 @@ func _ready():
 	isFacingLeft = false;
 	update_sprite_flip();
 	
-func _physics_process(delta):
+func _physics_process(_delta):
 	# If White Lightning is currently teleporting, his position is driven by the lightning projectile
 	if is_teleporting:
 		return;
 	
-	# Update White Lightning sprint boost timer
-	if is_sprinting:
-		sprint_timer -= delta;
-		if sprint_timer <= 0.0 or personagem != "V":
-			is_sprinting = false;
-			speed = BASE_SPEED;
-		else:
-			speed = SPRINT_SPEED;
+	# White Lightning sprint: active while holding down the Attack key/button
+	if personagem == "V" and Input.is_action_pressed("Ataque"):
+		is_sprinting = true;
+		speed = SPRINT_SPEED;
 	else:
+		is_sprinting = false;
 		speed = BASE_SPEED;
 		
 	vel = Vector2();
@@ -136,9 +131,6 @@ func _physics_process(delta):
 				atualizaUI();
 				var poder = novoPoder.instantiate();
 				pai.add_child(poder);
-				# White Lightning passive burst: gain high speed sprint halfway between walk (80) and dash (650)
-				is_sprinting = true;
-				sprint_timer = SPRINT_DURATION;
 			else:
 				energia -= 10;
 				atualizaUI();
