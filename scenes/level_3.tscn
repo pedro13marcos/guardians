@@ -8,6 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://bfvcrxtk1v78n" path="res://scenes/spawner_door.tscn" id="7_spawner"]
 [ext_resource type="PackedScene" uid="uid://bm83b7150i3kw" path="res://scenes/pause.tscn" id="8_una4e"]
 [ext_resource type="PackedScene" uid="uid://d0gmnax02ed3k" path="res://scenes/hud_2.tscn" id="9_ema3p"]
+[ext_resource type="PackedScene" path="res://scenes/filing_cabinet.tscn" id="pr_cabinet"]
+[ext_resource type="PackedScene" path="res://scenes/computer.tscn" id="pr_computer"]
+[ext_resource type="PackedScene" path="res://scenes/plant.tscn" id="pr_plant"]
+[ext_resource type="PackedScene" path="res://scenes/server_rack.tscn" id="pr_rack"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_rolev"]
 vertices = PackedVector2Array(-128, -128, 128, -128, 128, 128, -128, 128)
@@ -79,3 +83,147 @@ spawn_offset = Vector2(24, 0)
 [node name="HUD2" parent="." unique_id=206521178 instance=ExtResource("9_ema3p")]
 scale = Vector2(0.4, 0.4)
 transform = Transform2D(0.4, 0, 0, 0.4, 0, 0)
+
+[node name="Prop_FilingCabinet_1" parent="." instance=ExtResource("pr_cabinet")]
+position = Vector2(-592, -368)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_Computer_2" parent="." instance=ExtResource("pr_computer")]
+position = Vector2(-464, -368)
+scale = Vector2(0.02, 0.02)
+
+[node name="Prop_Plant_3" parent="." instance=ExtResource("pr_plant")]
+position = Vector2(-368, -368)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_ServerRack_4" parent="." instance=ExtResource("pr_rack")]
+position = Vector2(-272, -368)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_Computer_5" parent="." instance=ExtResource("pr_computer")]
+position = Vector2(16, -368)
+scale = Vector2(0.02, 0.02)
+
+[node name="Prop_Plant_6" parent="." instance=ExtResource("pr_plant")]
+position = Vector2(112, -368)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_FilingCabinet_7" parent="." instance=ExtResource("pr_cabinet")]
+position = Vector2(208, -368)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_Computer_8" parent="." instance=ExtResource("pr_computer")]
+position = Vector2(368, -368)
+scale = Vector2(0.02, 0.02)
+
+[node name="Prop_Plant_9" parent="." instance=ExtResource("pr_plant")]
+position = Vector2(-464, -272)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_ServerRack_10" parent="." instance=ExtResource("pr_rack")]
+position = Vector2(-368, -272)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_Computer_11" parent="." instance=ExtResource("pr_computer")]
+position = Vector2(-272, -272)
+scale = Vector2(0.02, 0.02)
+
+[node name="Prop_Plant_12" parent="." instance=ExtResource("pr_plant")]
+position = Vector2(16, -272)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_FilingCabinet_13" parent="." instance=ExtResource("pr_cabinet")]
+position = Vector2(112, -272)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_Computer_14" parent="." instance=ExtResource("pr_computer")]
+position = Vector2(208, -272)
+scale = Vector2(0.02, 0.02)
+
+[node name="Prop_Plant_15" parent="." instance=ExtResource("pr_plant")]
+position = Vector2(304, -208)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_ServerRack_16" parent="." instance=ExtResource("pr_rack")]
+position = Vector2(-624, -176)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_Computer_17" parent="." instance=ExtResource("pr_computer")]
+position = Vector2(464, -176)
+scale = Vector2(0.02, 0.02)
+
+[node name="Prop_Plant_18" parent="." instance=ExtResource("pr_plant")]
+position = Vector2(304, -112)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_FilingCabinet_19" parent="." instance=ExtResource("pr_cabinet")]
+position = Vector2(-528, -80)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_Computer_20" parent="." instance=ExtResource("pr_computer")]
+position = Vector2(272, -16)
+scale = Vector2(0.02, 0.02)
+
+[node name="Prop_Plant_21" parent="." instance=ExtResource("pr_plant")]
+position = Vector2(-496, 16)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_ServerRack_22" parent="." instance=ExtResource("pr_rack")]
+position = Vector2(-16, 16)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_Computer_23" parent="." instance=ExtResource("pr_computer")]
+position = Vector2(272, 80)
+scale = Vector2(0.02, 0.02)
+
+[node name="Prop_Plant_24" parent="." instance=ExtResource("pr_plant")]
+position = Vector2(-496, 112)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_FilingCabinet_25" parent="." instance=ExtResource("pr_cabinet")]
+position = Vector2(272, 176)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_Computer_26" parent="." instance=ExtResource("pr_computer")]
+position = Vector2(-496, 208)
+scale = Vector2(0.02, 0.02)
+
+[node name="Prop_Plant_27" parent="." instance=ExtResource("pr_plant")]
+position = Vector2(-624, 304)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_ServerRack_28" parent="." instance=ExtResource("pr_rack")]
+position = Vector2(464, 304)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_Computer_29" parent="." instance=ExtResource("pr_computer")]
+position = Vector2(-496, 368)
+scale = Vector2(0.02, 0.02)
+
+[node name="Prop_Plant_30" parent="." instance=ExtResource("pr_plant")]
+position = Vector2(240, 368)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_FilingCabinet_31" parent="." instance=ExtResource("pr_cabinet")]
+position = Vector2(-592, 432)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_Computer_32" parent="." instance=ExtResource("pr_computer")]
+position = Vector2(-400, 432)
+scale = Vector2(0.02, 0.02)
+
+[node name="Prop_Plant_33" parent="." instance=ExtResource("pr_plant")]
+position = Vector2(-304, 432)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_ServerRack_34" parent="." instance=ExtResource("pr_rack")]
+position = Vector2(-16, 432)
+scale = Vector2(0.04, 0.04)
+
+[node name="Prop_Computer_35" parent="." instance=ExtResource("pr_computer")]
+position = Vector2(80, 432)
+scale = Vector2(0.02, 0.02)
+
+[node name="Prop_Plant_36" parent="." instance=ExtResource("pr_plant")]
+position = Vector2(336, 432)
+scale = Vector2(0.04, 0.04)
