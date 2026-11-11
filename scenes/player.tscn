@@ -15,6 +15,8 @@
 [ext_resource type="Texture2D" path="res://assets/AI/wl_throw.png" id="8_wl_throw"]
 [ext_resource type="Texture2D" uid="uid://pgdy7ovygyft" path="res://assets/AI/wl_sprint_1.png" id="9_wl_sprint_1"]
 [ext_resource type="Texture2D" uid="uid://de1p2ti8kmm4c" path="res://assets/AI/wl_sprint_2.png" id="10_wl_sprint_2"]
+[ext_resource type="Texture2D" uid="uid://lmqcilt4e2x4" path="res://assets/AI/wl_sprint_3.png" id="11_wl_sprint_3"]
+[ext_resource type="Texture2D" uid="uid://buj2jfo14arlw" path="res://assets/AI/wl_sprint_4.png" id="12_wl_sprint_4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xciff"]
 animations = [{
@@ -228,6 +230,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("10_wl_sprint_2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_wl_sprint_3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_wl_sprint_4")
 }],
 "loop": true,
 "name": &"Vsprint",
