@@ -55,9 +55,11 @@ func _apply_damage(body: Node2D) -> void:
 	if body == player or body in hit_bodies:
 		return
 	
-	if body.is_in_group("inimigo"):
+	if body.is_in_group("inimigo") or body.has_method("take_damage") or "vida" in body:
 		hit_bodies[body] = true
-		if "vida" in body:
+		if body.has_method("take_damage"):
+			body.take_damage(damage)
+		elif "vida" in body:
 			body.vida -= damage
 	elif body.is_in_group("Quebravel"):
 		hit_bodies[body] = true

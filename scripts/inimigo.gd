@@ -2,7 +2,17 @@ extends CharacterBody2D
 
 var speed: float = 60.0
 var life: int = 5
-var vida: int = 5
+var is_dead: bool = false
+
+var vida: int = 5:
+	set(val):
+		vida = val
+		if is_inside_tree():
+			if vida <= 0 and not is_dead:
+				is_dead = true
+				call_deferred("_die")
+			elif vida > 0:
+				_play_hit_feedback()
 
 @export var disPers: float = 250.0
 @export var always_pursue: bool = false
@@ -24,6 +34,7 @@ var _last_position: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	randomize()
+	add_to_group("inimigo")
 	vida = life
 	_last_position = global_position
 	
@@ -112,6 +123,7 @@ func _physics_process(delta: float) -> void:
 		_apply_movement(intended_velocity)
 	
 	_check_player_collisions()
+	atualizaVida()
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
 	_apply_movement(safe_velocity)
@@ -166,8 +178,30 @@ func _on_att_nav_timeout() -> void:
 	if att_timer != null:
 		att_timer.start(randf_range(0.18, 0.28))
 
+func take_damage(amount: int = 5) -> void:
+	self.vida -= amount
+
+func dano(amount: int = 5) -> void:
+	take_damage(amount)
+
+func danoInimigo(amount: int = 5) -> void:
+	take_damage(amount)
+
+func _play_hit_feedback() -> void:
+	if not is_instance_valid(anim_sprite):
+		return
+	var tween = create_tween()
+	anim_sprite.modulate = Color(3.0, 0.3, 0.3, 1.0) # Bright red flash
+	tween.tween_property(anim_sprite, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.15)
+
+func _die() -> void:
+	atualizaVida()
+
 func atualizaVida() -> void:
 	if vida != null and vida <= 0:
+		if is_dead:
+			pass
+		is_dead = true
 		if randi_range(0, 10) < 6:
 			if randi_range(0, 4) <= 3:
 				var energia = novoEnergia.instantiate()
