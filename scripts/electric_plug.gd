@@ -23,7 +23,7 @@ func _process(_delta: float) -> void:
 		if player_ref.personagem == "V":
 			if prompt_label:
 				prompt_label.visible = true
-				prompt_label.text = "[E / Action] Enter Conduit"
+				prompt_label.text = "[Space / A] Enter Conduit"
 			
 			if Input.is_action_just_pressed("Action"):
 				_try_teleport()

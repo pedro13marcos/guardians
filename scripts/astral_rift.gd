@@ -32,7 +32,7 @@ func _process(_delta: float) -> void:
 		if player_ref.personagem == "F":
 			if prompt_label:
 				prompt_label.visible = true
-				prompt_label.text = "[E / Action] Phase Astral Wall"
+				prompt_label.text = "[Space / A] Phase Astral Wall"
 			
 			if Input.is_action_just_pressed("Action"):
 				open_wall()
