@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://basq60bf3sc0p"]
 
 [ext_resource type="Script" path="res://scripts/energy_font.gd" id="1_mj0gm"]
-[ext_resource type="Texture2D" uid="uid://8do6ojhxbx1k" path="res://assets/AI/monkey_energy.png" id="2_banana"]
+[ext_resource type="Texture2D" uid="uid://dnfmf0ajadssp" path="res://assets/AI/item_energy_monkey.png" id="2_monkey"]
 [ext_resource type="Texture2D" uid="uid://bguomnxfv5l5q" path="res://assets/AI/item_energy_guardian.png" id="3_guardian"]
 [ext_resource type="Texture2D" uid="uid://c033e65bxq70f" path="res://assets/AI/item_energy_wl.png" id="4_wl"]
 
@@ -9,7 +9,7 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_banana")
+"texture": ExtResource("2_monkey")
 }],
 "loop": true,
 "name": &"A",

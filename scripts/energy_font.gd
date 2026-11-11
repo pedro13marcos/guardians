@@ -6,12 +6,8 @@ extends Area2D
 
 func _ready():
 	$AnimatedSprite.play(player.personagem)
-	if player.personagem == "A":
-		$AnimatedSprite.scale = Vector2(2.0, 2.0)
-		$AnimatedSprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	else:
-		$AnimatedSprite.scale = Vector2(0.125, 0.125)
-		$AnimatedSprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	$AnimatedSprite.scale = Vector2(0.125, 0.125)
+	$AnimatedSprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 
 func _on_body_entered(body):
 	if body.name == "Player":
