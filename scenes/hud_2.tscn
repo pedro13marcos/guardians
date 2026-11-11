@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d0gmnax02ed3k"]
+[gd_scene load_steps=15 format=3 uid="uid://d0gmnax02ed3k"]
 
 [ext_resource type="Texture2D" path="res://assets/Bars/guardian hud (1).png" id="1_4ruds"]
 [ext_resource type="Script" path="res://scripts/hud_2.gd" id="1_ja568"]
@@ -11,6 +11,9 @@
 [ext_resource type="Texture2D" path="res://assets/Bars/Hud_enemy-removebg-preview.png" id="9_w8twj"]
 [ext_resource type="Texture2D" path="res://assets/Bars/Hud_time-removebg-preview.png" id="10_vo1jk"]
 [ext_resource type="Texture2D" path="res://assets/Bars/Done Mission.png" id="11_ha6lp"]
+[ext_resource type="Texture2D" uid="uid://bs2kdbam0oj04" path="res://assets/Bars/bubble_face_guardian.png" id="12_g_bubble"]
+[ext_resource type="Texture2D" uid="uid://c8cexcqpk1gy" path="res://assets/Bars/bubble_face_monkey.png" id="13_m_bubble"]
+[ext_resource type="Texture2D" uid="uid://b3nclhf3s08v4" path="res://assets/Bars/bubble_face_wl.png" id="14_wl_bubble"]
 
 [node name="HUD2" type="CanvasLayer" node_paths=PackedStringArray("healthBar", "goals", "energyBar")]
 script = ExtResource("1_ja568")
@@ -95,4 +98,22 @@ offset_top = 585.0
 offset_right = 910.0
 offset_bottom = 773.0
 texture = ExtResource("11_ha6lp")
+expand_mode = 1
+
+[node name="NextHeroBubble1" type="TextureRect" parent="HUD2"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 520.0
+offset_right = 260.0
+offset_bottom = 720.0
+texture = ExtResource("12_g_bubble")
+expand_mode = 1
+
+[node name="NextHeroBubble2" type="TextureRect" parent="HUD2"]
+layout_mode = 0
+offset_left = 135.0
+offset_top = 690.0
+offset_right = 295.0
+offset_bottom = 850.0
+texture = ExtResource("13_m_bubble")
 expand_mode = 1

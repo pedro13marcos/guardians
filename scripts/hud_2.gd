@@ -6,11 +6,16 @@ extends CanvasLayer
 
 var topObjetivo;
 
+@onready var bubble_wl = preload("res://assets/Bars/bubble_face_wl.png")
+@onready var bubble_guardian = preload("res://assets/Bars/bubble_face_guardian.png")
+@onready var bubble_monkey = preload("res://assets/Bars/bubble_face_monkey.png")
+
 func _ready():
 	$HUD2.show()
 	$HUD2/uiWL.show();
 	$HUD2/uiG.hide();
 	$HUD2/uiM.hide();
+	atualizaPersonagem("V")
 	healthBar.set_tint_progress(Color(0,1,0,1));
 	pass
 	
@@ -50,14 +55,26 @@ func atualizaPersonagem(per):
 		$HUD2/uiWL.show();
 		$HUD2/uiG.hide();
 		$HUD2/uiM.hide();
+		if has_node("HUD2/NextHeroBubble1"):
+			$HUD2/NextHeroBubble1.texture = bubble_guardian
+		if has_node("HUD2/NextHeroBubble2"):
+			$HUD2/NextHeroBubble2.texture = bubble_monkey
 	elif per == "F":
 		$HUD2/uiWL.hide();
 		$HUD2/uiG.show();
 		$HUD2/uiM.hide();
+		if has_node("HUD2/NextHeroBubble1"):
+			$HUD2/NextHeroBubble1.texture = bubble_monkey
+		if has_node("HUD2/NextHeroBubble2"):
+			$HUD2/NextHeroBubble2.texture = bubble_wl
 	elif per == "A":
 		$HUD2/uiWL.hide();
 		$HUD2/uiG.hide();
 		$HUD2/uiM.show();
+		if has_node("HUD2/NextHeroBubble1"):
+			$HUD2/NextHeroBubble1.texture = bubble_wl
+		if has_node("HUD2/NextHeroBubble2"):
+			$HUD2/NextHeroBubble2.texture = bubble_guardian
 	pass;
 	
 func atualizaObjetivo(quantidade):
