@@ -48,6 +48,7 @@ position = Vector2(-109, 384)
 
 [node name="door" parent="." unique_id=464546760 instance=ExtResource("5_q2dsb")]
 position = Vector2(-56, -392)
+slide_direction = "up"
 
 [node name="door2" parent="." unique_id=408363851 instance=ExtResource("5_q2dsb")]
 position = Vector2(176, 304)

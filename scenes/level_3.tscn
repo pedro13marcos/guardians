@@ -1,4 +1,4 @@
-﻿[gd_scene format=3 uid="uid://m1ov0r6xrhhn"]
+[gd_scene format=3 uid="uid://m1ov0r6xrhhn"]
 
 [ext_resource type="Script" path="res://scripts/level_3.gd" id="1_ha73p"]
 [ext_resource type="Texture2D" path="res://assets/AI/environment_tiles.png" id="2_vcx5n"]
@@ -46,6 +46,7 @@ position = Vector2(-109, 384)
 
 [node name="door" parent="." unique_id=464546760 instance=ExtResource("5_q2dsb")]
 position = Vector2(-144, 431)
+slide_direction = "down"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=533003130 node_paths=PackedStringArray("player")]
 zoom = Vector2(4, 4)

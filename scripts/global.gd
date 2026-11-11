@@ -1,9 +1,10 @@
 extends Node
 
 ## Global singleton for Guardians game.
-## Manages global game state, configuration/save persistence, translation, and overlays.
+## Manages global game state, configuration/save persistence, translation,
+## level background pre-loading, directional slide transitions, and persistent overlays.
 
-const GAME_VERSION: String = "0.39"
+const GAME_VERSION: String = "0.40"
 const CONF_PATH: String = "user://confGame.json"
 const SAVE_PATH: String = "user://saveGame.json"
 
@@ -11,6 +12,9 @@ var current_language_mode: String = "auto"
 var fullscreen: bool = false
 var current_level: String = "res://scenes/main.tscn"
 var watermark_label: Label = null
+
+var is_transitioning: bool = false
+var _preloaded_resources: Dictionary = {}
 
 const SUPPORTED_LANGUAGES: Array[Dictionary] = [
 	{"id": "auto",  "label_key": "lang_auto", "native_name": "Automatic"},
@@ -193,6 +197,147 @@ func reset_save() -> void:
 		DirAccess.remove_absolute(SAVE_PATH)
 	if FileAccess.file_exists("user://saveGame.txt"):
 		DirAccess.remove_absolute("user://saveGame.txt")
+
+# -------------------------------------------------------------
+# Level Pre-loading and Directional Slide Transition
+# -------------------------------------------------------------
+
+## Asynchronously requests background loading for the next level as soon as a door opens
+func preload_level(scene_path: String) -> void:
+	if scene_path == null or scene_path.is_empty():
+		return
+	if _preloaded_resources.has(scene_path):
+		return
+	if not ResourceLoader.exists(scene_path):
+		return
+	
+	var err = ResourceLoader.load_threaded_request(scene_path)
+	if err == OK:
+		_preloaded_resources[scene_path] = true
+		print("Global: Preloading next level in background -> ", scene_path)
+	else:
+		var res = load(scene_path)
+		if res is PackedScene:
+			_preloaded_resources[scene_path] = res
+
+## Returns the cached / preloaded PackedScene ready for instant instantiation
+func get_preloaded_scene(scene_path: String) -> PackedScene:
+	if _preloaded_resources.has(scene_path):
+		var stored = _preloaded_resources[scene_path]
+		if stored is PackedScene:
+			return stored
+		var status = ResourceLoader.load_threaded_get_status(scene_path)
+		if status == ResourceLoader.THREAD_LOAD_LOADED:
+			var res = ResourceLoader.load_threaded_get(scene_path)
+			if res is PackedScene:
+				return res
+	if ResourceLoader.exists(scene_path):
+		return load(scene_path) as PackedScene
+	return null
+
+## Transitions smoothly between scenes with a directional slide (up, down, left, right)
+func transition_to_level(target_scene: String, slide_dir: Vector2 = Vector2.UP) -> void:
+	if is_transitioning:
+		return
+	is_transitioning = true
+	save_level(target_scene)
+
+	var vp: Viewport = get_tree().root.get_viewport()
+	var vp_size: Vector2 = vp.get_visible_rect().size
+	if vp_size.x <= 0 or vp_size.y <= 0:
+		vp_size = Vector2(1600, 1200)
+
+	# 1. Capture outgoing screen
+	var old_tex: ImageTexture = null
+	var old_img: Image = vp.get_texture().get_image()
+	if old_img != null and not old_img.is_empty():
+		old_tex = ImageTexture.create_from_image(old_img)
+
+	# 2. Overlay CanvasLayer (layer 115, just below watermark at 120)
+	var canvas := CanvasLayer.new()
+	canvas.name = "SceneTransitionLayer"
+	canvas.layer = 115
+	canvas.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(canvas)
+
+	var root_ctrl := Control.new()
+	root_ctrl.set_anchors_preset(Control.PRESET_FULL_RECT)
+	root_ctrl.mouse_filter = Control.MOUSE_FILTER_STOP
+	canvas.add_child(root_ctrl)
+
+	var old_rect := TextureRect.new()
+	if old_tex != null:
+		old_rect.texture = old_tex
+	old_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	old_rect.stretch_mode = TextureRect.STRETCH_SCALE
+	old_rect.size = vp_size
+	old_rect.position = Vector2.ZERO
+	root_ctrl.add_child(old_rect)
+
+	# 3. Change scene underneath using pre-loaded PackedScene
+	var next_scene_res = get_preloaded_scene(target_scene)
+	if next_scene_res != null:
+		get_tree().change_scene_to_packed(next_scene_res)
+	else:
+		get_tree().change_scene_to_file(target_scene)
+
+	# 4. Wait for new scene to render its first frame
+	await get_tree().process_frame
+	await RenderingServer.frame_post_draw
+
+	# 5. Capture incoming screen
+	var new_tex: ImageTexture = null
+	var new_img: Image = vp.get_texture().get_image()
+	if new_img != null and not new_img.is_empty():
+		new_tex = ImageTexture.create_from_image(new_img)
+
+	var new_rect := TextureRect.new()
+	if new_tex != null:
+		new_rect.texture = new_tex
+	new_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	new_rect.stretch_mode = TextureRect.STRETCH_SCALE
+	new_rect.size = vp_size
+
+	# Incoming scene starts in opposite direction and slides to (0, 0)
+	var new_start_pos := -slide_dir * vp_size
+	new_rect.position = new_start_pos
+	root_ctrl.add_child(new_rect)
+
+	# 6. Stylish comic-dark divider seam line between the two slides
+	var divider := ColorRect.new()
+	divider.color = Color(0.04, 0.06, 0.1, 0.95)
+	if abs(slide_dir.y) >= abs(slide_dir.x):
+		divider.size = Vector2(vp_size.x, 6.0)
+		if slide_dir.y < 0:
+			divider.position = Vector2(0, vp_size.y - 3.0)
+		else:
+			divider.position = Vector2(0, -3.0)
+	else:
+		divider.size = Vector2(6.0, vp_size.y)
+		if slide_dir.x < 0:
+			divider.position = Vector2(vp_size.x - 3.0, 0)
+		else:
+			divider.position = Vector2(-3.0, 0)
+	root_ctrl.add_child(divider)
+
+	# 7. Smooth cubic tween
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.set_ease(Tween.EASE_IN_OUT)
+	var duration: float = 0.55
+
+	var old_end_pos := slide_dir * vp_size
+	tween.tween_property(old_rect, "position", old_end_pos, duration)
+	tween.tween_property(new_rect, "position", Vector2.ZERO, duration)
+	var divider_end_pos := divider.position + (slide_dir * vp_size)
+	tween.tween_property(divider, "position", divider_end_pos, duration)
+
+	await tween.finished
+
+	canvas.queue_free()
+	is_transitioning = false
+	print("Global: Level transition slide completed smoothly.")
 
 func _create_watermark() -> void:
 	# Persistent canvas layer on top of all scenes

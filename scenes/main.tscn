@@ -1,4 +1,4 @@
-﻿[gd_scene load_steps=17 format=3 uid="uid://dsg4y2ksuqxyq"]
+[gd_scene load_steps=17 format=3 uid="uid://dsg4y2ksuqxyq"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_pddk7"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1_vi310"]
@@ -75,6 +75,7 @@ player = NodePath("../Player")
 
 [node name="door" parent="." instance=ExtResource("5_elmpe")]
 position = Vector2(304, 32)
+slide_direction = "up"
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 zoom = Vector2(4, 4)
