@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" path="res://assets/AI/monkey_crunched.png" id="6_m_crunched"]
 [ext_resource type="Texture2D" path="res://assets/AI/guardian_staff_hit.png" id="7_g_staff"]
 [ext_resource type="Texture2D" path="res://assets/AI/wl_throw.png" id="8_wl_throw"]
+[ext_resource type="Texture2D" uid="uid://pgdy7ovygyft" path="res://assets/AI/wl_sprint_1.png" id="9_wl_sprint_1"]
+[ext_resource type="Texture2D" uid="uid://de1p2ti8kmm4c" path="res://assets/AI/wl_sprint_2.png" id="10_wl_sprint_2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xciff"]
 animations = [{
@@ -219,6 +221,17 @@ animations = [{
 "loop": false,
 "name": &"Vside",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_wl_sprint_1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_wl_sprint_2")
+}],
+"loop": true,
+"name": &"Vsprint",
+"speed": 8.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_player"]

@@ -54,7 +54,7 @@ texture_normal = ExtResource("2_5jpb2")
 action = "Pause"
 
 [node name="attack" type="TouchScreenButton" parent="Control"]
-position = Vector2(1268, 972.296)
+position = Vector2(1268, 830)
 scale = Vector2(0.378329, 0.378329)
 texture_normal = ExtResource("3_nqiey")
 passby_press = true
@@ -62,7 +62,7 @@ action = "Ataque"
 
 [node name="side_ability" type="TouchScreenButton" parent="Control"]
 modulate = Color(0.3, 0.9, 1, 1)
-position = Vector2(1268, 830)
+position = Vector2(1268, 972.296)
 scale = Vector2(0.32, 0.32)
 texture_normal = ExtResource("3_nqiey")
 passby_press = true

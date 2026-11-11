@@ -1,6 +1,12 @@
 extends CharacterBody2D
 
 var speed = 80;
+const BASE_SPEED: float = 80.0;
+const SPRINT_SPEED: float = 365.0; # Half-way between normal speed (80) and special ability dash (650)
+var is_sprinting: bool = false;
+var sprint_timer: float = 0.0;
+const SPRINT_DURATION: float = 1.6; # Speed boost duration on attack press
+
 var facingDir = Vector2();
 var vel = Vector2();
 var personagem = "V";
@@ -37,10 +43,21 @@ func _ready():
 	isFacingLeft = false;
 	update_sprite_flip();
 	
-func _physics_process(_delta):
+func _physics_process(delta):
 	# If White Lightning is currently teleporting, his position is driven by the lightning projectile
 	if is_teleporting:
 		return;
+	
+	# Update White Lightning sprint boost timer
+	if is_sprinting:
+		sprint_timer -= delta;
+		if sprint_timer <= 0.0 or personagem != "V":
+			is_sprinting = false;
+			speed = BASE_SPEED;
+		else:
+			speed = SPRINT_SPEED;
+	else:
+		speed = BASE_SPEED;
 		
 	vel = Vector2();
 	
@@ -68,7 +85,9 @@ func _physics_process(_delta):
 		
 		if vel != Vector2.ZERO:
 			facingDir = vel;
-			if vel.x != 0:
+			if is_sprinting and personagem == "V":
+				anim.play("Vsprint");
+			elif vel.x != 0:
 				if vel.x < 0:
 					anim.play(personagem + "left");
 				else:
@@ -112,13 +131,21 @@ func _physics_process(_delta):
 					atualizaUI();
 					activeTail = monkeyTailScene.instantiate();
 					pai.add_child(activeTail);
+			elif personagem == "V":
+				energia -= 10;
+				atualizaUI();
+				var poder = novoPoder.instantiate();
+				pai.add_child(poder);
+				# White Lightning passive burst: gain high speed sprint halfway between walk (80) and dash (650)
+				is_sprinting = true;
+				sprint_timer = SPRINT_DURATION;
 			else:
 				energia -= 10;
 				atualizaUI();
 				var poder = novoPoder.instantiate();
 				pai.add_child(poder);
 	
-	# --- Side Ability (Key F / Square / X / Y) ---
+	# --- Side Ability (Key E / Square / B / Circle) ---
 	if Input.is_action_just_pressed("side_ability") and not is_performing_side_ability:
 		if energia >= side_ability_energy_cost:
 			executa_side_ability();
