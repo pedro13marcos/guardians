@@ -44,19 +44,18 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Pause/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 100
-text = "Pause"
+text = "pause_title"
 horizontal_alignment = 1
 
 [node name="Continue" type="Button" parent="Pause/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 100
-text = "Continue
-"
+text = "pause_continue"
 
 [node name="Quit" type="Button" parent="Pause/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 100
-text = "Quit"
+text = "pause_quit"
 
 [connection signal="button_up" from="Pause/MarginContainer/VBoxContainer/Continue" to="Pause" method="_on_continue_button_up"]
 [connection signal="button_up" from="Pause/MarginContainer/VBoxContainer/Quit" to="Pause" method="_on_quit_button_up"]

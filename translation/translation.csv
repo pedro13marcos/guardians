@@ -1,0 +1,28 @@
+keys,en,es,pt_BR
+menu_play,PLAY GAME,JUGAR,JOGAR
+menu_options,OPTIONS,OPCIONES,OPÇÕES
+menu_quit,QUIT,SALIR,SAIR
+menu_back,BACK,VOLVER,VOLTAR
+menu_language,Language,Idioma,Idioma
+options_title,OPTIONS,OPCIONES,OPÇÕES
+options_fullscreen,Fullscreen,Pantalla Completa,Tela Cheia
+lang_auto,Automatic,Automático,Automático
+lang_en,English,Inglés,Inglês
+lang_es,Español,Español,Espanhol
+lang_pt,Português (BR),Portugués (BR),Português (BR)
+pause_title,Pause,Pausa,Pausa
+pause_continue,Continue,Continuar,Continuar
+pause_options,Options,Opciones,Opções
+pause_quit,Quit,Salir,Sair
+ending_congrats,Congratulations!,¡Felicidades!,Parabéns!
+ending_message,"You finished what I've prepared until now! I hope you enjoyed and if you want to tell me something, don't be afraid to contact me through comments or any other way that you want!","¡Terminaste lo que he preparado hasta ahora! ¡Espero que lo hayas disfrutado y si quieres decirme algo, no dudes en contactarme a través de comentarios o de cualquier otra forma que desees!","Você terminou o que preparei até agora! Espero que tenha gostado e se quiser me dizer algo, não hesite em entrar em contato através de comentários ou de qualquer outra forma que desejar!"
+ending_menu_btn,Menu,Menú,Menu
+survive_timer_prefix,SURVIVE,SOBREVIVE,SOBREVIVA
+survive_door_opened,DOOR OPENED! REACH THE EXIT!,¡PUERTA ABIERTA! ¡ALCANZA LA SALIDA!,PORTA ABERTA! ALCANCE A SAÍDA!
+prompt_enter_conduit,[Space / A] Enter Conduit,[Espacio / A] Entrar al Conducto,[Espaço / A] Entrar no Conduíte
+prompt_wl_only,White Lightning only,Solo White Lightning,Apenas White Lightning
+prompt_phase_astral_wall,[Space / A] Phase Astral Wall,[Espacio / A] Atravesar Pared Astral,[Espaço / A] Atravessar Parede Astral
+prompt_guardian_only,Guardian only,Solo Guardian,Apenas Guardião
+prompt_access_terminal,[Space / A] Access Terminal,[Espacio / A] Acceder a la Terminal,[Espaço / A] Acessar Terminal
+prompt_terminal_unlocked,Access Granted (Unlocked),Acceso Concedido (Desbloqueado),Acesso Concedido (Desbloqueado)
+prompt_monkey_only,Unauthorized: Monkey scientist required,No autorizado: Se requiere al Científico Mono,Não autorizado: Requer o Macaco Cientista

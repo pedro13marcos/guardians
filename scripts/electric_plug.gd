@@ -23,14 +23,14 @@ func _process(_delta: float) -> void:
 		if player_ref.personagem == "V":
 			if prompt_label:
 				prompt_label.visible = true
-				prompt_label.text = "[Space / A] Enter Conduit"
+				prompt_label.text = tr("prompt_enter_conduit")
 			
 			if Input.is_action_just_pressed("Action"):
 				_try_teleport()
 		else:
 			if prompt_label:
 				prompt_label.visible = true
-				prompt_label.text = "White Lightning only"
+				prompt_label.text = tr("prompt_wl_only")
 	else:
 		if prompt_label:
 			prompt_label.visible = false

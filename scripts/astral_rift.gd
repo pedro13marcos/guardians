@@ -32,14 +32,14 @@ func _process(_delta: float) -> void:
 		if player_ref.personagem == "F":
 			if prompt_label:
 				prompt_label.visible = true
-				prompt_label.text = "[Space / A] Phase Astral Wall"
+				prompt_label.text = tr("prompt_phase_astral_wall")
 			
 			if Input.is_action_just_pressed("Action"):
 				open_wall()
 		else:
 			if prompt_label:
 				prompt_label.visible = true
-				prompt_label.text = "Guardian only"
+				prompt_label.text = tr("prompt_guardian_only")
 	else:
 		if prompt_label:
 			prompt_label.visible = false

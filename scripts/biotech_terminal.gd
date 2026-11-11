@@ -25,21 +25,21 @@ func _process(_delta: float) -> void:
 		if is_accessed:
 			if prompt_label:
 				prompt_label.visible = true
-				prompt_label.text = "Access Granted (Unlocked)"
+				prompt_label.text = tr("prompt_terminal_unlocked")
 			return
 			
 		# Only Monkey ("A") knows how to operate this laboratory security terminal
 		if player_ref.personagem == "A":
 			if prompt_label:
 				prompt_label.visible = true
-				prompt_label.text = "[Space / A] Access Terminal"
+				prompt_label.text = tr("prompt_access_terminal")
 			
 			if Input.is_action_just_pressed("Action"):
 				_access_terminal()
 		else:
 			if prompt_label:
 				prompt_label.visible = true
-				prompt_label.text = "Unauthorized: Monkey scientist required"
+				prompt_label.text = tr("prompt_monkey_only")
 	else:
 		if prompt_label:
 			prompt_label.visible = false

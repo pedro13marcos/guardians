@@ -26,7 +26,7 @@ func _setup_timer_ui() -> void:
 	
 	timer_label = Label.new()
 	timer_label.name = "CountdownLabel"
-	timer_label.text = "SURVIVE: 01:00"
+	timer_label.text = "%s: 01:00" % tr("survive_timer_prefix")
 	
 	# Center near top of screen
 	timer_label.anchor_left = 0.5
@@ -63,7 +63,7 @@ func _process(delta: float) -> void:
 		if timer_label:
 			var mins = int(remaining) / 60
 			var secs = int(remaining) % 60
-			timer_label.text = "SURVIVE: %02d:%02d" % [mins, secs]
+			timer_label.text = "%s: %02d:%02d" % [tr("survive_timer_prefix"), mins, secs]
 			if remaining <= 10.0:
 				timer_label.label_settings.font_color = Color(1.0, 0.3, 0.3, 1.0)
 		
@@ -80,7 +80,7 @@ func _complete_level_timer() -> void:
 		$HUD2.atualizaObjetivo(int(LEVEL_DURATION))
 	
 	if timer_label:
-		timer_label.text = "DOOR OPENED! REACH THE EXIT!"
+		timer_label.text = tr("survive_door_opened")
 		timer_label.label_settings.font_color = Color(0.3, 1.0, 0.4, 1.0)
 	
 	# Stop spawners

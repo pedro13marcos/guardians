@@ -5,7 +5,7 @@
 [ext_resource type="Theme" uid="uid://c6v2xk8j5qw1m" path="res://assets/guardians_theme.tres" id="3_theme"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slate"]
-bg_color = Color(0.06, 0.08, 0.12, 0.75)
+bg_color = Color(0.06, 0.08, 0.12, 0.85)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -68,18 +68,77 @@ theme_override_constants/separation = 14
 [node name="play" type="Button" parent="MenuSlate/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(250, 48)
 layout_mode = 2
-text = "PLAY GAME"
+text = "menu_play"
 
 [node name="options" type="Button" parent="MenuSlate/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(250, 48)
 layout_mode = 2
-text = "OPTIONS"
+text = "menu_options"
 
 [node name="quit" type="Button" parent="MenuSlate/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(250, 48)
 layout_mode = 2
-text = "QUIT"
+text = "menu_quit"
+
+[node name="OptionsSlate" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -210.0
+offset_top = -270.0
+offset_right = 210.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_slate")
+
+[node name="MarginContainer" type="MarginContainer" parent="OptionsSlate"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsSlate/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="OptionsSlate/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "options_title"
+horizontal_alignment = 1
+
+[node name="LanguageRow" type="HBoxContainer" parent="OptionsSlate/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="LanguageLabel" type="Label" parent="OptionsSlate/MarginContainer/VBoxContainer/LanguageRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "menu_language"
+vertical_alignment = 1
+
+[node name="LanguageSelect" type="OptionButton" parent="OptionsSlate/MarginContainer/VBoxContainer/LanguageRow"]
+custom_minimum_size = Vector2(170, 42)
+layout_mode = 2
+
+[node name="FullscreenCheck" type="CheckBox" parent="OptionsSlate/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "options_fullscreen"
+
+[node name="Back" type="Button" parent="OptionsSlate/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 44)
+layout_mode = 2
+text = "menu_back"
 
 [connection signal="button_up" from="MenuSlate/MarginContainer/VBoxContainer/play" to="." method="_on_play_button_up"]
 [connection signal="button_up" from="MenuSlate/MarginContainer/VBoxContainer/options" to="." method="_on_options_button_up"]
 [connection signal="button_up" from="MenuSlate/MarginContainer/VBoxContainer/quit" to="." method="_on_quit_button_up"]
+[connection signal="item_selected" from="OptionsSlate/MarginContainer/VBoxContainer/LanguageRow/LanguageSelect" to="." method="_on_language_select_item_selected"]
+[connection signal="toggled" from="OptionsSlate/MarginContainer/VBoxContainer/FullscreenCheck" to="." method="_on_fullscreen_check_toggled"]
+[connection signal="button_up" from="OptionsSlate/MarginContainer/VBoxContainer/Back" to="." method="_on_back_button_up"]
