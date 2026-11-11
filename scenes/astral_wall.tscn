@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dfvxu887q1w3p"]
+[gd_scene format=3 uid="uid://dfvxu887q1w3p"]
 
 [ext_resource type="Script" path="res://scripts/astral_wall.gd" id="1_wall_script"]
 [ext_resource type="Texture2D" uid="uid://brd7q8vlhrevn" path="res://assets/AI/astral_wall.png" id="2_wall_tex"]

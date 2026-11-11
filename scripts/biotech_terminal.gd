@@ -1,9 +1,11 @@
 extends Area2D
 
 ## Reusable Biotech Terminal that only Monkey ("A") can interact with.
-## Unlocks the linked target_door when accessed.
+## Can open multiple doors, barriers, or walls!
+## Assign single target_door, or multiple target_doors / target_nodes in the inspector.
 
 @export var target_door: NodePath = ""
+@export var target_nodes: Array[NodePath] = []
 @export var is_accessed: bool = false
 
 var is_player_inside: bool = false
@@ -23,7 +25,7 @@ func _process(_delta: float) -> void:
 		if is_accessed:
 			if prompt_label:
 				prompt_label.visible = true
-				prompt_label.text = "Access Granted (Door Unlocked)"
+				prompt_label.text = "Access Granted (Unlocked)"
 			return
 			
 		# Only Monkey ("A") knows how to operate this laboratory security terminal
@@ -46,16 +48,30 @@ func _access_terminal() -> void:
 	is_accessed = true
 	_apply_accessed_visuals()
 	
+	var all_targets: Array[NodePath] = []
 	if target_door and not target_door.is_empty():
-		var door = get_node_or_null(target_door)
-		if door:
-			if "isOpen" in door:
-				door.isOpen = true
-			elif door.has_method("open"):
-				door.open()
-			print("BiotechTerminal: Monkey authorized! Security door opened.")
-	else:
-		print("BiotechTerminal: No target_door linked!")
+		all_targets.append(target_door)
+	for path in target_nodes:
+		if path and not path.is_empty() and not all_targets.has(path):
+			all_targets.append(path)
+	
+	for path in all_targets:
+		var node = get_node_or_null(path)
+		if node:
+			_unlock_or_open(node)
+	
+	print("BiotechTerminal: Monkey authorized! Opened %d targets." % all_targets.size())
+
+func _unlock_or_open(target: Node) -> void:
+	if "isOpen" in target:
+		target.isOpen = true
+	elif "is_open" in target:
+		target.is_open = true
+	
+	if target.has_method("open_wall"):
+		target.open_wall()
+	elif target.has_method("open"):
+		target.open()
 
 func _apply_accessed_visuals() -> void:
 	var tween = create_tween()

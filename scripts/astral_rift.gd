@@ -1,39 +1,41 @@
 extends Area2D
 
-## Reusable Astral Rift interactable item for Guardian ("F").
-## When Guardian channels magical dimensional energy, the targeted AstralWall opens into a walkable path.
+## Unified Astral Rift Wall for Guardian ("F").
+## Starts as an impassable wall tile marked with an astral dimensional rift.
+## When Guardian interacts, it dissolves into a walkable purple astral floor tile!
 
-@export var target_astral_wall: NodePath = ""
-@export var is_rift_activated: bool = false
+@export var is_open: bool = false
 
 var is_player_inside: bool = false
 var player_ref: Node2D = null
 
-@onready var sprite = $Sprite2D
+@onready var anim_sprite = $AnimatedSprite2D
+@onready var wall_collider = $StaticBody2D/CollisionShape2D
 @onready var prompt_label = $PromptLabel
 
 func _ready() -> void:
 	if prompt_label:
 		prompt_label.visible = false
-	if is_rift_activated:
-		_apply_active_visuals()
+	if is_open:
+		open_wall(true)
+	else:
+		close_wall(true)
 
 func _process(_delta: float) -> void:
 	if is_player_inside and player_ref:
-		if is_rift_activated:
+		if is_open:
 			if prompt_label:
-				prompt_label.visible = true
-				prompt_label.text = "Astral Path Open"
+				prompt_label.visible = false
 			return
-			
-		# Only Guardian ("F") has magical planar powers
+		
+		# Only Guardian ("F") has planar magic to breach dimensions
 		if player_ref.personagem == "F":
 			if prompt_label:
 				prompt_label.visible = true
-				prompt_label.text = "[E / Action] Open Astral Path"
+				prompt_label.text = "[E / Action] Phase Astral Wall"
 			
 			if Input.is_action_just_pressed("Action"):
-				_activate_rift()
+				open_wall()
 		else:
 			if prompt_label:
 				prompt_label.visible = true
@@ -42,22 +44,29 @@ func _process(_delta: float) -> void:
 		if prompt_label:
 			prompt_label.visible = false
 
-func _activate_rift() -> void:
-	is_rift_activated = true
-	_apply_active_visuals()
+func open_wall(immediate: bool = false) -> void:
+	is_open = true
+	if wall_collider:
+		wall_collider.set_deferred("disabled", true)
 	
-	if target_astral_wall and not target_astral_wall.is_empty():
-		var wall = get_node_or_null(target_astral_wall)
-		if wall and wall.has_method("open_wall"):
-			wall.open_wall()
-			print("AstralRift: Astral wall demarked path opened by Guardian!")
-	else:
-		print("AstralRift: No target_astral_wall linked!")
+	if anim_sprite:
+		anim_sprite.play("open")
+		if not immediate:
+			var tween = create_tween()
+			anim_sprite.modulate = Color(1.8, 1.3, 2.0, 1.0)
+			tween.tween_property(anim_sprite, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.4)
 
-func _apply_active_visuals() -> void:
-	var tween = create_tween()
-	tween.tween_property(sprite, "modulate", Color(1.3, 0.9, 1.8, 1.0), 0.3)
-	tween.parallel().tween_property(sprite, "scale", Vector2(0.14, 0.14), 0.3)
+func close_wall(immediate: bool = false) -> void:
+	is_open = false
+	if wall_collider:
+		wall_collider.set_deferred("disabled", false)
+	
+	if anim_sprite:
+		anim_sprite.play("closed")
+		if not immediate:
+			var tween = create_tween()
+			anim_sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
+			tween.tween_property(anim_sprite, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.2)
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Player":

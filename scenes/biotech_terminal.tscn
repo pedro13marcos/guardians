@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3m8o8v0x4n8g"]
+[gd_scene format=3 uid="uid://d3m8o8v0x4n8g"]
 
 [ext_resource type="Script" path="res://scripts/biotech_terminal.gd" id="1_term_script"]
 [ext_resource type="Texture2D" uid="uid://ckmbumc2cesex" path="res://assets/AI/biotech_terminal.png" id="2_term_tex"]

@@ -1,28 +1,59 @@
-[gd_scene load_steps=5 format=3 uid="uid://bm1c98w2pux5o"]
+[gd_scene load_steps=7 format=3 uid="uid://bm1c98w2pux5o"]
 
 [ext_resource type="Script" path="res://scripts/astral_rift.gd" id="1_rift_script"]
-[ext_resource type="Texture2D" uid="uid://dohsuljiuab0r" path="res://assets/AI/astral_rift.png" id="2_rift_tex"]
+[ext_resource type="Texture2D" uid="uid://da6uobdlwwnp5" path="res://assets/AI/astral_rift_wall_closed.png" id="2_closed_tex"]
+[ext_resource type="Texture2D" uid="uid://b5lw5odydlr5" path="res://assets/AI/astral_rift_wall_open.png" id="3_open_tex"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_rift"]
-radius = 20.0
+[sub_resource type="SpriteFrames" id="SpriteFrames_rift_wall"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_closed_tex")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_open_tex")
+}],
+"loop": true,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interaction"]
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_block"]
+size = Vector2(32, 32)
 
 [sub_resource type="LabelSettings" id="LabelSettings_prompt"]
 font_size = 10
 outline_size = 3
 outline_color = Color(0, 0, 0, 0.9)
 
-[node name="AstralRift" type="Area2D"]
+[node name="AstralRiftWall" type="Area2D"]
 collision_layer = 7
 collision_mask = 7
 script = ExtResource("1_rift_script")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 2
 scale = Vector2(0.125, 0.125)
-texture = ExtResource("2_rift_tex")
+sprite_frames = SubResource("SpriteFrames_rift_wall")
+animation = &"closed"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_rift")
+shape = SubResource("RectangleShape2D_interaction")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_wall_block")
 
 [node name="PromptLabel" type="Label" parent="."]
 offset_left = -70.0

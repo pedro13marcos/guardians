@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvy535q43485y"]
+[gd_scene format=3 uid="uid://bvy535q43485y"]
 
 [ext_resource type="Script" path="res://scripts/electric_plug.gd" id="1_plug_script"]
 [ext_resource type="Texture2D" uid="uid://c31ujuur8btcs" path="res://assets/AI/electric_plug.png" id="2_plug_tex"]
