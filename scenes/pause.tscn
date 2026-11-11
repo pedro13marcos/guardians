@@ -5,6 +5,7 @@
 [ext_resource type="Theme" uid="uid://c6v2xk8j5qw1m" path="res://assets/guardians_theme.tres" id="2_theme"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
+layer = 25
 
 [node name="Pause" type="Control" parent="."]
 process_mode = 3

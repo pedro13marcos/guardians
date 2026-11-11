@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3f7mnk2v8x9w"]
+
+[ext_resource type="Script" path="res://scripts/minimap.gd" id="1_minimap_script"]
+[ext_resource type="Script" path="res://scripts/minimap_panel.gd" id="2_panel_script"]
+
+[node name="Minimap" type="CanvasLayer"]
+layer = 8
+script = ExtResource("1_minimap_script")
+
+[node name="MapPanel" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -285.0
+offset_top = 16.0
+offset_right = -15.0
+offset_bottom = 232.0
+grow_horizontal = 0
+mouse_filter = 0
+script = ExtResource("2_panel_script")

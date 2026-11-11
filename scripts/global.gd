@@ -4,7 +4,7 @@ extends Node
 ## Manages global game state, configuration/save persistence, translation,
 ## level background pre-loading, directional slide transitions, and persistent overlays.
 
-const GAME_VERSION: String = "0.43"
+const GAME_VERSION: String = "0.44"
 const CONF_PATH: String = "user://confGame.json"
 const SAVE_PATH: String = "user://saveGame.json"
 
@@ -14,6 +14,7 @@ var current_level: String = "res://scenes/main.tscn"
 var watermark_label: Label = null
 
 var is_transitioning: bool = false
+var max_reached_sector: int = 1
 var _preloaded_resources: Dictionary = {}
 
 const SUPPORTED_LANGUAGES: Array[Dictionary] = [

@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://lh61pnv6d838" path="res://assets/Bars/Done Mission.png" id="11_ha6lp"]
 [ext_resource type="Texture2D" uid="uid://bs2kdbam0oj04" path="res://assets/Bars/bubble_face_guardian.png" id="12_g_bubble"]
 [ext_resource type="Texture2D" uid="uid://c8cexcqpk1gy" path="res://assets/Bars/bubble_face_monkey.png" id="13_m_bubble"]
+[ext_resource type="PackedScene" uid="uid://c3f7mnk2v8x9w" path="res://scenes/minimap.tscn" id="14_minimap"]
 
 [node name="HUD2" type="CanvasLayer" unique_id=1528397012 node_paths=PackedStringArray("healthBar", "goals", "energyBar")]
 script = ExtResource("1_ja568")
@@ -123,3 +124,5 @@ offset_right = 278.0
 offset_bottom = 860.0
 texture = ExtResource("13_m_bubble")
 expand_mode = 1
+
+[node name="Minimap" parent="." instance=ExtResource("14_minimap")]

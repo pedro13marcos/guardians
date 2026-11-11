@@ -27,3 +27,15 @@ prompt_guardian_only,Guardian only,Solo Guardian,Apenas Guardião
 prompt_access_terminal,[Space / A] Access Terminal,[Espacio / A] Acceder a la Terminal,[Espaço / A] Acessar Terminal
 prompt_terminal_unlocked,Access Granted (Unlocked),Acceso Concedido (Desbloqueado),Acesso Concedido (Desbloqueado)
 prompt_monkey_only,Unauthorized: Monkey scientist required,No autorizado: Se requiere al Científico Mono,Não autorizado: Requer o Macaco Cientista
+minimap_title,FACILITY RADAR,RADAR DE INSTALACIÓN,RADAR DA INSTALAÇÃO
+minimap_sec1,SEC-01 Infiltration,SEC-01 Infiltración,SEC-01 Infiltração
+minimap_sec2,SEC-02 Generators,SEC-02 Generadores,SEC-02 Geradores
+minimap_sec3,SEC-03 Defense Matrix,SEC-03 Matriz de Defensa,SEC-03 Matriz de Defesa
+minimap_sec4,SEC-04 Core Lab,SEC-04 Laboratorio Central,SEC-04 Laboratório Central
+minimap_cleared,CLEARED,COMPLETADO,CONCLUÍDO
+minimap_transit_open,TRANSIT OPEN,TRÁNSITO ABIERTO,TRÂNSITO ABERTO
+minimap_transit_locked,LOCKED,BLOQUEADO,BLOQUEADO
+minimap_expand_hint,[M] Expand Map,[M] Expandir Mapa,[M] Expandir Mapa
+minimap_collapse_hint,[M] Collapse,[M] Reducir,[M] Reduzir
+minimap_legend_you,YOU,TÚ,VOCÊ
+minimap_legend_exit,EXIT,SALIDA,SAÍDA
