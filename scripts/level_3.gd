@@ -2,7 +2,7 @@ extends Node2D
 
 const LEVEL_DURATION: float = 60.0
 
-var nextLevel: String = "res://scenes/ending_page.tscn"
+var nextLevel: String = "res://scenes/level_4.tscn"
 var time_elapsed: float = 0.0
 var is_completed: bool = false
 var timer_label: Label = null
