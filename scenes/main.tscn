@@ -79,9 +79,6 @@ door_side = "top"
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
 zoom = Vector2(4, 4)
-limit_left = 0
-limit_top = 0
-position_smoothing_enabled = true
 script = ExtResource("3_nblma")
 player = NodePath("../Player")
 

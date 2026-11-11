@@ -59,14 +59,6 @@ position = Vector2(176, 304)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=533003130 node_paths=PackedStringArray("player")]
 zoom = Vector2(4, 4)
-limit_left = -640
-limit_top = -384
-limit_right = 480
-limit_bottom = 448
-limit_smoothed = true
-position_smoothing_enabled = true
-editor_draw_limits = true
-editor_draw_drag_margin = true
 script = ExtResource("6_p3r0x")
 player = NodePath("../Player")
 

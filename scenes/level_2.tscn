@@ -144,14 +144,6 @@ slide_direction = "left"
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1405391889 node_paths=PackedStringArray("player")]
 position = Vector2(-152, 784)
 zoom = Vector2(4, 4)
-limit_left = -439
-limit_top = 107
-limit_right = 137
-limit_bottom = 523
-limit_smoothed = true
-position_smoothing_enabled = true
-editor_draw_limits = true
-editor_draw_drag_margin = true
 script = ExtResource("5_y0icg")
 player = NodePath("../Player")
 

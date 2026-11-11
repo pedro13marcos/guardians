@@ -1,96 +1,79 @@
 extends Camera2D
 
-## Camera that always follows the player but never shows the void (empty tilemap cells).
-## When the player cannot be centered on one axis without exposing the void, the camera
-## keeps following on the other axis, using the closest valid position to the player.
+## Camera that always follows the player smoothly while clamping to the map boundaries.
+## Prevents showing the empty void outside the level's tilemap.
 
-@export var player: CharacterBody2D;
+@export var player: CharacterBody2D
+@export var smooth_speed: float = 10.0
 
 var _tilemap: TileMap
-var _cell: Vector2 = Vector2(32, 32)
-var _origin: Vector2i = Vector2i.ZERO
-var _grid_size: Vector2i = Vector2i.ZERO
-var _prefix: PackedInt32Array = PackedInt32Array()
+var _map_rect: Rect2 = Rect2()
+var _has_bounds: bool = false
 
 func _ready() -> void:
 	if player == null and has_node("../Player"):
 		player = get_node("../Player") as CharacterBody2D
 	if has_node("../Background"):
 		_tilemap = get_node("../Background") as TileMap
-		_build_grid()
-	# Level scripts must not clamp the camera by region anymore.
+		_compute_map_bounds()
+	
+	# Clear static editor limits so dynamic boundary clamp takes full control
 	limit_left = -10000000
 	limit_top = -10000000
 	limit_right = 10000000
 	limit_bottom = 10000000
 	limit_smoothed = false
 	position_smoothing_enabled = false
+	
+	# Immediately snap to the valid player position on spawn so there's no initial jump
+	if is_instance_valid(player):
+		global_position = _compute_target(player.global_position)
 
-func _build_grid() -> void:
+func _compute_map_bounds() -> void:
+	if _tilemap == null or _tilemap.tile_set == null:
+		_has_bounds = false
+		return
 	var used: Rect2i = _tilemap.get_used_rect()
-	_origin = used.position
-	_grid_size = used.size
-	_cell = Vector2(_tilemap.tile_set.tile_size) * _tilemap.scale
-	var w: int = _grid_size.x
-	var h: int = _grid_size.y
-	# Summed-area table of filled cells for O(1) rectangle queries.
-	_prefix.resize((w + 1) * (h + 1))
-	_prefix.fill(0)
-	for y in range(h):
-		var row_sum: int = 0
-		for x in range(w):
-			if _tilemap.get_cell_source_id(0, Vector2i(x, y) + _origin) != -1:
-				row_sum += 1
-			_prefix[(y + 1) * (w + 1) + (x + 1)] = _prefix[y * (w + 1) + (x + 1)] + row_sum
+	if used.size == Vector2i.ZERO:
+		_has_bounds = false
+		return
+	var cell: Vector2 = Vector2(_tilemap.tile_set.tile_size) * _tilemap.scale.abs()
+	var top_left_local: Vector2 = _tilemap.map_to_local(used.position) - cell * 0.5
+	var bottom_right_local: Vector2 = _tilemap.map_to_local(used.end - Vector2i.ONE) + cell * 0.5
+	var p1: Vector2 = _tilemap.to_global(top_left_local)
+	var p2: Vector2 = _tilemap.to_global(bottom_right_local)
+	var min_pt: Vector2 = Vector2(minf(p1.x, p2.x), minf(p1.y, p2.y))
+	var max_pt: Vector2 = Vector2(maxf(p1.x, p2.x), maxf(p1.y, p2.y))
+	_map_rect = Rect2(min_pt, max_pt - min_pt)
+	_has_bounds = true
 
-func _is_view_valid(center: Vector2, half: Vector2) -> bool:
-	var eps: float = 0.01
-	var x0: int = int(floor((center.x - half.x + eps) / _cell.x)) - _origin.x
-	var x1: int = int(ceil((center.x + half.x - eps) / _cell.x)) - _origin.x
-	var y0: int = int(floor((center.y - half.y + eps) / _cell.y)) - _origin.y
-	var y1: int = int(ceil((center.y + half.y - eps) / _cell.y)) - _origin.y
-	if x0 < 0 or y0 < 0 or x1 > _grid_size.x or y1 > _grid_size.y:
-		return false
-	var stride: int = _grid_size.x + 1
-	var filled: int = _prefix[y1 * stride + x1] - _prefix[y0 * stride + x1] - _prefix[y1 * stride + x0] + _prefix[y0 * stride + x0]
-	return filled == (x1 - x0) * (y1 - y0)
-
-func _candidates(p: float, half: float, cell: float, origin: int, count: int) -> Array[float]:
-	var result: Array[float] = [p]
-	var first: int = int(floor((p - 2.0 * half) / cell))
-	var last: int = int(ceil((p + 2.0 * half) / cell))
-	for b in range(maxi(first, origin), mini(last, origin + count) + 1):
-		var edge: float = b * cell
-		result.append(edge + half)
-		result.append(edge - half)
-	return result
-
-func _compute_position(target: Vector2) -> Vector2:
-	if _tilemap == null or _grid_size == Vector2i.ZERO:
+func _compute_target(target: Vector2) -> Vector2:
+	if not _has_bounds:
 		return target
 	var half: Vector2 = get_viewport_rect().size / zoom * 0.5
-	if _is_view_valid(target, half):
-		return target
-	var xs: Array[float] = _candidates(target.x, half.x, _cell.x, _origin.x, _grid_size.x)
-	var ys: Array[float] = _candidates(target.y, half.y, _cell.y, _origin.y, _grid_size.y)
-	var best: Vector2 = target
-	var best_d: float = INF
-	for cx in xs:
-		var dx: float = (cx - target.x) * (cx - target.x)
-		if dx >= best_d:
-			continue
-		for cy in ys:
-			var d: float = dx + (cy - target.y) * (cy - target.y)
-			if d >= best_d:
-				continue
-			if _is_view_valid(Vector2(cx, cy), half):
-				best = Vector2(cx, cy)
-				best_d = d
-	if best_d == INF:
-		# Map smaller than the view: center on the used area.
-		return (Vector2(_origin) + Vector2(_grid_size) * 0.5) * _cell
-	return best
+	var res := target
+	
+	# Horizontal clamping / centering
+	if _map_rect.size.x <= half.x * 2.0:
+		res.x = _map_rect.position.x + _map_rect.size.x * 0.5
+	else:
+		res.x = clampf(target.x, _map_rect.position.x + half.x, _map_rect.end.x - half.x)
+		
+	# Vertical clamping / centering
+	if _map_rect.size.y <= half.y * 2.0:
+		res.y = _map_rect.position.y + _map_rect.size.y * 0.5
+	else:
+		res.y = clampf(target.y, _map_rect.position.y + half.y, _map_rect.end.y - half.y)
+		
+	return res
 
-func _process(_delta: float) -> void:
-	if is_instance_valid(player):
-		position = _compute_position(player.global_position)
+func _process(delta: float) -> void:
+	if not is_instance_valid(player):
+		return
+	var target := _compute_target(player.global_position)
+	if delta > 0.0:
+		# Framerate-independent smooth exponential decay
+		var weight: float = 1.0 - exp(-smooth_speed * delta)
+		global_position = global_position.lerp(target, weight)
+	else:
+		global_position = target

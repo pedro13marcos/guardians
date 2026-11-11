@@ -4,7 +4,7 @@ extends Node
 ## Manages global game state, configuration/save persistence, translation,
 ## level background pre-loading, directional slide transitions, and persistent overlays.
 
-const GAME_VERSION: String = "0.47"
+const GAME_VERSION: String = "0.48"
 const CONF_PATH: String = "user://confGame.json"
 const SAVE_PATH: String = "user://saveGame.json"
 
@@ -237,7 +237,7 @@ func get_preloaded_scene(scene_path: String) -> PackedScene:
 	return null
 
 ## Transitions smoothly between scenes with a directional slide
-## (e.g. door on left -> slides from left to right, door on top -> slides from top to bottom)
+## (e.g. door on left -> slides from left to right, revealing the live new level seamlessly)
 func transition_to_level(target_scene: String, motion_vec: Vector2 = Vector2.DOWN) -> void:
 	if is_transitioning:
 		return
@@ -276,70 +276,57 @@ func transition_to_level(target_scene: String, motion_vec: Vector2 = Vector2.DOW
 	old_rect.position = Vector2.ZERO
 	root_ctrl.add_child(old_rect)
 
-	# 3. Change scene underneath using pre-loaded PackedScene
+	# 3. Add stylish seam divider to the trailing edge of old_rect
+	var divider := ColorRect.new()
+	divider.color = Color(0.04, 0.06, 0.1, 0.95)
+	var accent := ColorRect.new()
+	accent.color = Color(0.2, 0.75, 1.0, 0.8)
+
+	if abs(motion_vec.x) > abs(motion_vec.y):
+		divider.size = Vector2(8.0, vp_size.y)
+		accent.size = Vector2(2.0, vp_size.y)
+		if motion_vec.x > 0:
+			divider.position = Vector2(-8.0, 0)
+			accent.position = Vector2(0, 0)
+		else:
+			divider.position = Vector2(vp_size.x, 0)
+			accent.position = Vector2(6.0, 0)
+	else:
+		divider.size = Vector2(vp_size.x, 8.0)
+		accent.size = Vector2(vp_size.x, 2.0)
+		if motion_vec.y > 0:
+			divider.position = Vector2(0, -8.0)
+			accent.position = Vector2(0, 0)
+		else:
+			divider.position = Vector2(0, vp_size.y)
+			accent.position = Vector2(0, 6.0)
+
+	divider.add_child(accent)
+	old_rect.add_child(divider)
+
+	# 4. Change scene underneath using pre-loaded PackedScene
 	var next_scene_res = get_preloaded_scene(target_scene)
 	if next_scene_res != null:
 		get_tree().change_scene_to_packed(next_scene_res)
 	else:
 		get_tree().change_scene_to_file(target_scene)
 
-	# 4. Wait for new scene to render its first frame
+	# 5. Wait for new scene to load, spawn player, and initialize camera
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
 
-	# 5. Capture incoming screen
-	var new_tex: ImageTexture = null
-	var new_img: Image = vp.get_texture().get_image()
-	if new_img != null and not new_img.is_empty():
-		new_tex = ImageTexture.create_from_image(new_img)
-
-	var new_rect := TextureRect.new()
-	if new_tex != null:
-		new_rect.texture = new_tex
-	new_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	new_rect.stretch_mode = TextureRect.STRETCH_SCALE
-	new_rect.size = vp_size
-
-	# Incoming scene enters from opposite edge and slides into (0, 0)
-	var new_start_pos := -motion_vec * vp_size
-	new_rect.position = new_start_pos
-	root_ctrl.add_child(new_rect)
-
-	# 6. Stylish comic-dark divider seam line between the two slides
-	var divider := ColorRect.new()
-	divider.color = Color(0.04, 0.06, 0.1, 0.95)
-	var divider_start_pos := Vector2.ZERO
-	if abs(motion_vec.x) > abs(motion_vec.y):
-		divider.size = Vector2(6.0, vp_size.y)
-		if motion_vec.x > 0:
-			divider_start_pos = Vector2(-3.0, 0)
-		else:
-			divider_start_pos = Vector2(vp_size.x - 3.0, 0)
-	else:
-		divider.size = Vector2(vp_size.x, 6.0)
-		if motion_vec.y > 0:
-			divider_start_pos = Vector2(0, -3.0)
-		else:
-			divider_start_pos = Vector2(0, vp_size.y - 3.0)
-
-	divider.position = divider_start_pos
-	root_ctrl.add_child(divider)
-
-	# 7. Smooth cubic tween in direction of motion_vec
+	# 6. Smoothly slide old_rect completely off-screen, revealing the live new level underneath
 	var tween := create_tween()
-	tween.set_parallel(true)
 	tween.set_trans(Tween.TRANS_CUBIC)
-	tween.set_ease(Tween.EASE_IN_OUT)
-	var duration: float = 0.55
+	tween.set_ease(Tween.EASE_OUT)
+	var duration: float = 0.5
 
 	var old_end_pos := motion_vec * vp_size
 	tween.tween_property(old_rect, "position", old_end_pos, duration)
-	tween.tween_property(new_rect, "position", Vector2.ZERO, duration)
-	var divider_end_pos := divider_start_pos + (motion_vec * vp_size)
-	tween.tween_property(divider, "position", divider_end_pos, duration)
 
 	await tween.finished
 
+	# 7. Cleanup overlay (old_rect is completely off-screen, so removal is seamless)
 	canvas.queue_free()
 	is_transitioning = false
 	print("Global: Level transition slide completed smoothly.")
