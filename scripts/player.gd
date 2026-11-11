@@ -43,6 +43,11 @@ func _ready():
 	update_sprite_flip();
 	
 func _physics_process(_delta):
+	if Global.is_transitioning:
+		vel = Vector2.ZERO
+		velocity = Vector2.ZERO
+		return
+	
 	# If White Lightning is currently teleporting, his position is driven by the lightning projectile
 	if is_teleporting:
 		return;

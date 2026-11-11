@@ -65,6 +65,10 @@ func _resolve_player() -> void:
 		player = get_node("../Player") as Node2D
 
 func _physics_process(delta: float) -> void:
+	if Global.is_transitioning:
+		velocity = Vector2.ZERO
+		return
+	
 	_resolve_player()
 	if not is_instance_valid(player):
 		_update_animations(Vector2.ZERO, false)

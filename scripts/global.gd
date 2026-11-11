@@ -4,7 +4,7 @@ extends Node
 ## Manages global game state, configuration/save persistence, translation,
 ## level background pre-loading, directional slide transitions, and persistent overlays.
 
-const GAME_VERSION: String = "0.48"
+const GAME_VERSION: String = "0.49"
 const CONF_PATH: String = "user://confGame.json"
 const SAVE_PATH: String = "user://saveGame.json"
 
@@ -236,8 +236,9 @@ func get_preloaded_scene(scene_path: String) -> PackedScene:
 		return load(scene_path) as PackedScene
 	return null
 
-## Transitions smoothly between scenes with a directional slide
-## (e.g. door on left -> slides from left to right, revealing the live new level seamlessly)
+## Transitions smoothly between scenes with a synchronized push slide.
+## Both screens slide in lockstep: the old level slides out while the incoming level slides in,
+## physically pushing the old level away seamlessly.
 func transition_to_level(target_scene: String, motion_vec: Vector2 = Vector2.DOWN) -> void:
 	if is_transitioning:
 		return
@@ -276,7 +277,39 @@ func transition_to_level(target_scene: String, motion_vec: Vector2 = Vector2.DOW
 	old_rect.position = Vector2.ZERO
 	root_ctrl.add_child(old_rect)
 
-	# 3. Add stylish seam divider to the trailing edge of old_rect
+	# 3. Change scene underneath using pre-loaded PackedScene
+	var next_scene_res = get_preloaded_scene(target_scene)
+	if next_scene_res != null:
+		get_tree().change_scene_to_packed(next_scene_res)
+	else:
+		get_tree().change_scene_to_file(target_scene)
+
+	# 4. Wait for new scene to instantiate and initialize camera/player
+	await get_tree().process_frame
+
+	# 5. Capture incoming screen without presentation (swap_buffers = false)
+	#    Prevents any 1-frame screen flash while capturing the new scene's live view
+	canvas.visible = false
+	RenderingServer.force_draw(false)
+	var new_tex: ImageTexture = null
+	var new_img: Image = vp.get_texture().get_image()
+	if new_img != null and not new_img.is_empty():
+		new_tex = ImageTexture.create_from_image(new_img)
+	canvas.visible = true
+
+	# 6. Incoming scene TextureRect (enters sliding from opposite edge)
+	var new_rect := TextureRect.new()
+	var has_new_tex: bool = (new_tex != null)
+	if has_new_tex:
+		new_rect.texture = new_tex
+	new_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	new_rect.stretch_mode = TextureRect.STRETCH_SCALE
+	new_rect.size = vp_size
+	new_rect.position = -motion_vec * vp_size
+	new_rect.visible = has_new_tex
+	root_ctrl.add_child(new_rect)
+
+	# 7. Add stylish seam divider along the joint between the two screens
 	var divider := ColorRect.new()
 	divider.color = Color(0.04, 0.06, 0.1, 0.95)
 	var accent := ColorRect.new()
@@ -286,50 +319,52 @@ func transition_to_level(target_scene: String, motion_vec: Vector2 = Vector2.DOW
 		divider.size = Vector2(8.0, vp_size.y)
 		accent.size = Vector2(2.0, vp_size.y)
 		if motion_vec.x > 0:
-			divider.position = Vector2(-8.0, 0)
-			accent.position = Vector2(0, 0)
+			# Pushing right: new_rect is on the left, seam is on right edge of new_rect
+			divider.position = Vector2(vp_size.x - 4.0, 0)
+			accent.position = Vector2(4.0, 0)
 		else:
-			divider.position = Vector2(vp_size.x, 0)
-			accent.position = Vector2(6.0, 0)
+			# Pushing left: new_rect is on the right, seam is on left edge of new_rect
+			divider.position = Vector2(-4.0, 0)
+			accent.position = Vector2(2.0, 0)
 	else:
 		divider.size = Vector2(vp_size.x, 8.0)
 		accent.size = Vector2(vp_size.x, 2.0)
 		if motion_vec.y > 0:
-			divider.position = Vector2(0, -8.0)
-			accent.position = Vector2(0, 0)
+			# Pushing down: new_rect is above old_rect, seam is on bottom edge of new_rect
+			divider.position = Vector2(0, vp_size.y - 4.0)
+			accent.position = Vector2(0, 4.0)
 		else:
-			divider.position = Vector2(0, vp_size.y)
-			accent.position = Vector2(0, 6.0)
+			# Pushing up: new_rect is below old_rect, seam is on top edge of new_rect
+			divider.position = Vector2(0, -4.0)
+			accent.position = Vector2(0, 2.0)
 
 	divider.add_child(accent)
-	old_rect.add_child(divider)
-
-	# 4. Change scene underneath using pre-loaded PackedScene
-	var next_scene_res = get_preloaded_scene(target_scene)
-	if next_scene_res != null:
-		get_tree().change_scene_to_packed(next_scene_res)
+	if has_new_tex:
+		new_rect.add_child(divider)
 	else:
-		get_tree().change_scene_to_file(target_scene)
+		old_rect.add_child(divider)
 
-	# 5. Wait for new scene to load, spawn player, and initialize camera
-	await get_tree().process_frame
-	await RenderingServer.frame_post_draw
-
-	# 6. Smoothly slide old_rect completely off-screen, revealing the live new level underneath
+	# 8. Synchronized push tween:
+	#    old_rect slides OUT to motion_vec * vp_size
+	#    new_rect slides IN from -motion_vec * vp_size to Vector2.ZERO
+	#    Cubic in-out provides buttery acceleration and cushioning
 	var tween := create_tween()
+	tween.set_parallel(true)
 	tween.set_trans(Tween.TRANS_CUBIC)
-	tween.set_ease(Tween.EASE_OUT)
-	var duration: float = 0.5
+	tween.set_ease(Tween.EASE_IN_OUT)
+	var duration: float = 0.55
 
 	var old_end_pos := motion_vec * vp_size
 	tween.tween_property(old_rect, "position", old_end_pos, duration)
+	if has_new_tex:
+		tween.tween_property(new_rect, "position", Vector2.ZERO, duration)
 
 	await tween.finished
 
-	# 7. Cleanup overlay (old_rect is completely off-screen, so removal is seamless)
+	# 9. Cleanup overlay: new_rect is at Vector2.ZERO and perfectly matches the live scene underneath
 	canvas.queue_free()
 	is_transitioning = false
-	print("Global: Level transition slide completed smoothly.")
+	print("Global: Level push transition completed smoothly.")
 
 func _create_watermark() -> void:
 	# Persistent canvas layer on top of all scenes
