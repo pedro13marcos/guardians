@@ -19,6 +19,7 @@ goals = NodePath("HUD2/Goals")
 energyBar = NodePath("HUD2/Energy")
 
 [node name="HUD2" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 

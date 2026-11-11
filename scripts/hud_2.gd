@@ -7,6 +7,7 @@ extends CanvasLayer
 var topObjetivo;
 
 func _ready():
+	$HUD2.show()
 	$HUD2/uiWL.show();
 	$HUD2/uiG.hide();
 	$HUD2/uiM.hide();
