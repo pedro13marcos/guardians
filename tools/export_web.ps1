@@ -19,9 +19,20 @@
   If any step fails nothing is zipped and the script exits non-zero.
 #>
 param(
-    [string]$Godot = "D:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe",
+    [string]$Godot = "",
     [string]$Preset = "Web"
 )
+
+if ([string]::IsNullOrWhiteSpace($Godot)) {
+    $candidates = @(
+        "C:\Program Files (x86)\Steam\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe",
+        "D:\SteamLibrary\steamapps\common\Godot Engine\godot.windows.opt.tools.64.exe"
+    )
+    foreach ($c in $candidates) {
+        if (Test-Path $c) { $Godot = $c; break }
+    }
+    if ([string]::IsNullOrWhiteSpace($Godot)) { $Godot = $candidates[0] }
+}
 
 $ErrorActionPreference = "Stop"
 $project = Split-Path -Parent $PSScriptRoot
