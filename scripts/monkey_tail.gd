@@ -44,6 +44,22 @@ func _ready() -> void:
 	_detect_obstacle()
 	_update_geometry()
 
+func _should_ignore_collider(collider: Object) -> bool:
+	if collider == null or collider == player:
+		return true
+	if collider.is_in_group("energyFont") or collider.is_in_group("LifeItem"):
+		return true
+	if collider is Area2D:
+		var is_target := (
+			collider.is_in_group("inimigo")
+			or collider.has_method("take_damage")
+			or "vida" in collider
+			or collider.is_in_group("Quebravel")
+			or collider.is_in_group("button")
+		)
+		return not is_target
+	return false
+
 func _detect_obstacle() -> void:
 	var space_state = get_world_2d().direct_space_state
 	var start_pos = player.global_position
@@ -55,15 +71,24 @@ func _detect_obstacle() -> void:
 	var test_origins = [start_pos, start_pos + perp, start_pos - perp]
 	
 	for orig in test_origins:
-		var query = PhysicsRayQueryParameters2D.create(orig, orig + facing_dir * max_reach, 7, [player.get_rid()])
-		query.collide_with_areas = true
-		query.collide_with_bodies = true
-		var res = space_state.intersect_ray(query)
-		if not res.is_empty():
+		var excluded: Array[RID] = [player.get_rid()]
+		for _step in range(16):
+			var query = PhysicsRayQueryParameters2D.create(orig, orig + facing_dir * max_reach, 7, excluded)
+			query.collide_with_areas = true
+			query.collide_with_bodies = true
+			var res = space_state.intersect_ray(query)
+			if res.is_empty():
+				break
+			if _should_ignore_collider(res.collider):
+				if res.has("rid"):
+					excluded.append(res.rid)
+					continue
+				break
 			var dist = start_pos.distance_to(res.position)
 			if dist < closest_hit:
 				closest_hit = dist
 				hit_collider = res.collider
+			break
 	
 	# If an obstacle was hit, stop at contact point; otherwise full half-screen
 	target_distance = clamp(closest_hit, 8.0, max_reach)
