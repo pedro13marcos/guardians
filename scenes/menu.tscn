@@ -484,10 +484,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -210.0
-offset_top = -180.0
-offset_right = 210.0
-offset_bottom = 180.0
+offset_left = -260.0
+offset_top = -240.0
+offset_right = 260.0
+offset_bottom = 240.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slate")
@@ -495,19 +495,22 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_slate")
 [node name="MarginContainer" type="MarginContainer" parent="OptionsSlate"]
 layout_mode = 2
 theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 16
+theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_bottom = 18
 
 [node name="VBoxContainer" type="VBoxContainer" parent="OptionsSlate/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 10
 
 [node name="Title" type="Label" parent="OptionsSlate/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "options_title"
 horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="OptionsSlate/MarginContainer/VBoxContainer"]
+layout_mode = 2
 
 [node name="LanguageRow" type="HBoxContainer" parent="OptionsSlate/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -520,16 +523,48 @@ text = "menu_language"
 vertical_alignment = 1
 
 [node name="LanguageSelect" type="OptionButton" parent="OptionsSlate/MarginContainer/VBoxContainer/LanguageRow"]
-custom_minimum_size = Vector2(170, 42)
+custom_minimum_size = Vector2(230, 40)
+layout_mode = 2
+
+[node name="ResolutionRow" type="HBoxContainer" parent="OptionsSlate/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ResolutionLabel" type="Label" parent="OptionsSlate/MarginContainer/VBoxContainer/ResolutionRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "options_resolution"
+vertical_alignment = 1
+
+[node name="ResolutionSelect" type="OptionButton" parent="OptionsSlate/MarginContainer/VBoxContainer/ResolutionRow"]
+custom_minimum_size = Vector2(230, 40)
+layout_mode = 2
+
+[node name="ScalingRow" type="HBoxContainer" parent="OptionsSlate/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ScalingLabel" type="Label" parent="OptionsSlate/MarginContainer/VBoxContainer/ScalingRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "options_scaling"
+vertical_alignment = 1
+
+[node name="ScalingSelect" type="OptionButton" parent="OptionsSlate/MarginContainer/VBoxContainer/ScalingRow"]
+custom_minimum_size = Vector2(230, 40)
 layout_mode = 2
 
 [node name="FullscreenCheck" type="CheckBox" parent="OptionsSlate/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "options_fullscreen"
 
+[node name="HSeparator2" type="HSeparator" parent="OptionsSlate/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="Back" type="Button" parent="OptionsSlate/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 44)
 layout_mode = 2
+size_flags_horizontal = 4
 text = "menu_back"
 
 [connection signal="button_up" from="MenuSlate/MarginContainer/VBoxContainer/demo" to="." method="_on_demo_button_up"]
@@ -544,5 +579,7 @@ text = "menu_back"
 [connection signal="button_up" from="DemoSlate/MarginContainer/VBoxContainer/HBoxContainer/Back" to="." method="_on_back_button_up"]
 [connection signal="button_up" from="SavesSlate/MarginContainer/VBoxContainer/Back" to="." method="_on_back_button_up"]
 [connection signal="item_selected" from="OptionsSlate/MarginContainer/VBoxContainer/LanguageRow/LanguageSelect" to="." method="_on_language_select_item_selected"]
+[connection signal="item_selected" from="OptionsSlate/MarginContainer/VBoxContainer/ResolutionRow/ResolutionSelect" to="." method="_on_resolution_select_item_selected"]
+[connection signal="item_selected" from="OptionsSlate/MarginContainer/VBoxContainer/ScalingRow/ScalingSelect" to="." method="_on_scaling_select_item_selected"]
 [connection signal="toggled" from="OptionsSlate/MarginContainer/VBoxContainer/FullscreenCheck" to="." method="_on_fullscreen_check_toggled"]
 [connection signal="button_up" from="OptionsSlate/MarginContainer/VBoxContainer/Back" to="." method="_on_back_button_up"]

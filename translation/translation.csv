@@ -58,3 +58,8 @@ slot_load,Resume,Reanudar,Continuar
 slot_new,New Game,Nueva Partida,Novo Jogo
 slot_delete,Delete,Borrar,Apagar
 slot_active,ACTIVE,ACTIVO,ATIVO
+options_resolution,Resolution,Resolución,Resolução
+options_scaling,Screen Fit,Ajuste de Pantalla,Ajuste de Tela
+res_native,Native / Auto (Fill Monitor),Nativa / Automática (Llenar Monitor),Nativa / Automático (Preencher)
+scaling_expand,Fill Screen (Expand),Llenar Pantalla (Expandir),Preencher Tela (Expandir)
+scaling_keep,Keep Aspect (4:3),Mantener Aspecto (4:3),Manter Proporção (4:3)

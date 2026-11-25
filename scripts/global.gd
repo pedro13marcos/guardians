@@ -4,7 +4,7 @@ extends Node
 ## Manages global game state, configuration/save persistence, translation,
 ## level background pre-loading, directional slide transitions, and persistent overlays.
 
-const GAME_VERSION: String = "0.54"
+const GAME_VERSION: String = "0.55"
 const CONF_PATH: String = "user://confGame.json"
 const SAVE_PATH: String = "user://saveGame.json"
 const TOTAL_SAVE_SLOTS: int = 4
@@ -12,6 +12,8 @@ const SLOT_PATH_PREFIX: String = "user://save_slot_"
 
 var current_language_mode: String = "auto"
 var fullscreen: bool = false
+var current_resolution_id: String = "auto"
+var current_scaling_mode: String = "expand"
 var current_level: String = "res://scenes/main.tscn"
 var current_save_slot: int = 1
 var watermark_label: Label = null
@@ -25,6 +27,28 @@ const SUPPORTED_LANGUAGES: Array[Dictionary] = [
 	{"id": "en",    "label_key": "lang_en",   "native_name": "English"},
 	{"id": "es",    "label_key": "lang_es",   "native_name": "Español"},
 	{"id": "pt_BR", "label_key": "lang_pt",   "native_name": "Português (BR)"}
+]
+
+const RESOLUTION_PRESETS: Array[Dictionary] = [
+	{"id": "auto",        "label_key": "res_native",       "size": Vector2i.ZERO},
+	{"id": "3840x2160",   "label": "3840 x 2160 (4K UHD)", "size": Vector2i(3840, 2160)},
+	{"id": "2560x1440",   "label": "2560 x 1440 (1440p)",   "size": Vector2i(2560, 1440)},
+	{"id": "1920x1080",   "label": "1920 x 1080 (1080p FHD)", "size": Vector2i(1920, 1080)},
+	{"id": "1600x900",    "label": "1600 x 900 (900p HD+)",   "size": Vector2i(1600, 900)},
+	{"id": "1366x768",    "label": "1366 x 768 (Laptop)",   "size": Vector2i(1366, 768)},
+	{"id": "1280x720",    "label": "1280 x 720 (720p HD)",  "size": Vector2i(1280, 720)},
+	{"id": "1920x1200",   "label": "1920 x 1200 (16:10)",   "size": Vector2i(1920, 1200)},
+	{"id": "1680x1050",   "label": "1680 x 1050 (16:10)",   "size": Vector2i(1680, 1050)},
+	{"id": "1280x800",    "label": "1280 x 800 (Deck)",     "size": Vector2i(1280, 800)},
+	{"id": "1600x1200",   "label": "1600 x 1200 (4:3)",     "size": Vector2i(1600, 1200)},
+	{"id": "1024x768",    "label": "1024 x 768 (4:3)",      "size": Vector2i(1024, 768)},
+	{"id": "2560x1080",   "label": "2560 x 1080 (21:9)",    "size": Vector2i(2560, 1080)},
+	{"id": "3440x1440",   "label": "3440 x 1440 (21:9)",    "size": Vector2i(3440, 1440)}
+]
+
+const SCALING_MODES: Array[Dictionary] = [
+	{"id": "expand", "label_key": "scaling_expand"},
+	{"id": "keep",   "label_key": "scaling_keep"}
 ]
 
 func _ready() -> void:
@@ -104,11 +128,54 @@ func set_fullscreen(is_fullscreen: bool) -> void:
 	apply_display_settings()
 	save_config()
 
+func set_resolution_by_id(res_id: String) -> void:
+	current_resolution_id = res_id
+	apply_display_settings()
+	save_config()
+
+func set_scaling_mode(mode: String) -> void:
+	current_scaling_mode = mode
+	apply_display_settings()
+	save_config()
+
+func get_current_resolution_size() -> Vector2i:
+	for preset in RESOLUTION_PRESETS:
+		if preset["id"] == current_resolution_id:
+			return preset["size"]
+	return Vector2i.ZERO
+
 func apply_display_settings() -> void:
+	# Configure viewport scaling mode to expand so the game can fill any monitor
+	var root_win: Window = get_tree().root
+	if root_win:
+		root_win.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+		if current_scaling_mode == "keep":
+			root_win.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
+		else:
+			root_win.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
+	
+	var screen_id: int = DisplayServer.window_get_current_screen()
+	var screen_size: Vector2i = DisplayServer.screen_get_size(screen_id)
+	
 	if fullscreen:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		var target_size = get_current_resolution_size()
+		if target_size == Vector2i.ZERO:
+			# Auto: 85% of screen size, maintaining 16:9 or 4:3 proportion
+			var w = int(screen_size.x * 0.85)
+			var h = int(screen_size.y * 0.85)
+			target_size = Vector2i(w, h)
+		
+		# Ensure window size never overflows the active monitor boundaries
+		target_size.x = mini(target_size.x, screen_size.x)
+		target_size.y = mini(target_size.y, screen_size.y)
+		DisplayServer.window_set_size(target_size)
+		
+		var screen_pos: Vector2i = DisplayServer.screen_get_position(screen_id)
+		var win_pos = screen_pos + (screen_size - target_size) / 2
+		DisplayServer.window_set_position(win_pos)
 
 # -------------------------------------------------------------
 # Configuration File Persistence (user://confGame.json)
@@ -118,6 +185,8 @@ func save_config() -> void:
 	var data = {
 		"lang": current_language_mode,
 		"fullscreen": fullscreen,
+		"resolution": current_resolution_id,
+		"scaling": current_scaling_mode,
 		"version": GAME_VERSION
 	}
 	var file = FileAccess.open(CONF_PATH, FileAccess.WRITE)
@@ -128,21 +197,26 @@ func save_config() -> void:
 func load_config() -> void:
 	if not FileAccess.file_exists(CONF_PATH):
 		set_language_mode("auto")
+		apply_display_settings()
 		return
 	var file = FileAccess.open(CONF_PATH, FileAccess.READ)
 	if file == null:
 		set_language_mode("auto")
+		apply_display_settings()
 		return
 	var json_str = file.get_as_text()
 	var data = JSON.parse_string(json_str)
 	if typeof(data) == TYPE_DICTIONARY:
 		var saved_lang = data.get("lang", "auto")
 		fullscreen = bool(data.get("fullscreen", false))
+		current_resolution_id = str(data.get("resolution", "auto"))
+		current_scaling_mode = str(data.get("scaling", "expand"))
 		set_language_mode(saved_lang)
 		apply_display_settings()
 		print("Config loaded successfully!")
 	else:
 		set_language_mode("auto")
+		apply_display_settings()
 
 # -------------------------------------------------------------
 # 4-Slot Game Save Persistence (user://save_slot_1..4.json)

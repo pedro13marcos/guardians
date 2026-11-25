@@ -14,10 +14,14 @@ extends Control
 
 # Options Slate Controls
 @onready var language_select: OptionButton = $OptionsSlate/MarginContainer/VBoxContainer/LanguageRow/LanguageSelect
+@onready var language_label: Label = $OptionsSlate/MarginContainer/VBoxContainer/LanguageRow/LanguageLabel
+@onready var resolution_select: OptionButton = $OptionsSlate/MarginContainer/VBoxContainer/ResolutionRow/ResolutionSelect
+@onready var resolution_label: Label = $OptionsSlate/MarginContainer/VBoxContainer/ResolutionRow/ResolutionLabel
+@onready var scaling_select: OptionButton = $OptionsSlate/MarginContainer/VBoxContainer/ScalingRow/ScalingSelect
+@onready var scaling_label: Label = $OptionsSlate/MarginContainer/VBoxContainer/ScalingRow/ScalingLabel
 @onready var fullscreen_check: CheckBox = $OptionsSlate/MarginContainer/VBoxContainer/FullscreenCheck
 @onready var back_btn: Button = $OptionsSlate/MarginContainer/VBoxContainer/Back
 @onready var options_title: Label = $OptionsSlate/MarginContainer/VBoxContainer/Title
-@onready var language_label: Label = $OptionsSlate/MarginContainer/VBoxContainer/LanguageRow/LanguageLabel
 
 # Demo Slate Controls
 @onready var demo_title: Label = $DemoSlate/MarginContainer/VBoxContainer/Title
@@ -83,6 +87,38 @@ func _sync_options_state() -> void:
 		var current_mode = DisplayServer.window_get_mode()
 		fullscreen_check.button_pressed = (current_mode == DisplayServer.WINDOW_MODE_FULLSCREEN or current_mode == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 	_populate_language_options()
+	_populate_resolution_options()
+	_populate_scaling_options()
+
+func _populate_resolution_options() -> void:
+	if resolution_select == null:
+		return
+	resolution_select.clear()
+	var selected_idx: int = 0
+	for i in range(Global.RESOLUTION_PRESETS.size()):
+		var preset: Dictionary = Global.RESOLUTION_PRESETS[i]
+		var label_text: String = ""
+		if preset.has("label_key") and not preset["label_key"].is_empty():
+			label_text = tr(preset["label_key"])
+		else:
+			label_text = preset.get("label", preset["id"])
+		resolution_select.add_item(label_text, i)
+		if preset["id"] == Global.current_resolution_id:
+			selected_idx = i
+	resolution_select.select(selected_idx)
+
+func _populate_scaling_options() -> void:
+	if scaling_select == null:
+		return
+	scaling_select.clear()
+	var selected_idx: int = 0
+	for i in range(Global.SCALING_MODES.size()):
+		var mode: Dictionary = Global.SCALING_MODES[i]
+		var label_text: String = tr(mode["label_key"])
+		scaling_select.add_item(label_text, i)
+		if mode["id"] == Global.current_scaling_mode:
+			selected_idx = i
+	scaling_select.select(selected_idx)
 
 func _populate_language_options() -> void:
 	if language_select == null:
@@ -228,11 +264,25 @@ func _on_language_select_item_selected(index: int) -> void:
 	Global.set_language_mode(lang_id)
 	_refresh_ui_text()
 
+func _on_resolution_select_item_selected(index: int) -> void:
+	if index < 0 or index >= Global.RESOLUTION_PRESETS.size():
+		return
+	var res_id: String = Global.RESOLUTION_PRESETS[index]["id"]
+	Global.set_resolution_by_id(res_id)
+
+func _on_scaling_select_item_selected(index: int) -> void:
+	if index < 0 or index >= Global.SCALING_MODES.size():
+		return
+	var mode_id: String = Global.SCALING_MODES[index]["id"]
+	Global.set_scaling_mode(mode_id)
+
 func _on_fullscreen_check_toggled(button_pressed: bool) -> void:
 	Global.set_fullscreen(button_pressed)
 
 func _refresh_ui_text() -> void:
 	_populate_language_options()
+	_populate_resolution_options()
+	_populate_scaling_options()
 	if play_btn:
 		play_btn.text = tr("menu_play_unavailable")
 	if demo_btn:
@@ -247,6 +297,10 @@ func _refresh_ui_text() -> void:
 		options_title.text = tr("options_title")
 	if language_label:
 		language_label.text = tr("menu_language")
+	if resolution_label:
+		resolution_label.text = tr("options_resolution")
+	if scaling_label:
+		scaling_label.text = tr("options_scaling")
 	if fullscreen_check:
 		fullscreen_check.text = tr("options_fullscreen")
 	if back_btn:
