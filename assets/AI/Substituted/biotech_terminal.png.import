@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://assets/AI/biotech_terminal.png"
+source_file="res://assets/AI/Substituted/biotech_terminal.png"
 dest_files=["res://.godot/imported/biotech_terminal.png-38560e31fcf00da62d6b25d0dc3c9b41.ctex"]
 
 [params]

@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bm83b7150i3kw" path="res://scenes/pause.tscn" id="8_una4e"]
 [ext_resource type="PackedScene" uid="uid://d0gmnax02ed3k" path="res://scenes/hud_2.tscn" id="9_ema3p"]
 [ext_resource type="PackedScene" path="res://scenes/filing_cabinet.tscn" id="pr_cabinet"]
-[ext_resource type="PackedScene" uid="uid://bf5nsw1gvvosb" path="res://scenes/computer.tscn" id="pr_computer"]
+[ext_resource type="PackedScene" path="res://scenes/computer.tscn" id="pr_computer"]
 [ext_resource type="PackedScene" path="res://scenes/plant.tscn" id="pr_plant"]
 [ext_resource type="PackedScene" path="res://scenes/server_rack.tscn" id="pr_rack"]
 
@@ -74,7 +74,6 @@ spawn_offset = Vector2(24, 0)
 visible = false
 
 [node name="HUD2" parent="." unique_id=206521178 instance=ExtResource("9_ema3p")]
-visible = false
 scale = Vector2(0.4, 0.4)
 transform = Transform2D(0.4, 0, 0, 0.4, 0, 0)
 
