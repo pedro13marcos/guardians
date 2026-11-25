@@ -28,10 +28,10 @@ var topObjetivo;
 
 func _ready():
 	$HUD2.show()
-	$HUD2/uiWL.show();
-	$HUD2/uiG.hide();
-	$HUD2/uiM.hide();
-	atualizaPersonagem("V")
+	var starting_char: String = "V"
+	if Global and "player_character" in Global and not Global.player_character.is_empty():
+		starting_char = Global.player_character
+	atualizaPersonagem(starting_char)
 	healthBar.set_tint_progress(Color(0,1,0,1));
 	pass
 	
@@ -39,12 +39,16 @@ func atualizaVida(vida):
 	
 	healthBar.value = vida;
 
-	if vida >= 50 && vida < 100:
-		var red = ((100.0 - ((vida-50.0)*2.0))/100.0);
-		healthBar.set_tint_progress(Color(red,1,0,1));
-	elif vida > 0 && vida < 50:
-		var green = vida/50.0
-		healthBar.set_tint_progress(Color(1,green,0,1))
+	if vida >= 100:
+		healthBar.set_tint_progress(Color(0, 1, 0, 1))
+	elif vida >= 50:
+		var red = ((100.0 - ((vida - 50.0) * 2.0)) / 100.0);
+		healthBar.set_tint_progress(Color(red, 1, 0, 1));
+	elif vida > 0:
+		var green = vida / 50.0
+		healthBar.set_tint_progress(Color(1, green, 0, 1))
+	else:
+		healthBar.set_tint_progress(Color(1, 0, 0, 1))
 
 func setObjetivo(tipo,top,atual):
 	topObjetivo = top;

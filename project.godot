@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="OldProject (4.7)"
-config/version="0.56"
+config/version="0.57"
 run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
 boot_splash/bg_color=Color(0.038397163, 0.038397174, 0.038397145, 1)

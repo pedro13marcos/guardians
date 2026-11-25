@@ -182,6 +182,9 @@ func _on_quit_button_up() -> void:
 
 # Demo Level Direct Select
 func _on_demo_level_selected(level_path: String) -> void:
+	Global.player_health = 100
+	Global.player_energy = 100
+	Global.player_character = "V"
 	Global.save_level(level_path)
 	get_tree().change_scene_to_file(level_path)
 
@@ -235,10 +238,18 @@ func _refresh_saves_ui() -> void:
 				var ts = str(data.get("timestamp", ""))
 				var lvl_name = str(data.get("level_name", ""))
 				var ver = str(data.get("version", Global.GAME_VERSION))
+				var hero_code = str(data.get("player_character", "V"))
+				var hero_key = "char_wl"
+				if hero_code == "F":
+					hero_key = "char_guardian"
+				elif hero_code == "A":
+					hero_key = "char_monkey"
+				var hero_name = tr(hero_key)
+				var hp = int(data.get("player_health", 100))
 				if not ts.is_empty():
-					details_lbl.text = "%s  |  %s  |  v%s" % [lvl_name, ts, ver]
+					details_lbl.text = "%s  |  %s (HP: %d)  |  %s" % [lvl_name, hero_name, hp, ts]
 				else:
-					details_lbl.text = "%s  |  v%s" % [lvl_name, ver]
+					details_lbl.text = "%s  |  %s (HP: %d)  |  v%s" % [lvl_name, hero_name, hp, ver]
 			if resume_btn:
 				resume_btn.visible = true
 				resume_btn.text = tr("slot_load")

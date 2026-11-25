@@ -29,16 +29,21 @@ var is_teleporting: bool = false;
 @onready var guardianHealScene = preload("res://scenes/guardian_heal.tscn");
 
 @onready var anim = $AnimatedSprite2D;
-@onready var UI = get_node("../HUD2");
+@onready var UI = get_node_or_null("../HUD2") if has_node("../HUD2") else get_node_or_null("../HUD");
 @onready var pai = get_node("..");
 
 func _ready():
 	add_to_group("player")
+	if Global:
+		vida = Global.player_health
+		energia = Global.player_energy
+		personagem = Global.player_character
 	atualizaUI();
-	anim.play("Vdown");
+	if UI and UI.has_method("atualizaPersonagem"):
+		UI.atualizaPersonagem(personagem);
+	anim.play(personagem + "down");
 	anim.stop();
-	personagem = "V";
-	facingDir = Vector2(0,1);
+	facingDir = Vector2(0, 1);
 	isFacingLeft = false;
 	update_sprite_flip();
 	
@@ -217,7 +222,10 @@ func trocaPersonagem(personagem):
 		personagem = "A";
 	elif personagem == "A":
 		personagem = "V";
-	UI.atualizaPersonagem(personagem);
+	if Global:
+		Global.player_character = personagem;
+	if UI and UI.has_method("atualizaPersonagem"):
+		UI.atualizaPersonagem(personagem);
 	return personagem;
 	
 func getX():
@@ -233,8 +241,13 @@ func playerAnim():
 	return anim.animation;
 	
 func atualizaUI():
-	UI.atualizaVida(vida);
-	UI.atualizaEnergia(energia);
+	if Global:
+		Global.player_health = vida;
+		Global.player_energy = energia;
+		Global.player_character = personagem;
+	if UI:
+		UI.atualizaVida(vida);
+		UI.atualizaEnergia(energia);
 
 func _on_hurting_cool_down_timeout():
 	hurtCoolDown = false;
@@ -246,6 +259,9 @@ func _on_energy_growing_timeout():
 		atualizaUI();
 	
 func morrePlayer():
+	if Global:
+		Global.player_health = 100;
+		Global.player_energy = 100;
 	get_tree().reload_current_scene();
 	
 func danoPlayer():

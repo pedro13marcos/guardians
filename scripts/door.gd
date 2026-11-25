@@ -43,6 +43,12 @@ func _update_door_state():
 func _on_body_entered(body):
 	if isOpen and body.name == "Player":
 		if level and not level.is_empty():
+			if "vida" in body and body.vida > 0:
+				Global.player_health = body.vida
+			if "energia" in body:
+				Global.player_energy = body.energia
+			if "personagem" in body and not body.personagem.is_empty():
+				Global.player_character = body.personagem
 			var motion_vec: Vector2 = _determine_motion_vector(body)
 			nextLevel(level, motion_vec)
 

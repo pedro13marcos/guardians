@@ -4,7 +4,7 @@ extends Node
 ## Manages global game state, configuration/save persistence, translation,
 ## level background pre-loading, directional slide transitions, and persistent overlays.
 
-const GAME_VERSION: String = "0.56"
+const GAME_VERSION: String = "0.57"
 const CONF_PATH: String = "user://confGame.json"
 const SAVE_PATH: String = "user://saveGame.json"
 const TOTAL_SAVE_SLOTS: int = 4
@@ -17,6 +17,11 @@ var current_scaling_mode: String = "expand"
 var current_level: String = "res://scenes/main.tscn"
 var current_save_slot: int = 1
 var watermark_label: Label = null
+
+# Persistent player state across level advancement and save slots
+var player_health: int = 100
+var player_energy: int = 100
+var player_character: String = "V"
 
 var is_transitioning: bool = false
 var max_reached_sector: int = 1
@@ -285,6 +290,9 @@ func get_slot_data(slot_idx: int) -> Dictionary:
 		"slot": slot_idx,
 		"last_level": "",
 		"level_name": tr("slot_empty") if tr("slot_empty") != "slot_empty" else "Empty Slot",
+		"player_health": 100,
+		"player_energy": 100,
+		"player_character": "V",
 		"timestamp": "",
 		"version": ""
 	}
@@ -305,6 +313,9 @@ func get_slot_data(slot_idx: int) -> Dictionary:
 		"slot": slot_idx,
 		"last_level": lvl_path,
 		"level_name": lvl_name,
+		"player_health": int(json.get("player_health", 100)),
+		"player_energy": int(json.get("player_energy", 100)),
+		"player_character": str(json.get("player_character", "V")),
 		"timestamp": str(json.get("timestamp", "")),
 		"version": str(json.get("version", GAME_VERSION))
 	}
@@ -315,9 +326,22 @@ func save_to_slot(slot_idx: int, level_path: String = "") -> void:
 		if not level_path.contains("menu.tscn") and not level_path.contains("ending_page.tscn"):
 			current_level = level_path
 	
+	# If player is in the tree, capture latest stats
+	var p = get_tree().get_first_node_in_group("player")
+	if is_instance_valid(p):
+		if "vida" in p and p.vida > 0:
+			player_health = p.vida
+		if "energia" in p:
+			player_energy = p.energia
+		if "personagem" in p and not p.personagem.is_empty():
+			player_character = p.personagem
+
 	var data = {
 		"slot": current_save_slot,
 		"last_level": current_level,
+		"player_health": player_health,
+		"player_energy": player_energy,
+		"player_character": player_character,
 		"version": GAME_VERSION,
 		"timestamp": Time.get_datetime_string_from_system()
 	}
@@ -325,18 +349,24 @@ func save_to_slot(slot_idx: int, level_path: String = "") -> void:
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	if file != null:
 		file.store_string(JSON.stringify(data, "\t"))
-		print("Global: Game saved to Slot %d! Level: %s" % [current_save_slot, current_level])
+		print("Global: Game saved to Slot %d! Level: %s (HP: %d, EP: %d, Char: %s)" % [current_save_slot, current_level, player_health, player_energy, player_character])
 
 func load_from_slot(slot_idx: int) -> void:
 	current_save_slot = clampi(slot_idx, 1, TOTAL_SAVE_SLOTS)
 	var slot_info = get_slot_data(current_save_slot)
 	if slot_info["exists"] and not slot_info["last_level"].is_empty():
 		current_level = slot_info["last_level"]
+		player_health = int(slot_info.get("player_health", 100))
+		player_energy = int(slot_info.get("player_energy", 100))
+		player_character = str(slot_info.get("player_character", "V"))
 	else:
 		current_level = "res://scenes/main.tscn"
+		player_health = 100
+		player_energy = 100
+		player_character = "V"
 		save_to_slot(current_save_slot, current_level)
 	
-	print("Global: Game loaded from Slot %d! Resuming from: %s" % [current_save_slot, current_level])
+	print("Global: Game loaded from Slot %d! Resuming from: %s (HP: %d, EP: %d, Char: %s)" % [current_save_slot, current_level, player_health, player_energy, player_character])
 	get_tree().change_scene_to_file(current_level)
 
 func delete_slot(slot_idx: int) -> void:
@@ -348,6 +378,9 @@ func delete_slot(slot_idx: int) -> void:
 func start_new_game_in_slot(slot_idx: int, level_path: String = "res://scenes/main.tscn") -> void:
 	current_save_slot = clampi(slot_idx, 1, TOTAL_SAVE_SLOTS)
 	current_level = level_path
+	player_health = 100
+	player_energy = 100
+	player_character = "V"
 	save_to_slot(current_save_slot, current_level)
 	get_tree().change_scene_to_file(current_level)
 
@@ -415,6 +448,17 @@ func transition_to_level(target_scene: String, motion_vec: Vector2 = Vector2.DOW
 	if is_transitioning:
 		return
 	is_transitioning = true
+
+	# Ensure current player stats are captured before transitioning
+	var p = get_tree().get_first_node_in_group("player")
+	if is_instance_valid(p):
+		if "vida" in p and p.vida > 0:
+			player_health = p.vida
+		if "energia" in p:
+			player_energy = p.energia
+		if "personagem" in p and not p.personagem.is_empty():
+			player_character = p.personagem
+
 	save_level(target_scene)
 
 	var vp: Viewport = get_tree().root.get_viewport()
