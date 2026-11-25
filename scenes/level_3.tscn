@@ -71,7 +71,6 @@ initial_delay = 2.6
 spawn_offset = Vector2(24, 0)
 
 [node name="CanvasLayer" parent="." unique_id=363877291 instance=ExtResource("8_una4e")]
-visible = false
 
 [node name="HUD2" parent="." unique_id=206521178 instance=ExtResource("9_ema3p")]
 scale = Vector2(0.4, 0.4)

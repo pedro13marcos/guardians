@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://d0qaxoayuvlfe"]
+[gd_scene load_steps=7 format=3 uid="uid://d0qaxoayuvlfe"]
 
 [ext_resource type="Script" uid="uid://c1o8f42q5pknm" path="res://scripts/Menu.gd" id="1_gh1ei"]
 [ext_resource type="Texture2D" uid="uid://y4x6swa5xy4t" path="res://assets/AI/menu_background.jpg" id="2_bg"]
 [ext_resource type="Theme" uid="uid://c6v2xk8j5qw1m" path="res://assets/guardians_theme.tres" id="3_theme"]
+[ext_resource type="Texture2D" path="res://assets/AI/game_logo.png" id="4_logo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slate"]
 bg_color = Color(0.06, 0.08, 0.12, 0.88)
@@ -50,6 +51,21 @@ grow_vertical = 2
 texture = ExtResource("2_bg")
 expand_mode = 1
 stretch_mode = 6
+
+[node name="Logo" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -240.0
+offset_top = 24.0
+offset_right = 240.0
+offset_bottom = 384.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("4_logo")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="MenuSlate" type="PanelContainer" parent="."]
 layout_mode = 1

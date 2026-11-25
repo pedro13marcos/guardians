@@ -81,6 +81,8 @@ func _show_slate(target: PanelContainer) -> void:
 	options_slate.visible = (target == options_slate)
 	demo_slate.visible = (target == demo_slate)
 	saves_slate.visible = (target == saves_slate)
+	if has_node("Logo"):
+		$Logo.visible = (target == menu_slate)
 
 func _sync_options_state() -> void:
 	if fullscreen_check != null:
