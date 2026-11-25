@@ -47,10 +47,10 @@ func _ready() -> void:
 func _should_ignore_collider(collider: Object) -> bool:
 	if collider == null or collider == player:
 		return true
-	if collider.is_in_group("energyFont") or collider.is_in_group("LifeItem"):
+	if collider is Node and (collider.is_in_group("energyFont") or collider.is_in_group("LifeItem")):
 		return true
 	if collider is Area2D:
-		var is_target := (
+		var is_target: bool = (
 			collider.is_in_group("inimigo")
 			or collider.has_method("take_damage")
 			or "vida" in collider
