@@ -1,6 +1,10 @@
 extends CharacterBody2D
 
 var speed = 80;
+const BASE_SPEED: float = 80.0;
+const SPRINT_SPEED: float = 365.0; # Half-way between normal speed (80) and special ability dash (650)
+var is_sprinting: bool = false;
+
 var facingDir = Vector2();
 var vel = Vector2();
 var personagem = "V";
@@ -29,6 +33,7 @@ var is_teleporting: bool = false;
 @onready var pai = get_node("..");
 
 func _ready():
+	add_to_group("player")
 	atualizaUI();
 	anim.play("Vdown");
 	anim.stop();
@@ -38,9 +43,22 @@ func _ready():
 	update_sprite_flip();
 	
 func _physics_process(_delta):
+	if Global.is_transitioning:
+		vel = Vector2.ZERO
+		velocity = Vector2.ZERO
+		return
+	
 	# If White Lightning is currently teleporting, his position is driven by the lightning projectile
 	if is_teleporting:
 		return;
+	
+	# White Lightning sprint: active while holding down the Attack key/button
+	if personagem == "V" and Input.is_action_pressed("Ataque"):
+		is_sprinting = true;
+		speed = SPRINT_SPEED;
+	else:
+		is_sprinting = false;
+		speed = BASE_SPEED;
 		
 	vel = Vector2();
 	
@@ -68,7 +86,9 @@ func _physics_process(_delta):
 		
 		if vel != Vector2.ZERO:
 			facingDir = vel;
-			if vel.x != 0:
+			if is_sprinting and personagem == "V":
+				anim.play("Vsprint");
+			elif vel.x != 0:
 				if vel.x < 0:
 					anim.play(personagem + "left");
 				else:
@@ -77,10 +97,30 @@ func _physics_process(_delta):
 				anim.play(personagem + "up");
 			elif vel.y > 0:
 				anim.play(personagem + "down");
+			
+			# Tile snapping / corner nudge:
+			# When moving along one axis, subtly align the perpendicular axis to the tile center (32px grid).
+			# This ensures the player slides effortlessly into 1-tile wide doorways without snagging corners.
+			const TILE_SIZE: float = 32.0
+			const ALIGN_STRENGTH: float = 40.0
+			var tile_offset_x = fposmod(global_position.x, TILE_SIZE) - (TILE_SIZE * 0.5)
+			var tile_offset_y = fposmod(global_position.y, TILE_SIZE) - (TILE_SIZE * 0.5)
+			
+			var nudge = Vector2.ZERO
+			if vel.x != 0 and vel.y == 0:
+				# Moving horizontally: gently pull towards vertical lane center if slightly misaligned
+				if abs(tile_offset_y) > 0.5 and abs(tile_offset_y) < 10.0:
+					nudge.y = -sign(tile_offset_y) * ALIGN_STRENGTH
+			elif vel.y != 0 and vel.x == 0:
+				# Moving vertically: gently pull towards horizontal lane center if slightly misaligned
+				if abs(tile_offset_x) > 0.5 and abs(tile_offset_x) < 10.0:
+					nudge.x = -sign(tile_offset_x) * ALIGN_STRENGTH
+			
+			velocity = (vel * speed) + nudge
 		else:
 			anim.stop();
+			velocity = Vector2.ZERO;
 
-		velocity = vel*speed;
 		move_and_slide();
 	
 	# --- Primary Attack ---
@@ -92,13 +132,18 @@ func _physics_process(_delta):
 					atualizaUI();
 					activeTail = monkeyTailScene.instantiate();
 					pai.add_child(activeTail);
+			elif personagem == "V":
+				energia -= 10;
+				atualizaUI();
+				var poder = novoPoder.instantiate();
+				pai.add_child(poder);
 			else:
 				energia -= 10;
 				atualizaUI();
 				var poder = novoPoder.instantiate();
 				pai.add_child(poder);
 	
-	# --- Side Ability (Key F / Square / X / Y) ---
+	# --- Side Ability (Key E / Square / B / Circle) ---
 	if Input.is_action_just_pressed("side_ability") and not is_performing_side_ability:
 		if energia >= side_ability_energy_cost:
 			executa_side_ability();

@@ -24,3 +24,9 @@ Follow these rules whenever making any code, scene, asset, or configuration alte
    - Place all AI audio assets together inside a single top-level `ai/` folder within the main sound directory (for example: `sound/ai/` or `sound/ai/<lang>/`).
    - Never mix AI placeholders into human-made asset folders so they can be easily reviewed, filtered, and replaced before final release.
    - When moving assets into `ai/` folders, always update and relink all scene (`.tscn`), script (`.gd`), and `.import` references so nothing breaks in Godot.
+
+
+5. **Always Export Web Builds With `tools/export_web.ps1`**:
+   - Never call the Godot executable directly for the itch.io build. Run `powershell -ExecutionPolicy Bypass -File tools\export_web.ps1` **outside the sandbox** (`BypassSandbox: true`): Godot (Steam build) must write to `editor_data\temp` next to its exe, otherwise it silently packs an empty `project.binary` and itch.io shows `Couldn't load project data at path "/"`.
+   - The script exports synchronously, loads the resulting `.pck` with the engine to verify it, checks `index.html` file sizes, builds `Exports/guardians-web-v<version>.zip`, and verifies the zip. Only upload a zip when the script prints `OK`.
+   - Keep only the latest version in `Exports/`.

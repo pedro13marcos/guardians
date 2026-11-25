@@ -1,6 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://qr3w6g4i8ojv"]
 
 [ext_resource type="Script" path="res://scripts/Control.gd" id="1_uukbw"]
+[ext_resource type="Theme" uid="uid://c6v2xk8j5qw1m" path="res://assets/guardians_theme.tres" id="2_theme"]
 
 [sub_resource type="Animation" id="Animation_odpfr"]
 length = 0.001
@@ -50,6 +51,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("2_theme")
 script = ExtResource("1_uukbw")
 
 [node name="MarginContainer" type="MarginContainer" parent="Control"]
@@ -72,8 +74,7 @@ layout_mode = 2
 [node name="Congrats" type="Label" parent="Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 100
-text = "Congratulations!
-"
+text = "ending_congrats"
 
 [node name="TypingAnim" type="AnimationPlayer" parent="Control/MarginContainer/VBoxContainer"]
 root_node = NodePath("../Text")
@@ -85,7 +86,7 @@ autoplay = "Typing"
 [node name="Text" type="Label" parent="Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-text = "You finished what I've prepared until now! I hope you enjoyed and if you want to tell me something, don't be afraid to contact me through comentaries or any other way that you want!"
+text = "ending_message"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -95,6 +96,6 @@ visible_ratio = 0.0
 [node name="Button" type="Button" parent="Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
-text = "Menu"
+text = "ending_menu_btn"
 
 [connection signal="button_up" from="Control/MarginContainer/VBoxContainer/Button" to="Control" method="_on_button_button_up"]

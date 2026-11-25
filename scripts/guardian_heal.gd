@@ -1,10 +1,9 @@
 extends Area2D
 
 ## Guardian Staff Slam & Divine Restoration Effect
-## Heals Guardian for half of his life (+50 HP) and unleashes an expanding radiant light burst that repels nearby enemies.
+## Heals Guardian for half of his life (+50 HP) with an expanding radiant light burst. Purely a healing skill (no damage).
 
 @export var heal_amount: int = 50
-@export var damage: int = 10
 @export var duration: float = 0.45
 
 var player: CharacterBody2D = null
@@ -67,14 +66,6 @@ func _physics_process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	_apply_effect(body)
 
-func _apply_effect(body: Node2D) -> void:
-	if body == player or body in hit_bodies:
-		return
-	hit_bodies[body] = true
-	
-	if body.is_in_group("inimigo"):
-		if "vida" in body:
-			body.vida -= damage
-	elif body.is_in_group("Quebravel"):
-		if body.has_method("quebra"):
-			body.quebra()
+func _apply_effect(_body: Node2D) -> void:
+	# Healing only: this skill never damages enemies or breakable objects.
+	pass

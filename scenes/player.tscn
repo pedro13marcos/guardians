@@ -13,6 +13,10 @@
 [ext_resource type="Texture2D" path="res://assets/AI/monkey_crunched.png" id="6_m_crunched"]
 [ext_resource type="Texture2D" path="res://assets/AI/guardian_staff_hit.png" id="7_g_staff"]
 [ext_resource type="Texture2D" path="res://assets/AI/wl_throw.png" id="8_wl_throw"]
+[ext_resource type="Texture2D" uid="uid://pgdy7ovygyft" path="res://assets/AI/wl_sprint_1.png" id="9_wl_sprint_1"]
+[ext_resource type="Texture2D" uid="uid://de1p2ti8kmm4c" path="res://assets/AI/wl_sprint_2.png" id="10_wl_sprint_2"]
+[ext_resource type="Texture2D" uid="uid://lmqcilt4e2x4" path="res://assets/AI/wl_sprint_3.png" id="11_wl_sprint_3"]
+[ext_resource type="Texture2D" uid="uid://buj2jfo14arlw" path="res://assets/AI/wl_sprint_4.png" id="12_wl_sprint_4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xciff"]
 animations = [{
@@ -219,10 +223,27 @@ animations = [{
 "loop": false,
 "name": &"Vside",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_wl_sprint_1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_wl_sprint_2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_wl_sprint_3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_wl_sprint_4")
+}],
+"loop": true,
+"name": &"Vsprint",
+"speed": 8.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_15vd7"]
-size = Vector2(20, 32)
+[sub_resource type="CircleShape2D" id="CircleShape2D_player"]
+radius = 11.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 z_index = 1
@@ -236,7 +257,8 @@ sprite_frames = SubResource("SpriteFrames_xciff")
 animation = &"Vdown"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_15vd7")
+position = Vector2(0, 4)
+shape = SubResource("CircleShape2D_player")
 
 [node name="hurtingCoolDown" type="Timer" parent="."]
 

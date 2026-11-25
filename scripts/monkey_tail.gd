@@ -138,8 +138,10 @@ func _trigger_impact(primary_target: Object) -> void:
 func _apply_damage_to(target: Object) -> void:
 	if not is_instance_valid(target):
 		return
-	if target.is_in_group("inimigo"):
-		if "vida" in target:
+	if target.is_in_group("inimigo") or target.has_method("take_damage") or "vida" in target:
+		if target.has_method("take_damage"):
+			target.take_damage(5)
+		elif "vida" in target:
 			target.vida -= 5
 	elif target.is_in_group("Quebravel"):
 		if target.has_method("quebra"):

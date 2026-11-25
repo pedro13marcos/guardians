@@ -2,20 +2,21 @@
 
 [ext_resource type="Texture2D" path="res://inner bar.png" id="1_mb0h6"]
 [ext_resource type="Script" path="res://scripts/pause.gd" id="1_uhgxk"]
-
-[sub_resource type="Theme" id="Theme_qiq18"]
+[ext_resource type="Theme" uid="uid://c6v2xk8j5qw1m" path="res://assets/guardians_theme.tres" id="2_theme"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
+layer = 25
 
 [node name="Pause" type="Control" parent="."]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_qiq18")
+theme = ExtResource("2_theme")
 script = ExtResource("1_uhgxk")
 
 [node name="Sprite2D" type="Sprite2D" parent="Pause"]
@@ -44,19 +45,18 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Pause/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 100
-text = "Pause"
+text = "pause_title"
 horizontal_alignment = 1
 
 [node name="Continue" type="Button" parent="Pause/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 100
-text = "Continue
-"
+text = "pause_continue"
 
 [node name="Quit" type="Button" parent="Pause/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 100
-text = "Quit"
+text = "pause_quit"
 
 [connection signal="button_up" from="Pause/MarginContainer/VBoxContainer/Continue" to="Pause" method="_on_continue_button_up"]
 [connection signal="button_up" from="Pause/MarginContainer/VBoxContainer/Quit" to="Pause" method="_on_quit_button_up"]
