@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" path="res://assets/Props/Acess/terminal 3.png" id="5_t3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_term"]
-size = Vector2(36, 48)
+size = Vector2(22, 30)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_term"]
 animations = [{
@@ -55,17 +55,17 @@ shape = SubResource("RectangleShape2D_term")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-scale = Vector2(0.014, 0.014)
+scale = Vector2(0.009, 0.009)
 offset = Vector2(-74, -126)
 sprite_frames = SubResource("SpriteFrames_term")
 animation = &"Up"
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(0, -6)
+position = Vector2(0, -4)
 color = Color(0.25, 0.85, 1, 1)
 energy = 0.45
 texture = SubResource("GradientTexture2D_light")
-texture_scale = 0.55
+texture_scale = 0.4
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

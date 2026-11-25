@@ -97,88 +97,88 @@ target_nodes = Array[NodePath]([NodePath("../door2")])
 
 [node name="Prop_ServerRack_1" parent="." unique_id=1552795716 instance=ExtResource("pr_rack")]
 position = Vector2(48, -368)
-scale = Vector2(0.04, 0.04)
+scale = Vector2(0.029, 0.029)
 
 [node name="Prop_Computer_2" parent="." unique_id=1228575713 instance=ExtResource("pr_computer")]
 position = Vector2(144, -240)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.0145, 0.0145)
 
 [node name="Prop_Plant_3" parent="." unique_id=1309328864 instance=ExtResource("pr_plant")]
 position = Vector2(240, -208)
-scale = Vector2(0.04, 0.04)
+scale = Vector2(0.0295, 0.0295)
 
 [node name="Prop_Computer_4" parent="." unique_id=329947415 instance=ExtResource("pr_computer")]
 position = Vector2(-624, -176)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.0145, 0.0145)
 
 [node name="Prop_FilingCabinet_5" parent="." unique_id=1130800577 instance=ExtResource("pr_cabinet")]
 position = Vector2(-336, -176)
-scale = Vector2(0.04, 0.04)
+scale = Vector2(0.028, 0.028)
 
 [node name="Prop_ServerRack_6" parent="." unique_id=354680022 instance=ExtResource("pr_rack")]
 position = Vector2(464, -176)
-scale = Vector2(0.04, 0.04)
+scale = Vector2(0.029, 0.029)
 
 [node name="Prop_Computer_7" parent="." unique_id=1783778151 instance=ExtResource("pr_computer")]
 position = Vector2(144, -144)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.0145, 0.0145)
 
 [node name="Prop_Plant_8" parent="." unique_id=379795426 instance=ExtResource("pr_plant")]
 position = Vector2(304, -112)
-scale = Vector2(0.04, 0.04)
+scale = Vector2(0.0295, 0.0295)
 
 [node name="Prop_Computer_9" parent="." unique_id=478551074 instance=ExtResource("pr_computer")]
 position = Vector2(-528, -80)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.0145, 0.0145)
 
 [node name="Prop_FilingCabinet_10" parent="." unique_id=1080182955 instance=ExtResource("pr_cabinet")]
 position = Vector2(-272, -80)
-scale = Vector2(0.04, 0.04)
+scale = Vector2(0.028, 0.028)
 
 [node name="Prop_ServerRack_11" parent="." unique_id=669830080 instance=ExtResource("pr_rack")]
 position = Vector2(144, -48)
-scale = Vector2(0.04, 0.04)
+scale = Vector2(0.029, 0.029)
 
 [node name="Prop_Computer_12" parent="." unique_id=1596819004 instance=ExtResource("pr_computer")]
 position = Vector2(-272, 16)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.0145, 0.0145)
 
 [node name="Prop_Plant_13" parent="." unique_id=237191480 instance=ExtResource("pr_plant")]
 position = Vector2(144, 48)
-scale = Vector2(0.04, 0.04)
+scale = Vector2(0.0295, 0.0295)
 
 [node name="Prop_Computer_14" parent="." unique_id=434212730 instance=ExtResource("pr_computer")]
 position = Vector2(144, 144)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.0145, 0.0145)
 
 [node name="Prop_FilingCabinet_15" parent="." unique_id=1828030433 instance=ExtResource("pr_cabinet")]
 position = Vector2(-624, 304)
-scale = Vector2(0.04, 0.04)
+scale = Vector2(0.028, 0.028)
 
 [node name="Prop_ServerRack_16" parent="." unique_id=733297273 instance=ExtResource("pr_rack")]
 position = Vector2(464, 304)
-scale = Vector2(0.04, 0.04)
+scale = Vector2(0.029, 0.029)
 
 [node name="Prop_Computer_17" parent="." unique_id=201497097 instance=ExtResource("pr_computer")]
 position = Vector2(-272, 400)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.0145, 0.0145)
 
 [node name="Prop_Plant_18" parent="." unique_id=1867986538 instance=ExtResource("pr_plant")]
 position = Vector2(-592, 432)
-scale = Vector2(0.04, 0.04)
+scale = Vector2(0.0295, 0.0295)
 
 [node name="Prop_Computer_19" parent="." unique_id=283703556 instance=ExtResource("pr_computer")]
 position = Vector2(-464, 432)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.0145, 0.0145)
 
 [node name="Prop_FilingCabinet_20" parent="." unique_id=1666047673 instance=ExtResource("pr_cabinet")]
 position = Vector2(-368, 432)
-scale = Vector2(0.04, 0.04)
+scale = Vector2(0.028, 0.028)
 
 [node name="Prop_ServerRack_21" parent="." unique_id=512187579 instance=ExtResource("pr_rack")]
 position = Vector2(-176, 432)
-scale = Vector2(0.04, 0.04)
+scale = Vector2(0.029, 0.029)
 
 [node name="Prop_Computer_22" parent="." unique_id=465325401 instance=ExtResource("pr_computer")]
 position = Vector2(80, 432)
-scale = Vector2(0.02, 0.02)
+scale = Vector2(0.0145, 0.0145)
