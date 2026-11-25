@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://d1c2d8hltgp7j"]
 
 [ext_resource type="Script" path="res://scripts/lifeFont.gd" id="1_jyfxd"]
-[ext_resource type="Texture2D" uid="uid://ol32gukuchuq" path="res://assets/AI/item_health.png" id="2_health"]
+[ext_resource type="Texture2D" path="res://assets/Powers/pill.png" id="2_health"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dh0n0"]
 animations = [{
@@ -22,7 +22,7 @@ script = ExtResource("1_jyfxd")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 2
-scale = Vector2(0.125, 0.125)
+scale = Vector2(0.007, 0.007)
 sprite_frames = SubResource("SpriteFrames_dh0n0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

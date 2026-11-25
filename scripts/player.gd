@@ -35,9 +35,9 @@ var is_teleporting: bool = false;
 func _ready():
 	add_to_group("player")
 	if Global:
-		vida = Global.player_health
-		energia = Global.player_energy
 		personagem = Global.player_character
+		vida = Global.get_character_health(personagem)
+		energia = Global.get_character_energy(personagem)
 	atualizaUI();
 	if UI and UI.has_method("atualizaPersonagem"):
 		UI.atualizaPersonagem(personagem);
@@ -215,18 +215,26 @@ func update_sprite_flip():
 	else:
 		anim.flip_h = not isFacingLeft;
 
-func trocaPersonagem(personagem):
-	if personagem == "V":
-		personagem = "F";
-	elif personagem == "F":
-		personagem = "A";
-	elif personagem == "A":
-		personagem = "V";
+func trocaPersonagem(p):
 	if Global:
-		Global.player_character = personagem;
+		Global.set_character_health(p, vida)
+		Global.set_character_energy(p, energia)
+	if p == "V":
+		p = "F";
+	elif p == "F":
+		p = "A";
+	elif p == "A":
+		p = "V";
+	if Global:
+		Global.player_character = p;
+		vida = Global.get_character_health(p)
+		energia = Global.get_character_energy(p)
 	if UI and UI.has_method("atualizaPersonagem"):
-		UI.atualizaPersonagem(personagem);
-	return personagem;
+		UI.atualizaPersonagem(p);
+	if UI:
+		UI.atualizaVida(vida);
+		UI.atualizaEnergia(energia);
+	return p;
 	
 func getX():
 	return global_position.x;
@@ -242,9 +250,9 @@ func playerAnim():
 	
 func atualizaUI():
 	if Global:
-		Global.player_health = vida;
-		Global.player_energy = energia;
 		Global.player_character = personagem;
+		Global.set_character_health(personagem, vida);
+		Global.set_character_energy(personagem, energia);
 	if UI:
 		UI.atualizaVida(vida);
 		UI.atualizaEnergia(energia);
@@ -260,8 +268,7 @@ func _on_energy_growing_timeout():
 	
 func morrePlayer():
 	if Global:
-		Global.player_health = 100;
-		Global.player_energy = 100;
+		Global.reset_character_stats(false);
 	get_tree().reload_current_scene();
 	
 func danoPlayer():

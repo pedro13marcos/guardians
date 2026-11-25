@@ -184,9 +184,7 @@ func _on_quit_button_up() -> void:
 
 # Demo Level Direct Select
 func _on_demo_level_selected(level_path: String) -> void:
-	Global.player_health = 100
-	Global.player_energy = 100
-	Global.player_character = "V"
+	Global.reset_character_stats(true)
 	Global.save_level(level_path)
 	get_tree().change_scene_to_file(level_path)
 

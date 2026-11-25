@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://basq60bf3sc0p"]
 
 [ext_resource type="Script" path="res://scripts/energy_font.gd" id="1_mj0gm"]
-[ext_resource type="Texture2D" uid="uid://dnfmf0ajadssp" path="res://assets/AI/item_energy_monkey.png" id="2_monkey"]
-[ext_resource type="Texture2D" uid="uid://bguomnxfv5l5q" path="res://assets/AI/item_energy_guardian.png" id="3_guardian"]
-[ext_resource type="Texture2D" uid="uid://c033e65bxq70f" path="res://assets/AI/item_energy_wl.png" id="4_wl"]
+[ext_resource type="Texture2D" path="res://assets/Powers/Monkey energy.png" id="2_monkey"]
+[ext_resource type="Texture2D" path="res://assets/Powers/Energy guardian.png" id="3_guardian"]
+[ext_resource type="Texture2D" path="res://assets/Powers/energy lightning.png" id="4_wl"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_he7u1"]
 animations = [{
@@ -40,7 +40,7 @@ script = ExtResource("1_mj0gm")
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 2
-scale = Vector2(0.125, 0.125)
+scale = Vector2(0.007, 0.007)
 sprite_frames = SubResource("SpriteFrames_he7u1")
 animation = &"V"
 
