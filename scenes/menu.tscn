@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0qaxoayuvlfe"]
+[gd_scene load_steps=6 format=3 uid="uid://d0qaxoayuvlfe"]
 
 [ext_resource type="Script" uid="uid://c1o8f42q5pknm" path="res://scripts/Menu.gd" id="1_gh1ei"]
 [ext_resource type="Texture2D" uid="uid://y4x6swa5xy4t" path="res://assets/AI/menu_background.jpg" id="2_bg"]
 [ext_resource type="Theme" uid="uid://c6v2xk8j5qw1m" path="res://assets/guardians_theme.tres" id="3_theme"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slate"]
-bg_color = Color(0.06, 0.08, 0.12, 0.85)
+bg_color = Color(0.06, 0.08, 0.12, 0.88)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -17,6 +17,18 @@ corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 shadow_color = Color(0, 0, 0, 0.5)
 shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot"]
+bg_color = Color(0.09, 0.12, 0.18, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.45, 0.65, 0.45)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -47,7 +59,7 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -170.0
-offset_top = -305.0
+offset_top = -340.0
 offset_right = 170.0
 offset_bottom = -25.0
 grow_horizontal = 2
@@ -57,48 +69,427 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_slate")
 [node name="MarginContainer" type="MarginContainer" parent="MenuSlate"]
 layout_mode = 2
 theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 18
+theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 18
+theme_override_constants/margin_bottom = 16
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MenuSlate/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 12
-
-[node name="continue" type="Button" parent="MenuSlate/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(250, 48)
-layout_mode = 2
-text = "menu_continue"
+theme_override_constants/separation = 10
 
 [node name="play" type="Button" parent="MenuSlate/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(250, 48)
+custom_minimum_size = Vector2(250, 46)
 layout_mode = 2
-text = "menu_play"
+focus_mode = 0
+disabled = true
+text = "menu_play_unavailable"
+
+[node name="demo" type="Button" parent="MenuSlate/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(250, 46)
+layout_mode = 2
+text = "menu_demo"
+
+[node name="saves" type="Button" parent="MenuSlate/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(250, 46)
+layout_mode = 2
+text = "menu_saves"
 
 [node name="options" type="Button" parent="MenuSlate/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(250, 48)
+custom_minimum_size = Vector2(250, 46)
 layout_mode = 2
 text = "menu_options"
 
 [node name="quit" type="Button" parent="MenuSlate/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(250, 48)
+custom_minimum_size = Vector2(250, 46)
 layout_mode = 2
 text = "menu_quit"
+
+[node name="DemoSlate" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -270.0
+offset_top = -250.0
+offset_right = 270.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slate")
+
+[node name="MarginContainer" type="MarginContainer" parent="DemoSlate"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 18
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DemoSlate/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="DemoSlate/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "demo_title"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="DemoSlate/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.85, 1, 0.85)
+theme_override_font_sizes/font_size = 14
+text = "demo_subtitle"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="DemoSlate/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Level1" type="Button" parent="DemoSlate/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(320, 44)
+layout_mode = 2
+text = "demo_level_1"
+
+[node name="Level2" type="Button" parent="DemoSlate/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(320, 44)
+layout_mode = 2
+text = "demo_level_2"
+
+[node name="Level3" type="Button" parent="DemoSlate/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(320, 44)
+layout_mode = 2
+text = "demo_level_3"
+
+[node name="Level4" type="Button" parent="DemoSlate/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(320, 44)
+layout_mode = 2
+text = "demo_level_4"
+
+[node name="HSeparator2" type="HSeparator" parent="DemoSlate/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DemoSlate/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="OpenSaves" type="Button" parent="DemoSlate/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "demo_open_saves"
+
+[node name="Back" type="Button" parent="DemoSlate/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "menu_back"
+
+[node name="SavesSlate" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -380.0
+offset_top = -310.0
+offset_right = 380.0
+offset_bottom = 310.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slate")
+
+[node name="MarginContainer" type="MarginContainer" parent="SavesSlate"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 18
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SavesSlate/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="SavesSlate/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "saves_title"
+horizontal_alignment = 1
+
+[node name="SlotContainer" type="VBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Slot1" type="PanelContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="MarginContainer" type="MarginContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot1"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="HBox" type="HBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot1/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="InfoBox" type="VBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot1/MarginContainer/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="HeaderRow" type="HBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot1/MarginContainer/HBox/InfoBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SlotTitle" type="Label" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot1/MarginContainer/HBox/InfoBox/HeaderRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Slot 1"
+
+[node name="ActiveBadge" type="Label" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot1/MarginContainer/HBox/InfoBox/HeaderRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 1, 0.5, 1)
+theme_override_font_sizes/font_size = 13
+text = "[ACTIVE]"
+
+[node name="Details" type="Label" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot1/MarginContainer/HBox/InfoBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.85, 0.9, 1)
+theme_override_font_sizes/font_size = 14
+text = "Empty Slot"
+
+[node name="Actions" type="HBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot1/MarginContainer/HBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ResumeBtn" type="Button" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot1/MarginContainer/HBox/Actions"]
+custom_minimum_size = Vector2(90, 36)
+layout_mode = 2
+text = "slot_load"
+
+[node name="NewBtn" type="Button" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot1/MarginContainer/HBox/Actions"]
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 2
+text = "slot_new"
+
+[node name="DeleteBtn" type="Button" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot1/MarginContainer/HBox/Actions"]
+custom_minimum_size = Vector2(80, 36)
+layout_mode = 2
+text = "slot_delete"
+
+[node name="Slot2" type="PanelContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="MarginContainer" type="MarginContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot2"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="HBox" type="HBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot2/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="InfoBox" type="VBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot2/MarginContainer/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="HeaderRow" type="HBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot2/MarginContainer/HBox/InfoBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SlotTitle" type="Label" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot2/MarginContainer/HBox/InfoBox/HeaderRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Slot 2"
+
+[node name="ActiveBadge" type="Label" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot2/MarginContainer/HBox/InfoBox/HeaderRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 1, 0.5, 1)
+theme_override_font_sizes/font_size = 13
+text = "[ACTIVE]"
+
+[node name="Details" type="Label" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot2/MarginContainer/HBox/InfoBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.85, 0.9, 1)
+theme_override_font_sizes/font_size = 14
+text = "Empty Slot"
+
+[node name="Actions" type="HBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot2/MarginContainer/HBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ResumeBtn" type="Button" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot2/MarginContainer/HBox/Actions"]
+custom_minimum_size = Vector2(90, 36)
+layout_mode = 2
+text = "slot_load"
+
+[node name="NewBtn" type="Button" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot2/MarginContainer/HBox/Actions"]
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 2
+text = "slot_new"
+
+[node name="DeleteBtn" type="Button" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot2/MarginContainer/HBox/Actions"]
+custom_minimum_size = Vector2(80, 36)
+layout_mode = 2
+text = "slot_delete"
+
+[node name="Slot3" type="PanelContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="MarginContainer" type="MarginContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot3"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="HBox" type="HBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot3/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="InfoBox" type="VBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot3/MarginContainer/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="HeaderRow" type="HBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot3/MarginContainer/HBox/InfoBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SlotTitle" type="Label" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot3/MarginContainer/HBox/InfoBox/HeaderRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Slot 3"
+
+[node name="ActiveBadge" type="Label" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot3/MarginContainer/HBox/InfoBox/HeaderRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 1, 0.5, 1)
+theme_override_font_sizes/font_size = 13
+text = "[ACTIVE]"
+
+[node name="Details" type="Label" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot3/MarginContainer/HBox/InfoBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.85, 0.9, 1)
+theme_override_font_sizes/font_size = 14
+text = "Empty Slot"
+
+[node name="Actions" type="HBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot3/MarginContainer/HBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ResumeBtn" type="Button" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot3/MarginContainer/HBox/Actions"]
+custom_minimum_size = Vector2(90, 36)
+layout_mode = 2
+text = "slot_load"
+
+[node name="NewBtn" type="Button" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot3/MarginContainer/HBox/Actions"]
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 2
+text = "slot_new"
+
+[node name="DeleteBtn" type="Button" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot3/MarginContainer/HBox/Actions"]
+custom_minimum_size = Vector2(80, 36)
+layout_mode = 2
+text = "slot_delete"
+
+[node name="Slot4" type="PanelContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="MarginContainer" type="MarginContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot4"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="HBox" type="HBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot4/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="InfoBox" type="VBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot4/MarginContainer/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="HeaderRow" type="HBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot4/MarginContainer/HBox/InfoBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SlotTitle" type="Label" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot4/MarginContainer/HBox/InfoBox/HeaderRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Slot 4"
+
+[node name="ActiveBadge" type="Label" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot4/MarginContainer/HBox/InfoBox/HeaderRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 1, 0.5, 1)
+theme_override_font_sizes/font_size = 13
+text = "[ACTIVE]"
+
+[node name="Details" type="Label" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot4/MarginContainer/HBox/InfoBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.85, 0.9, 1)
+theme_override_font_sizes/font_size = 14
+text = "Empty Slot"
+
+[node name="Actions" type="HBoxContainer" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot4/MarginContainer/HBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ResumeBtn" type="Button" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot4/MarginContainer/HBox/Actions"]
+custom_minimum_size = Vector2(90, 36)
+layout_mode = 2
+text = "slot_load"
+
+[node name="NewBtn" type="Button" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot4/MarginContainer/HBox/Actions"]
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 2
+text = "slot_new"
+
+[node name="DeleteBtn" type="Button" parent="SavesSlate/MarginContainer/VBoxContainer/SlotContainer/Slot4/MarginContainer/HBox/Actions"]
+custom_minimum_size = Vector2(80, 36)
+layout_mode = 2
+text = "slot_delete"
+
+[node name="HSeparator" type="HSeparator" parent="SavesSlate/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="SavesSlate/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 44)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "menu_back"
 
 [node name="OptionsSlate" type="PanelContainer" parent="."]
 visible = false
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
+anchor_bottom = 0.5
 offset_left = -210.0
-offset_top = -270.0
+offset_top = -180.0
 offset_right = 210.0
-offset_bottom = -25.0
+offset_bottom = 180.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slate")
 
 [node name="MarginContainer" type="MarginContainer" parent="OptionsSlate"]
@@ -141,10 +532,17 @@ custom_minimum_size = Vector2(200, 44)
 layout_mode = 2
 text = "menu_back"
 
-[connection signal="button_up" from="MenuSlate/MarginContainer/VBoxContainer/continue" to="." method="_on_continue_button_up"]
-[connection signal="button_up" from="MenuSlate/MarginContainer/VBoxContainer/play" to="." method="_on_play_button_up"]
+[connection signal="button_up" from="MenuSlate/MarginContainer/VBoxContainer/demo" to="." method="_on_demo_button_up"]
+[connection signal="button_up" from="MenuSlate/MarginContainer/VBoxContainer/saves" to="." method="_on_saves_button_up"]
 [connection signal="button_up" from="MenuSlate/MarginContainer/VBoxContainer/options" to="." method="_on_options_button_up"]
 [connection signal="button_up" from="MenuSlate/MarginContainer/VBoxContainer/quit" to="." method="_on_quit_button_up"]
+[connection signal="button_up" from="DemoSlate/MarginContainer/VBoxContainer/Level1" to="." method="_on_level1_button_up"]
+[connection signal="button_up" from="DemoSlate/MarginContainer/VBoxContainer/Level2" to="." method="_on_level2_button_up"]
+[connection signal="button_up" from="DemoSlate/MarginContainer/VBoxContainer/Level3" to="." method="_on_level3_button_up"]
+[connection signal="button_up" from="DemoSlate/MarginContainer/VBoxContainer/Level4" to="." method="_on_level4_button_up"]
+[connection signal="button_up" from="DemoSlate/MarginContainer/VBoxContainer/HBoxContainer/OpenSaves" to="." method="_on_saves_button_up"]
+[connection signal="button_up" from="DemoSlate/MarginContainer/VBoxContainer/HBoxContainer/Back" to="." method="_on_back_button_up"]
+[connection signal="button_up" from="SavesSlate/MarginContainer/VBoxContainer/Back" to="." method="_on_back_button_up"]
 [connection signal="item_selected" from="OptionsSlate/MarginContainer/VBoxContainer/LanguageRow/LanguageSelect" to="." method="_on_language_select_item_selected"]
 [connection signal="toggled" from="OptionsSlate/MarginContainer/VBoxContainer/FullscreenCheck" to="." method="_on_fullscreen_check_toggled"]
 [connection signal="button_up" from="OptionsSlate/MarginContainer/VBoxContainer/Back" to="." method="_on_back_button_up"]

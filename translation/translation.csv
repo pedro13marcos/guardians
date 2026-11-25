@@ -39,3 +39,22 @@ minimap_expand_hint,[M] Expand Map,[M] Expandir Mapa,[M] Expandir Mapa
 minimap_collapse_hint,[M] Collapse,[M] Reducir,[M] Reduzir
 minimap_legend_you,YOU,TÚ,VOCÊ
 minimap_legend_exit,EXIT,SALIDA,SAÍDA
+menu_demo,DEMO LEVELS,NIVELES DEMO,NÍVEIS DEMO
+menu_saves,SAVE SLOTS,RANURAS DE GUARDADO,SLOTS DE SAVE
+menu_play_unavailable,PLAY (UNAVAILABLE),JUGAR (NO DISPONIBLE),JOGAR (INDISPONÍVEL)
+menu_unavailable,Unavailable,No disponible,Indisponível
+demo_title,DEMO LEVELS,NIVELES DEMO,NÍVEIS DEMO
+demo_subtitle,Facility Sectors (Pre-Alpha Demo Build),Sectores de la Instalación (Versión Demo),Setores da Instalação (Versão Demo)
+demo_level_1,SEC-01 Infiltration (Lab),SEC-01 Infiltración (Lab),SEC-01 Infiltração (Lab)
+demo_level_2,SEC-02 Generators (Servers),SEC-02 Generadores (Servidores),SEC-02 Geradores (Servidores)
+demo_level_3,SEC-03 Defense Matrix (Rift),SEC-03 Matriz de Defensa (Falla),SEC-03 Matriz de Defesa (Fenda)
+demo_level_4,SEC-04 Core Lab (Biotech),SEC-04 Laboratorio Central (Biotec),SEC-04 Laboratório Central (Biotec)
+demo_open_saves,Open Save Slots,Abrir Ranuras de Guardado,Abrir Slots de Save
+demo_direct_select,Direct Level Select,Selección Directa de Nivel,Seleção Direta de Nível
+saves_title,SAVE SLOTS (DEMO),RANURAS DE GUARDADO (DEMO),SLOTS DE SAVE (DEMO)
+slot_title,Slot %d,Ranura %d,Slot %d
+slot_empty,Empty Slot,Ranura Vacía,Slot Vazio
+slot_load,Resume,Reanudar,Continuar
+slot_new,New Game,Nueva Partida,Novo Jogo
+slot_delete,Delete,Borrar,Apagar
+slot_active,ACTIVE,ACTIVO,ATIVO

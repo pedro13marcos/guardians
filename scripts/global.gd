@@ -4,13 +4,16 @@ extends Node
 ## Manages global game state, configuration/save persistence, translation,
 ## level background pre-loading, directional slide transitions, and persistent overlays.
 
-const GAME_VERSION: String = "0.51"
+const GAME_VERSION: String = "0.52"
 const CONF_PATH: String = "user://confGame.json"
 const SAVE_PATH: String = "user://saveGame.json"
+const TOTAL_SAVE_SLOTS: int = 4
+const SLOT_PATH_PREFIX: String = "user://save_slot_"
 
 var current_language_mode: String = "auto"
 var fullscreen: bool = false
 var current_level: String = "res://scenes/main.tscn"
+var current_save_slot: int = 1
 var watermark_label: Label = null
 
 var is_transitioning: bool = false
@@ -28,6 +31,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_load_csv_translations("res://translation/translation.csv")
 	load_config()
+	_migrate_legacy_save()
 	_create_watermark()
 
 func _input(event: InputEvent) -> void:
@@ -141,63 +145,157 @@ func load_config() -> void:
 		set_language_mode("auto")
 
 # -------------------------------------------------------------
-# Game Save Persistence (user://saveGame.json & user://saveGame.txt)
+# 4-Slot Game Save Persistence (user://save_slot_1..4.json)
 # -------------------------------------------------------------
 
+func get_slot_path(slot_idx: int) -> String:
+	var clamped_slot = clampi(slot_idx, 1, TOTAL_SAVE_SLOTS)
+	return "%s%d.json" % [SLOT_PATH_PREFIX, clamped_slot]
+
+## Migrates old single saveGame.json or saveGame.txt to Slot 1 if Slot 1 does not exist yet
+func _migrate_legacy_save() -> void:
+	var slot1_path = get_slot_path(1)
+	if not FileAccess.file_exists(slot1_path):
+		var old_path = ""
+		if FileAccess.file_exists(SAVE_PATH):
+			old_path = SAVE_PATH
+		elif FileAccess.file_exists("user://saveGame.txt"):
+			old_path = "user://saveGame.txt"
+		if not old_path.is_empty():
+			var src = FileAccess.open(old_path, FileAccess.READ)
+			if src:
+				var content = src.get_as_text()
+				var dst = FileAccess.open(slot1_path, FileAccess.WRITE)
+				if dst:
+					dst.store_string(content)
+					print("Global: Migrated legacy save to Slot 1.")
+
+func check_slot_save(slot_idx: int) -> bool:
+	var path = get_slot_path(slot_idx)
+	return FileAccess.file_exists(path)
+
+func has_any_save() -> bool:
+	for i in range(1, TOTAL_SAVE_SLOTS + 1):
+		if check_slot_save(i):
+			return true
+	return false
+
 func check_save() -> bool:
-	return FileAccess.file_exists(SAVE_PATH) or FileAccess.file_exists("user://saveGame.txt")
+	return has_any_save()
 
 func checkSave() -> bool:
-	return check_save()
+	return has_any_save()
 
-func save_game(level_path: String = "") -> void:
+func get_level_display_name(level_path: String) -> String:
+	if level_path.contains("main.tscn"):
+		var t = tr("demo_level_1")
+		return t if not t.is_empty() and t != "demo_level_1" else "SEC-01 Infiltration"
+	elif level_path.contains("level_2.tscn"):
+		var t = tr("demo_level_2")
+		return t if not t.is_empty() and t != "demo_level_2" else "SEC-02 Generators"
+	elif level_path.contains("level_3.tscn"):
+		var t = tr("demo_level_3")
+		return t if not t.is_empty() and t != "demo_level_3" else "SEC-03 Defense Matrix"
+	elif level_path.contains("level_4.tscn"):
+		var t = tr("demo_level_4")
+		return t if not t.is_empty() and t != "demo_level_4" else "SEC-04 Core Lab"
+	elif level_path.is_empty():
+		var t = tr("slot_empty")
+		return t if not t.is_empty() and t != "slot_empty" else "Empty Slot"
+	return level_path.get_file().get_basename()
+
+func get_slot_data(slot_idx: int) -> Dictionary:
+	var path = get_slot_path(slot_idx)
+	var empty_dict = {
+		"exists": false,
+		"slot": slot_idx,
+		"last_level": "",
+		"level_name": tr("slot_empty") if tr("slot_empty") != "slot_empty" else "Empty Slot",
+		"timestamp": "",
+		"version": ""
+	}
+	if not FileAccess.file_exists(path):
+		return empty_dict
+	var file = FileAccess.open(path, FileAccess.READ)
+	if not file:
+		return empty_dict
+	var text = file.get_as_text()
+	var json = JSON.parse_string(text)
+	if typeof(json) != TYPE_DICTIONARY:
+		return empty_dict
+	
+	var lvl_path: String = str(json.get("last_level", "res://scenes/main.tscn"))
+	var lvl_name: String = get_level_display_name(lvl_path)
+	return {
+		"exists": true,
+		"slot": slot_idx,
+		"last_level": lvl_path,
+		"level_name": lvl_name,
+		"timestamp": str(json.get("timestamp", "")),
+		"version": str(json.get("version", GAME_VERSION))
+	}
+
+func save_to_slot(slot_idx: int, level_path: String = "") -> void:
+	current_save_slot = clampi(slot_idx, 1, TOTAL_SAVE_SLOTS)
 	if not level_path.is_empty():
-		# Do not save menu or ending page as resumable levels
 		if not level_path.contains("menu.tscn") and not level_path.contains("ending_page.tscn"):
 			current_level = level_path
 	
 	var data = {
+		"slot": current_save_slot,
 		"last_level": current_level,
 		"version": GAME_VERSION,
 		"timestamp": Time.get_datetime_string_from_system()
 	}
-	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	var path = get_slot_path(current_save_slot)
+	var file = FileAccess.open(path, FileAccess.WRITE)
 	if file != null:
 		file.store_string(JSON.stringify(data, "\t"))
-		print("Game saved successfully! Last level: ", current_level)
+		print("Global: Game saved to Slot %d! Level: %s" % [current_save_slot, current_level])
+
+func load_from_slot(slot_idx: int) -> void:
+	current_save_slot = clampi(slot_idx, 1, TOTAL_SAVE_SLOTS)
+	var slot_info = get_slot_data(current_save_slot)
+	if slot_info["exists"] and not slot_info["last_level"].is_empty():
+		current_level = slot_info["last_level"]
+	else:
+		current_level = "res://scenes/main.tscn"
+		save_to_slot(current_save_slot, current_level)
+	
+	print("Global: Game loaded from Slot %d! Resuming from: %s" % [current_save_slot, current_level])
+	get_tree().change_scene_to_file(current_level)
+
+func delete_slot(slot_idx: int) -> void:
+	var path = get_slot_path(slot_idx)
+	if FileAccess.file_exists(path):
+		DirAccess.remove_absolute(path)
+		print("Global: Deleted Slot %d at %s" % [slot_idx, path])
+
+func start_new_game_in_slot(slot_idx: int, level_path: String = "res://scenes/main.tscn") -> void:
+	current_save_slot = clampi(slot_idx, 1, TOTAL_SAVE_SLOTS)
+	current_level = level_path
+	save_to_slot(current_save_slot, current_level)
+	get_tree().change_scene_to_file(current_level)
+
+func save_game(level_path: String = "") -> void:
+	save_to_slot(current_save_slot, level_path)
 
 func save_level(level_path: String) -> void:
 	save_game(level_path)
 
 func load_game() -> void:
-	var path_to_load = SAVE_PATH
-	if not FileAccess.file_exists(path_to_load):
-		if FileAccess.file_exists("user://saveGame.txt"):
-			path_to_load = "user://saveGame.txt"
-		else:
-			print("Save file not found; starting default level.")
-			current_level = "res://scenes/main.tscn"
-			get_tree().change_scene_to_file(current_level)
-			return
-
-	var file = FileAccess.open(path_to_load, FileAccess.READ)
-	if file == null:
+	# If current slot has a save, load it; otherwise find first slot with a save, or slot 1
+	if check_slot_save(current_save_slot):
+		load_from_slot(current_save_slot)
 		return
-	var json_str = file.get_as_text()
-	var data = JSON.parse_string(json_str)
-	if typeof(data) == TYPE_DICTIONARY:
-		current_level = data.get("last_level", "res://scenes/main.tscn")
-		print("Game loaded! Resuming from: ", current_level)
-		get_tree().change_scene_to_file(current_level)
-	else:
-		get_tree().change_scene_to_file("res://scenes/main.tscn")
+	for i in range(1, TOTAL_SAVE_SLOTS + 1):
+		if check_slot_save(i):
+			load_from_slot(i)
+			return
+	load_from_slot(1)
 
 func reset_save() -> void:
-	current_level = "res://scenes/main.tscn"
-	if FileAccess.file_exists(SAVE_PATH):
-		DirAccess.remove_absolute(SAVE_PATH)
-	if FileAccess.file_exists("user://saveGame.txt"):
-		DirAccess.remove_absolute("user://saveGame.txt")
+	delete_slot(current_save_slot)
 
 # -------------------------------------------------------------
 # Level Pre-loading and Directional Slide Transition
