@@ -15,9 +15,10 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="OldProject (4.7)"
-config/version="0.55"
+config/version="0.56"
 run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
+boot_splash/bg_color=Color(0.038397163, 0.038397174, 0.038397145, 1)
 config/icon="res://2023-06-21 10.39.05.jpg"
 
 [autoload]
@@ -31,6 +32,7 @@ window/size/viewport_height=1200
 window/size/mode=2
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/main_scene="res://scenes/main.tscn"
 
 [gui]
 
@@ -109,3 +111,4 @@ locale/translations=PackedStringArray("res://translation/translation.en.translat
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.07284262, 0.072842635, 0.072842605, 1)

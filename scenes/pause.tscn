@@ -1,6 +1,5 @@
-[gd_scene load_steps=4 format=3 uid="uid://bm83b7150i3kw"]
+[gd_scene load_steps=3 format=3 uid="uid://bm83b7150i3kw"]
 
-[ext_resource type="Texture2D" path="res://inner bar.png" id="1_mb0h6"]
 [ext_resource type="Script" path="res://scripts/pause.gd" id="1_uhgxk"]
 [ext_resource type="Theme" uid="uid://c6v2xk8j5qw1m" path="res://assets/guardians_theme.tres" id="2_theme"]
 
@@ -19,11 +18,14 @@ grow_vertical = 2
 theme = ExtResource("2_theme")
 script = ExtResource("1_uhgxk")
 
-[node name="Sprite2D" type="Sprite2D" parent="Pause"]
-modulate = Color(0, 0, 0, 0.168627)
-position = Vector2(801, 595)
-scale = Vector2(1.594, 5.95)
-texture = ExtResource("1_mb0h6")
+[node name="ColorRect" type="ColorRect" parent="Pause"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
 
 [node name="MarginContainer" type="MarginContainer" parent="Pause"]
 layout_mode = 1

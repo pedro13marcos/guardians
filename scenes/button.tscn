@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://57e2sjpuj1c6"]
+[gd_scene load_steps=11 format=3 uid="uid://57e2sjpuj1c6"]
 
 [ext_resource type="Script" path="res://scripts/button.gd" id="1_pbav5"]
 [ext_resource type="Texture2D" path="res://assets/Props/Acess/terminal off.png" id="2_toff"]
@@ -6,8 +6,11 @@
 [ext_resource type="Texture2D" path="res://assets/Props/Acess/terminal 2.png" id="4_t2"]
 [ext_resource type="Texture2D" path="res://assets/Props/Acess/terminal 3.png" id="5_t3"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_term"]
-size = Vector2(22, 30)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
+size = Vector2(32, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_solid"]
+size = Vector2(20, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_term"]
 animations = [{
@@ -51,7 +54,15 @@ collision_mask = 7
 script = ExtResource("1_pbav5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_term")
+shape = SubResource("RectangleShape2D_trigger")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_solid")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
