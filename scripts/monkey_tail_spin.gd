@@ -63,3 +63,7 @@ func _apply_damage(body: Node2D) -> void:
 		hit_bodies[body] = true
 		if body.has_method("quebra"):
 			body.quebra()
+	elif body.is_in_group("button"):
+		hit_bodies[body] = true
+		if body.has_method("press"):
+			body.press()

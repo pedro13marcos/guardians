@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://monkeytailspinscene1"]
+[gd_scene format=3 uid="uid://ch3n0buhot3rm"]
 
 [ext_resource type="Script" path="res://scripts/monkey_tail_spin.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://assets/AI/monkey_tail_spin.png" id="2_tex"]

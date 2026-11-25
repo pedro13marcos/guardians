@@ -1,42 +1,71 @@
-[gd_scene load_steps=6 format=3 uid="uid://57e2sjpuj1c6"]
+[gd_scene load_steps=10 format=3 uid="uid://57e2sjpuj1c6"]
 
-[ext_resource type="Texture2D" path="res://assets/ButtonDown.png" id="1_p8gen"]
 [ext_resource type="Script" path="res://scripts/button.gd" id="1_pbav5"]
-[ext_resource type="Texture2D" path="res://assets/ButtonUp.png" id="2_82kuk"]
+[ext_resource type="Texture2D" path="res://assets/Props/Acess/terminal off.png" id="2_toff"]
+[ext_resource type="Texture2D" path="res://assets/Props/Acess/terminal 1.png" id="3_t1"]
+[ext_resource type="Texture2D" path="res://assets/Props/Acess/terminal 2.png" id="4_t2"]
+[ext_resource type="Texture2D" path="res://assets/Props/Acess/terminal 3.png" id="5_t3"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lo8r4"]
-size = Vector2(32, 16)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_term"]
+size = Vector2(36, 48)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_nq86a"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_term"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_p8gen")
+"texture": ExtResource("2_toff")
 }],
-"loop": true,
+"loop": false,
 "name": &"Down",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_82kuk")
+"texture": ExtResource("3_t1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_t2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_t3")
 }],
 "loop": true,
 "name": &"Up",
-"speed": 5.0
+"speed": 2.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_radial"]
+colors = PackedColorArray(0.2, 0.85, 1, 0.9, 0.1, 0.4, 0.8, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_light"]
+gradient = SubResource("Gradient_radial")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
 [node name="Button" type="Area2D" groups=["button"]]
+collision_layer = 7
+collision_mask = 7
 script = ExtResource("1_pbav5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 8)
-shape = SubResource("RectangleShape2D_lo8r4")
+shape = SubResource("RectangleShape2D_term")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_nq86a")
-animation = &"Down"
+scale = Vector2(0.014, 0.014)
+offset = Vector2(-74, -126)
+sprite_frames = SubResource("SpriteFrames_term")
+animation = &"Up"
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, -6)
+color = Color(0.25, 0.85, 1, 1)
+energy = 1.4
+texture = SubResource("GradientTexture2D_light")
+texture_scale = 0.8
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

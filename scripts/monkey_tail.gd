@@ -144,3 +144,6 @@ func _apply_damage_to(target: Object) -> void:
 	elif target.is_in_group("Quebravel"):
 		if target.has_method("quebra"):
 			target.quebra()
+	elif target.is_in_group("button"):
+		if target.has_method("press"):
+			target.press()
