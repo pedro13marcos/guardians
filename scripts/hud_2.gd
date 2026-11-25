@@ -8,7 +8,7 @@ var topObjetivo;
 
 # Preloaded HUD-theme matching hero bubbles
 # Matrix: [CurrentHUDTheme][UpcomingHero]
-@onready var bubble_textures = {
+var bubble_textures = {
 	"V": {
 		"guardian": preload("res://assets/Bars/bubble_hud_wl_hero_guardian.png"),
 		"monkey": preload("res://assets/Bars/bubble_hud_wl_hero_monkey.png"),
@@ -29,11 +29,18 @@ var topObjetivo;
 func _ready():
 	$HUD2.show()
 	var starting_char: String = "V"
-	if Global and "player_character" in Global and not Global.player_character.is_empty():
-		starting_char = Global.player_character
+	var starting_hp: int = 100
+	var starting_ep: int = 100
+	if Global:
+		if "player_character" in Global and not Global.player_character.is_empty():
+			starting_char = Global.player_character
+		if "player_health" in Global:
+			starting_hp = Global.player_health
+		if "player_energy" in Global:
+			starting_ep = Global.player_energy
 	atualizaPersonagem(starting_char)
-	healthBar.set_tint_progress(Color(0,1,0,1));
-	pass
+	atualizaVida(starting_hp)
+	atualizaEnergia(starting_ep)
 	
 func atualizaVida(vida):
 	
