@@ -35,7 +35,7 @@ animations = [{
 }]
 
 [sub_resource type="Gradient" id="Gradient_radial"]
-colors = PackedColorArray(0.2, 0.85, 1, 0.9, 0.1, 0.4, 0.8, 0)
+colors = PackedColorArray(0.2, 0.85, 1, 0.45, 0.1, 0.4, 0.8, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_light"]
 gradient = SubResource("Gradient_radial")
@@ -63,9 +63,9 @@ animation = &"Up"
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(0, -6)
 color = Color(0.25, 0.85, 1, 1)
-energy = 1.4
+energy = 0.45
 texture = SubResource("GradientTexture2D_light")
-texture_scale = 0.8
+texture_scale = 0.55
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

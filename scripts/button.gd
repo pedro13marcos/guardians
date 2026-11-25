@@ -9,7 +9,9 @@ var isButtonPressed: bool = false
 
 signal buttonPressed
 
-const LIGHT_ENERGY = [1.4, 1.05, 1.25]
+const LIGHT_ENERGY = [0.45, 0.32, 0.4]
+
+@export var light_energy_frames: Array[float] = [0.45, 0.32, 0.4]
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var light: PointLight2D = $PointLight2D if has_node("PointLight2D") else null
@@ -42,8 +44,9 @@ func _updateLight() -> void:
 		light.enabled = false
 		return
 	light.enabled = true
-	var idx = anim.frame % LIGHT_ENERGY.size()
-	light.energy = LIGHT_ENERGY[idx]
+	var energy_list = light_energy_frames if not light_energy_frames.is_empty() else LIGHT_ENERGY
+	var idx = anim.frame % energy_list.size()
+	light.energy = energy_list[idx]
 
 func _process(_delta: float) -> void:
 	if colPlayer and Input.is_action_just_released("Action") and not isButtonPressed:
